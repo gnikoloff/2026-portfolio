@@ -52,6 +52,33 @@
           "repeat": false
         }
       },
+      "project_secondary_link": {
+        "type": "Link",
+        "config": {
+          "label": "Project Secondary Link",
+          "placeholder": "",
+          "select": null,
+          "allowTargetBlank": true,
+          "allowText": true,
+          "repeat": false
+        }
+      },
+      "project_year": {
+        "type": "Number",
+        "config": {
+          "label": "Project Year",
+          "placeholder": ""
+        }
+      },
+      "project_body": {
+        "type": "StructuredText",
+        "config": {
+          "label": "Project Body",
+          "placeholder": "",
+          "allowTargetBlank": true,
+          "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl"
+        }
+      },
       "slices": {
         "type": "Slices",
         "fieldset": "Slice Zone",

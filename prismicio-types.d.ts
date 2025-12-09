@@ -137,6 +137,45 @@ interface WorkDocumentData {
   >;
 
   /**
+   * Project Secondary Link field in *Work*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: work.project_secondary_link
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  project_secondary_link: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    never
+  >;
+
+  /**
+   * Project Year field in *Work*
+   *
+   * - **Field Type**: Number
+   * - **Placeholder**: *None*
+   * - **API ID Path**: work.project_year
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/number
+   */
+  project_year: prismic.NumberField;
+
+  /**
+   * Project Body field in *Work*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: work.project_body
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  project_body: prismic.RichTextField;
+
+  /**
    * Slice Zone field in *Work*
    *
    * - **Field Type**: Slice Zone
