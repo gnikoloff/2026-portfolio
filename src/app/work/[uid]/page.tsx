@@ -9,8 +9,11 @@ export default async function Work({ params }: { params: Promise<Params> }) {
 	const client = createClient();
 	const page = await client.getByUID("work", uid);
 	return (
-		<div>
+		<div className="container">
 			<Link href={`/`}>Back</Link>
+			<br />
+			<br />
+			<br />
 			<h1>{page.data.project_title}</h1>
 		</div>
 	);

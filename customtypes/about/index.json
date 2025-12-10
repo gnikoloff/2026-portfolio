@@ -1,0 +1,33 @@
+{
+  "id": "about",
+  "json": {
+    "Main": {
+      "text": {
+        "type": "StructuredText",
+        "config": {
+          "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl",
+          "label": "Text"
+        }
+      },
+      "experience": {
+        "type": "StructuredText",
+        "config": {
+          "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl",
+          "label": "Experience"
+        }
+      },
+      "mugshot": {
+        "type": "Image",
+        "config": {
+          "constraint": {},
+          "thumbnails": [],
+          "label": "Mugshot"
+        }
+      }
+    }
+  },
+  "label": "About",
+  "repeatable": false,
+  "status": true,
+  "format": "custom"
+}

@@ -69,14 +69,517 @@ type ContentRelationshipFieldWithData<
   >;
 }[Exclude<TCustomType[number], string>["id"]];
 
-type WorkDocumentDataSlicesSlice = never;
+/**
+ * Content for About documents
+ */
+interface AboutDocumentData {
+  /**
+   * Text field in *About*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: about.text
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  text: prismic.RichTextField;
+
+  /**
+   * Experience field in *About*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: about.experience
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  experience: prismic.RichTextField;
+
+  /**
+   * Mugshot field in *About*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: about.mugshot
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  mugshot: prismic.ImageField<never>;
+}
 
 /**
- * Content for Work documents
+ * About document from Prismic
+ *
+ * - **API ID**: `about`
+ * - **Repeatable**: `false`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type AboutDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithoutUID<Simplify<AboutDocumentData>, "about", Lang>;
+
+/**
+ * Content for Blog documents
+ */
+interface BlogDocumentData {
+  /**
+   * External Link field in *Blog*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: blog.external_link
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  external_link: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    never
+  >;
+
+  /**
+   * External Resource Name field in *Blog*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: blog.external_resource_name
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  external_resource_name: prismic.RichTextField;
+
+  /**
+   * SEO Description field in *Blog*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: blog.seo_description
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  seo_description: prismic.KeyTextField;
+
+  /**
+   * title field in *Blog*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: blog.title
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  title: prismic.RichTextField;
+
+  /**
+   * body field in *Blog*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: blog.body
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  body: prismic.RichTextField;
+}
+
+/**
+ * Blog document from Prismic
+ *
+ * - **API ID**: `blog`
+ * - **Repeatable**: `true`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type BlogDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithUID<Simplify<BlogDocumentData>, "blog", Lang>;
+
+/**
+ * Item in *CV → work*
+ */
+export interface CvDocumentDataWorkItem {
+  /**
+   * work-entry field in *CV → work*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: cv.work[].work-entry
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  "work-entry": prismic.RichTextField;
+}
+
+/**
+ * Content for CV documents
+ */
+interface CvDocumentData {
+  /**
+   * intro field in *CV*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: cv.intro-web
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  "intro-web": prismic.RichTextField;
+
+  /**
+   * print-intro field in *CV*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: cv.intro-print
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  "intro-print": prismic.RichTextField;
+
+  /**
+   * programming field in *CV*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: cv.programming
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  programming: prismic.RichTextField;
+
+  /**
+   * web field in *CV*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: cv.web
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  web: prismic.RichTextField;
+
+  /**
+   * ios field in *CV*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: cv.ios
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  ios: prismic.RichTextField;
+
+  /**
+   * computer graphics field in *CV*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: cv.computer_graphics
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  computer_graphics: prismic.RichTextField;
+
+  /**
+   * backend field in *CV*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: cv.backend
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  backend: prismic.RichTextField;
+
+  /**
+   * languages field in *CV*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: cv.languages
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  languages: prismic.RichTextField;
+
+  /**
+   * software field in *CV*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: cv.software
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  software: prismic.RichTextField;
+
+  /**
+   * hobbies field in *CV*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: cv.hobbies
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  hobbies: prismic.RichTextField;
+
+  /**
+   * work field in *CV*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: cv.work[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  work: prismic.GroupField<Simplify<CvDocumentDataWorkItem>>;
+
+  /**
+   * education field in *CV*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: cv.education
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  education: prismic.RichTextField;
+}
+
+/**
+ * CV document from Prismic
+ *
+ * - **API ID**: `cv`
+ * - **Repeatable**: `false`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type CvDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithoutUID<Simplify<CvDocumentData>, "cv", Lang>;
+
+/**
+ * Content for home documents
+ */
+interface HomeDocumentData {
+  /**
+   * Intro Text field in *home*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: home.intro_text
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  intro_text: prismic.RichTextField;
+}
+
+/**
+ * home document from Prismic
+ *
+ * - **API ID**: `home`
+ * - **Repeatable**: `false`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type HomeDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithoutUID<Simplify<HomeDocumentData>, "home", Lang>;
+
+/**
+ * Content for pdf-cv documents
+ */
+interface PdfCvDocumentData {
+  /**
+   * pdf field in *pdf-cv*
+   *
+   * - **Field Type**: Link to Media
+   * - **Placeholder**: *None*
+   * - **API ID Path**: pdf-cv.pdf
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/link-to-media
+   */
+  pdf: prismic.LinkToMediaField<prismic.FieldState, never>;
+}
+
+/**
+ * pdf-cv document from Prismic
+ *
+ * - **API ID**: `pdf-cv`
+ * - **Repeatable**: `false`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type PdfCvDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithoutUID<
+    Simplify<PdfCvDocumentData>,
+    "pdf-cv",
+    Lang
+  >;
+
+/**
+ * Content for speaking documents
+ */
+interface SpeakingDocumentData {
+  /**
+   * SEO description field in *speaking*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: speaking.seo_description
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  seo_description: prismic.KeyTextField;
+
+  /**
+   * project link field in *speaking*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: speaking.project_link
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  project_link: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    never
+  >;
+
+  /**
+   * project tech field in *speaking*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: speaking.project_tech
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  project_tech: prismic.RichTextField;
+
+  /**
+   * Project Image field in *speaking*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: speaking.project_image
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  project_image: prismic.ImageField<never>;
+
+  /**
+   * Project Title field in *speaking*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: speaking.project_title
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  project_title: prismic.RichTextField;
+
+  /**
+   * Project Type field in *speaking*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: speaking.project_type
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  project_type: prismic.RichTextField;
+
+  /**
+   * Project Year field in *speaking*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: speaking.project_year
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  project_year: prismic.RichTextField;
+
+  /**
+   * Project Body field in *speaking*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: speaking.project_body
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  project_body: prismic.RichTextField;
+}
+
+/**
+ * speaking document from Prismic
+ *
+ * - **API ID**: `speaking`
+ * - **Repeatable**: `true`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type SpeakingDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithUID<
+    Simplify<SpeakingDocumentData>,
+    "speaking",
+    Lang
+  >;
+
+/**
+ * Item in *work → Project Technologies*
+ */
+export interface WorkDocumentDataProjectTechnologiesListItem {
+  /**
+   * Project Tech field in *work → Project Technologies*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **API ID Path**: work.project_technologies_list[].project_tech
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  project_tech: prismic.SelectField<
+    | "Javascript"
+    | "Swift"
+    | "C"
+    | "C++"
+    | "WebAssembly"
+    | "WebGL"
+    | "WebGPU"
+    | "Metal"
+    | "Vulkan"
+    | "HTML"
+    | "CSS"
+    | "SVG"
+    | "Wordpress"
+    | "Drupal"
+    | "SwiftUI"
+    | "ARKit"
+    | "Three.js"
+    | "VR"
+    | "React"
+    | "Vue"
+    | "Express.js"
+    | "canvas2d"
+  >;
+}
+
+/**
+ * Content for work documents
  */
 interface WorkDocumentData {
   /**
-   * Project Title field in *Work*
+   * Project Title field in *work*
    *
    * - **Field Type**: Text
    * - **Placeholder**: *None*
@@ -87,29 +590,42 @@ interface WorkDocumentData {
   project_title: prismic.KeyTextField;
 
   /**
-   * Project Type field in *Work*
+   * Project Type field in *work*
    *
-   * - **Field Type**: Text
+   * - **Field Type**: Rich Text
    * - **Placeholder**: *None*
    * - **API ID Path**: work.project_type
    * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/fields/text
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
    */
-  project_type: prismic.KeyTextField;
+  project_type: prismic.RichTextField;
 
   /**
-   * Project Technologies field in *Work*
+   * Project Year field in *work*
    *
-   * - **Field Type**: Text
+   * - **Field Type**: Number
    * - **Placeholder**: *None*
-   * - **API ID Path**: work.project_technologies
+   * - **API ID Path**: work.project_year
    * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/fields/text
+   * - **Documentation**: https://prismic.io/docs/fields/number
    */
-  project_technologies: prismic.KeyTextField;
+  project_year: prismic.NumberField;
 
   /**
-   * Project Image field in *Work*
+   * Project Technologies field in *work*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: work.project_technologies_list[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  project_technologies_list: prismic.GroupField<
+    Simplify<WorkDocumentDataProjectTechnologiesListItem>
+  >;
+
+  /**
+   * Project Image field in *work*
    *
    * - **Field Type**: Image
    * - **Placeholder**: *None*
@@ -120,7 +636,7 @@ interface WorkDocumentData {
   project_image: prismic.ImageField<never>;
 
   /**
-   * Project Link field in *Work*
+   * Project Main Link field in *work*
    *
    * - **Field Type**: Link
    * - **Placeholder**: *None*
@@ -137,7 +653,7 @@ interface WorkDocumentData {
   >;
 
   /**
-   * Project Secondary Link field in *Work*
+   * Project Secondary Link field in *work*
    *
    * - **Field Type**: Link
    * - **Placeholder**: *None*
@@ -154,18 +670,7 @@ interface WorkDocumentData {
   >;
 
   /**
-   * Project Year field in *Work*
-   *
-   * - **Field Type**: Number
-   * - **Placeholder**: *None*
-   * - **API ID Path**: work.project_year
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/fields/number
-   */
-  project_year: prismic.NumberField;
-
-  /**
-   * Project Body field in *Work*
+   * Project Body field in *work*
    *
    * - **Field Type**: Rich Text
    * - **Placeholder**: *None*
@@ -173,53 +678,42 @@ interface WorkDocumentData {
    * - **Tab**: Main
    * - **Documentation**: https://prismic.io/docs/fields/rich-text
    */
-  project_body: prismic.RichTextField;
-
-  /**
-   * Slice Zone field in *Work*
-   *
-   * - **Field Type**: Slice Zone
-   * - **Placeholder**: *None*
-   * - **API ID Path**: work.slices[]
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/slices
-   */
-  slices: prismic.SliceZone<WorkDocumentDataSlicesSlice>; /**
-   * Meta Title field in *Work*
+  project_body: prismic.RichTextField; /**
+   * Meta Title field in *work*
    *
    * - **Field Type**: Text
-   * - **Placeholder**: A title of the page used for social media and search engines
+   * - **Placeholder**: *None*
    * - **API ID Path**: work.meta_title
-   * - **Tab**: SEO & Metadata
+   * - **Tab**: Metadata
    * - **Documentation**: https://prismic.io/docs/fields/text
    */
   meta_title: prismic.KeyTextField;
 
   /**
-   * Meta Description field in *Work*
+   * Meta Description field in *work*
    *
    * - **Field Type**: Text
-   * - **Placeholder**: A brief summary of the page
+   * - **Placeholder**: *None*
    * - **API ID Path**: work.meta_description
-   * - **Tab**: SEO & Metadata
+   * - **Tab**: Metadata
    * - **Documentation**: https://prismic.io/docs/fields/text
    */
   meta_description: prismic.KeyTextField;
 
   /**
-   * Meta Image field in *Work*
+   * meta_image field in *work*
    *
    * - **Field Type**: Image
    * - **Placeholder**: *None*
    * - **API ID Path**: work.meta_image
-   * - **Tab**: SEO & Metadata
+   * - **Tab**: Metadata
    * - **Documentation**: https://prismic.io/docs/fields/image
    */
   meta_image: prismic.ImageField<never>;
 }
 
 /**
- * Work document from Prismic
+ * work document from Prismic
  *
  * - **API ID**: `work`
  * - **Repeatable**: `true`
@@ -230,7 +724,14 @@ interface WorkDocumentData {
 export type WorkDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithUID<Simplify<WorkDocumentData>, "work", Lang>;
 
-export type AllDocumentTypes = WorkDocument;
+export type AllDocumentTypes =
+  | AboutDocument
+  | BlogDocument
+  | CvDocument
+  | HomeDocument
+  | PdfCvDocument
+  | SpeakingDocument
+  | WorkDocument;
 
 declare module "@prismicio/client" {
   interface CreateClient {
@@ -253,9 +754,22 @@ declare module "@prismicio/client" {
 
   namespace Content {
     export type {
+      AboutDocument,
+      AboutDocumentData,
+      BlogDocument,
+      BlogDocumentData,
+      CvDocument,
+      CvDocumentData,
+      CvDocumentDataWorkItem,
+      HomeDocument,
+      HomeDocumentData,
+      PdfCvDocument,
+      PdfCvDocumentData,
+      SpeakingDocument,
+      SpeakingDocumentData,
       WorkDocument,
       WorkDocumentData,
-      WorkDocumentDataSlicesSlice,
+      WorkDocumentDataProjectTechnologiesListItem,
       AllDocumentTypes,
     };
   }

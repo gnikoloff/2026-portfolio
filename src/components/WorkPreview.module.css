@@ -1,0 +1,25 @@
+.root {
+	background: red;
+}
+
+.imageWrapper {
+	width: 100%;
+	aspect-ratio: calc(800 / 500);
+	position: relative;
+}
+
+.image {
+	width: 100%;
+}
+
+.technologiesList li {
+	display: inline-block;
+}
+
+.technologiesList li {
+	margin-right: 0.75rem;
+}
+
+.technologiesList li:last-of-type {
+	margin-right: unset;
+}

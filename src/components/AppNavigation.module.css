@@ -1,0 +1,9 @@
+.root {
+	position: fixed;
+	top: 0;
+	left: 0;
+	padding: 2rem;
+	background-color: #222;
+
+	transform: translate3d(250px, 250px, 0);
+}

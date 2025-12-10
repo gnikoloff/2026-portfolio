@@ -1,0 +1,52 @@
+{
+  "id": "blog",
+  "json": {
+    "Main": {
+      "uid": {
+        "type": "UID",
+        "config": {
+          "label": "slug"
+        }
+      },
+      "external_link": {
+        "type": "Link",
+        "config": {
+          "allowTargetBlank": true,
+          "label": "External Link",
+          "select": null
+        }
+      },
+      "external_resource_name": {
+        "type": "StructuredText",
+        "config": {
+          "single": "heading5",
+          "label": "External Resource Name"
+        }
+      },
+      "seo_description": {
+        "type": "Text",
+        "config": {
+          "label": "SEO Description"
+        }
+      },
+      "title": {
+        "type": "StructuredText",
+        "config": {
+          "single": "heading1,heading2,heading3,heading4,heading5,heading6",
+          "label": "title"
+        }
+      },
+      "body": {
+        "type": "StructuredText",
+        "config": {
+          "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl",
+          "label": "body"
+        }
+      }
+    }
+  },
+  "label": "Blog",
+  "repeatable": true,
+  "status": true,
+  "format": "custom"
+}

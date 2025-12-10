@@ -1,0 +1,15 @@
+.root {
+	padding: 2rem 0;
+}
+
+.worksWrapper {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+
+	gap: 2rem;
+}
+
+.yearTitle {
+	font-size: 3rem;
+	margin-bottom: 2rem;
+}

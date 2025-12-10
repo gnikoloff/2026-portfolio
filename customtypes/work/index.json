@@ -1,17 +1,11 @@
 {
-  "format": "page",
   "id": "work",
-  "label": "Work",
+  "label": "work",
   "repeatable": true,
   "status": true,
+  "format": "custom",
   "json": {
     "Main": {
-      "uid": {
-        "type": "UID",
-        "config": {
-          "label": "UID"
-        }
-      },
       "project_title": {
         "type": "Text",
         "config": {
@@ -20,36 +14,73 @@
         }
       },
       "project_type": {
-        "type": "Text",
+        "type": "StructuredText",
         "config": {
-          "label": "Project Type",
+          "single": "heading4",
+          "label": "Project Type"
+        }
+      },
+      "project_year": {
+        "type": "Number",
+        "config": {
+          "label": "Project Year",
           "placeholder": ""
         }
       },
-      "project_technologies": {
-        "type": "Text",
+      "project_technologies_list": {
+        "type": "Group",
         "config": {
           "label": "Project Technologies",
-          "placeholder": ""
+          "repeat": true,
+          "fields": {
+            "project_tech": {
+              "type": "Select",
+              "config": {
+                "label": "Project Tech",
+                "placeholder": "",
+                "options": [
+                  "Javascript",
+                  "Swift",
+                  "C",
+                  "C++",
+                  "WebAssembly",
+                  "WebGL",
+                  "WebGPU",
+                  "Metal",
+                  "Vulkan",
+                  "HTML",
+                  "CSS",
+                  "SVG",
+                  "Wordpress",
+                  "Drupal",
+                  "SwiftUI",
+                  "ARKit",
+                  "Three.js",
+                  "VR",
+                  "React",
+                  "Vue",
+                  "Express.js",
+                  "canvas2d"
+                ]
+              }
+            }
+          }
         }
       },
       "project_image": {
         "type": "Image",
         "config": {
-          "label": "Project Image",
           "constraint": {},
-          "thumbnails": []
+          "thumbnails": [],
+          "label": "Project Image"
         }
       },
       "project_link": {
         "type": "Link",
         "config": {
-          "label": "Project Link",
+          "label": "Project Main Link",
           "placeholder": "",
-          "select": null,
-          "allowTargetBlank": true,
-          "allowText": true,
-          "repeat": false
+          "select": null
         }
       },
       "project_secondary_link": {
@@ -63,55 +94,45 @@
           "repeat": false
         }
       },
-      "project_year": {
-        "type": "Number",
-        "config": {
-          "label": "Project Year",
-          "placeholder": ""
-        }
-      },
       "project_body": {
         "type": "StructuredText",
         "config": {
-          "label": "Project Body",
-          "placeholder": "",
-          "allowTargetBlank": true,
-          "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl"
+          "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,o-list-item",
+          "label": "Project Body"
         }
       },
-      "slices": {
-        "type": "Slices",
-        "fieldset": "Slice Zone",
+      "uid": {
+        "type": "UID",
         "config": {
-          "choices": {}
+          "label": "uid"
         }
       }
     },
-    "SEO & Metadata": {
+    "Metadata": {
       "meta_title": {
+        "type": "Text",
         "config": {
           "label": "Meta Title",
-          "placeholder": "A title of the page used for social media and search engines"
-        },
-        "type": "Text"
+          "placeholder": ""
+        }
       },
       "meta_description": {
+        "type": "Text",
         "config": {
           "label": "Meta Description",
-          "placeholder": "A brief summary of the page"
-        },
-        "type": "Text"
+          "placeholder": ""
+        }
       },
       "meta_image": {
+        "type": "Image",
         "config": {
+          "label": "meta_image",
           "constraint": {
-            "height": 1260,
-            "width": 2400
+            "width": 1200,
+            "height": 628
           },
-          "label": "Meta Image",
           "thumbnails": []
-        },
-        "type": "Image"
+        }
       }
     }
   }
