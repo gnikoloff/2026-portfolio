@@ -1,5 +1,11 @@
 .root {
-	background: red;
+	background: var(--background-secondary);
+	border-radius: 20px;
+	overflow: hidden;
+}
+
+.body {
+	padding: 0.75rem 0.5rem;
 }
 
 .imageWrapper {
@@ -12,14 +18,12 @@
 	width: 100%;
 }
 
-.technologiesList li {
-	display: inline-block;
+.title {
+	/* margin-bottom: 0.6rem; */
 }
 
-.technologiesList li {
-	margin-right: 0.75rem;
-}
-
-.technologiesList li:last-of-type {
-	margin-right: unset;
+.subtitle {
+	font-weight: 500;
+	color: var(--foreground-secondary);
+	margin: 0.5rem 0 0.5rem;
 }

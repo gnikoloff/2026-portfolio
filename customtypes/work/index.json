@@ -14,10 +14,18 @@
         }
       },
       "project_type": {
-        "type": "StructuredText",
+        "type": "Select",
         "config": {
-          "single": "heading4",
-          "label": "Project Type"
+          "label": "Project Type",
+          "placeholder": "",
+          "options": [
+            "Graphics Demo",
+            "Native Application",
+            "Website",
+            "Game",
+            "Visualisation",
+            "Animation"
+          ]
         }
       },
       "project_year": {
@@ -47,7 +55,6 @@
                   "WebGL",
                   "WebGPU",
                   "Metal",
-                  "Vulkan",
                   "HTML",
                   "CSS",
                   "SVG",
@@ -58,7 +65,6 @@
                   "Three.js",
                   "VR",
                   "React",
-                  "Vue",
                   "Express.js",
                   "canvas2d"
                 ]

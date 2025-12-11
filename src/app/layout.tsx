@@ -1,6 +1,6 @@
-import AppNavigation from "@/components/AppNavigation";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import "./globals.css";
+import "./typeset.min.css";
 
 // export const metadata: Metadata = {
 // 	title: "Create Next App",
@@ -17,7 +17,8 @@ export default function RootLayout({
 			<body>
 				<NuqsAdapter>
 					{children}
-					<AppNavigation />
+
+					{/* <AppNavigation /> */}
 				</NuqsAdapter>
 			</body>
 		</html>

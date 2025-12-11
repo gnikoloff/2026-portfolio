@@ -557,7 +557,6 @@ export interface WorkDocumentDataProjectTechnologiesListItem {
     | "WebGL"
     | "WebGPU"
     | "Metal"
-    | "Vulkan"
     | "HTML"
     | "CSS"
     | "SVG"
@@ -568,7 +567,6 @@ export interface WorkDocumentDataProjectTechnologiesListItem {
     | "Three.js"
     | "VR"
     | "React"
-    | "Vue"
     | "Express.js"
     | "canvas2d"
   >;
@@ -592,13 +590,20 @@ interface WorkDocumentData {
   /**
    * Project Type field in *work*
    *
-   * - **Field Type**: Rich Text
+   * - **Field Type**: Select
    * - **Placeholder**: *None*
    * - **API ID Path**: work.project_type
    * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   * - **Documentation**: https://prismic.io/docs/fields/select
    */
-  project_type: prismic.RichTextField;
+  project_type: prismic.SelectField<
+    | "Graphics Demo"
+    | "Native Application"
+    | "Website"
+    | "Game"
+    | "Visualisation"
+    | "Animation"
+  >;
 
   /**
    * Project Year field in *work*

@@ -18,6 +18,7 @@ export default function YearWorkContainer({
 						key={work.uid}
 						uid={work.uid}
 						title={work.data.project_title}
+						type={work.data.project_type}
 						technologies={[...work.data.project_technologies_list]}
 						previewImageURL={work.data.project_image.url}
 					/>

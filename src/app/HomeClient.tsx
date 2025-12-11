@@ -1,7 +1,7 @@
 // src/app/HomeClient.tsx
 "use client";
 
-import AppNavigation from "@/components/AppNavigation";
+import AppNavigation from "@/components/AppNavigation/AppNavigation";
 import YearWorkContainer from "@/components/YearWorkContainer";
 import { useFilterStore } from "@/store/filterStore";
 import { FilterState } from "@/types";
@@ -44,9 +44,17 @@ export default function HomeClient({
 	const worksPerYears = groupWorksByYear(filteredWorks);
 	const sortedYears = getSortedYears(worksPerYears, "desc");
 
+	useEffect(() => {
+		const savedScroll = sessionStorage.getItem("homeScrollY");
+		sessionStorage.removeItem("homeScrollY");
+		if (savedScroll !== null) {
+			window.scrollTo(0, parseInt(savedScroll, 10));
+		}
+	}, []);
+
 	return (
 		<div>
-			<AppNavigation />
+			<AppNavigation works={filteredWorks} />
 
 			<div className="container">
 				<PrismicRichText field={homePage.data.intro_text} />

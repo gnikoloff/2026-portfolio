@@ -1,0 +1,16 @@
+.root li {
+	display: inline-block;
+	border: 1px solid white;
+	padding: 8px 12px;
+	border-radius: 50px;
+}
+
+.root li {
+	margin-right: 0.5rem;
+	font-size: 14px;
+	padding: 0px 6px;
+}
+
+.root li:last-of-type {
+	margin-right: unset;
+}

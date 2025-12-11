@@ -9,7 +9,6 @@ export type Tag =
 	| "WebGL"
 	| "WebGPU"
 	| "Metal"
-	| "Vulkan"
 	| "HTML"
 	| "CSS"
 	| "SVG"
@@ -20,7 +19,6 @@ export type Tag =
 	| "Three.js"
 	| "VR"
 	| "React"
-	| "Vue"
 	| "Express.js"
 	| "canvas2d";
 
@@ -56,11 +54,6 @@ export const TECH_TAGS: TechTag[] = [
 	// Frontend - Web
 	{
 		name: "React",
-		category: "frontend",
-		compatibleLanguages: ["Javascript", "HTML", "CSS"],
-	},
-	{
-		name: "Vue",
 		category: "frontend",
 		compatibleLanguages: ["Javascript", "HTML", "CSS"],
 	},
@@ -128,11 +121,6 @@ export const TECH_TAGS: TechTag[] = [
 		name: "Metal",
 		category: "graphics-3d",
 		compatibleLanguages: ["Swift", "C++"], // Swift and C++ only
-	},
-	{
-		name: "Vulkan",
-		category: "graphics-3d",
-		compatibleLanguages: ["C++", "C"],
 	},
 
 	// AR/VR
