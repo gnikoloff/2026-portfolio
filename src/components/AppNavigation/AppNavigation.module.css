@@ -2,9 +2,38 @@
 	position: fixed;
 	top: 0;
 	left: 0;
-	padding: 2rem;
 	z-index: 999;
-	background-color: #222;
+	pointer-events: none;
+}
 
-	transform: translate3d(250px, 250px, 0);
+.root.dragging .draggableArea {
+	background-color: rgba(0, 0, 255, 0.4);
+	pointer-events: auto;
+}
+
+.navContainer {
+	pointer-events: auto;
+	display: flex;
+	opacity: 0;
+	transition: opacity 0.1s ease-in;
+}
+
+.navContainer.inited {
+	opacity: 1;
+}
+
+.navWrapper {
+	padding: 2rem;
+	background-color: #222;
+}
+
+.draggable {
+	width: 102px;
+	height: 102px;
+	background-color: green;
+	cursor: grab;
+}
+
+.root.dragging .draggable {
+	pointer-events: none;
 }

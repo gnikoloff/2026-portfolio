@@ -1,9 +1,11 @@
+import PageLayout from "@/components/PageLayout";
 import { SinglePageHeader } from "@/components/SinglePageHeader";
 import { SPEAKING_CUSTOM_TYPE } from "@/constants";
 import { createClient } from "@/prismicio";
 import { htmlSerializer } from "@/utils/htmlSerialiser";
 import { asHTML } from "@prismicio/client";
 import styles from "./page.module.css";
+
 type Params = { uid: string };
 
 export default async function SpeakingWork({
@@ -18,7 +20,7 @@ export default async function SpeakingWork({
 	const page = speakingWorks.find(({ uid: pageUid }) => pageUid === uid)!;
 	const html = asHTML(page.data.project_body, { serializer: htmlSerializer });
 	return (
-		<>
+		<PageLayout>
 			<div className="tight-container">
 				<SinglePageHeader
 					title={page.data.project_title}
@@ -29,6 +31,6 @@ export default async function SpeakingWork({
 					<div dangerouslySetInnerHTML={{ __html: html }}></div>
 				</main>
 			</div>
-		</>
+		</PageLayout>
 	);
 }

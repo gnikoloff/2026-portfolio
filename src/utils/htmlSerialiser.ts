@@ -1,5 +1,8 @@
 import { HTMLRichTextSerializer } from "@prismicio/client";
 
+// @ts-ignore
+import htmlToFormattedText from "html-to-formatted-text";
+
 const decodeHTMLEntities = (html: string): string => {
 	return html
 		.replace(/&lt;/g, "<")
@@ -19,8 +22,12 @@ export const htmlSerializer: HTMLRichTextSerializer = {
 	oListItem: ({ children: content }) => {
 		return `<li>${decodeHTMLEntities(content)}</li>`;
 	},
-	// preformatted: ({ node }) => {
-	// 	const text = node.text || "";
-	// 	return `<pre><code class="javascript">${text}</code></pre>`;
-	// },
+	preformatted: ({ children }) => {
+		const renderedChildren = children;
+		const lang = "javascript"; //renderedChildren.substring(0, renderedChildren.indexOf('*'))
+
+		return `<pre class="code-snippet"><code class="${lang}">${htmlToFormattedText(
+			renderedChildren,
+		)}</code></pre>`;
+	},
 };

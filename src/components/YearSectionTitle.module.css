@@ -1,4 +1,8 @@
 .root {
 	font-size: 3rem;
-	margin: 2rem 0;
+	margin: 4rem 0;
+}
+
+.root.noMarginTop {
+	margin-top: 0;
 }

@@ -1,4 +1,4 @@
-import AppNavigation from "@/components/AppNavigation/AppNavigation";
+import PageLayout from "@/components/PageLayout";
 import { SinglePageHeader } from "@/components/SinglePageHeader";
 import { WORKS_CUSTOM_TYPE } from "@/constants";
 import { createClient } from "@/prismicio";
@@ -19,8 +19,7 @@ export default async function Work({ params }: { params: Promise<Params> }) {
 	const [prevWork, nextWork] = getPrevNextWorks(works, uid);
 	const [prevWorkLink, nextWorkLink] = getPrevNextWorkLinks(works, uid);
 	return (
-		<>
-			<AppNavigation works={works} />
+		<PageLayout>
 			<div className="tight-container">
 				<SinglePageHeader
 					title={page.data.project_title}
@@ -49,6 +48,6 @@ export default async function Work({ params }: { params: Promise<Params> }) {
 					</Link>
 				</footer>
 			</div>
-		</>
+		</PageLayout>
 	);
 }

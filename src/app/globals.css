@@ -40,9 +40,17 @@ a {
 }
 
 code {
-	background-color: var(--background-secondary);
-	color: var(--foreground);
+	background-color: var(--background-secondary) !important;
+	color: var(--foreground) !important;
 	border-radius: 4px;
+}
+
+#app-header {
+	padding-bottom: 8rem;
+}
+
+#app-main {
+	padding-top: 8rem;
 }
 
 .container {
@@ -55,6 +63,13 @@ code {
 	width: 100%;
 	max-width: 720px;
 	margin: 0 auto;
+}
+
+.code-snippet {
+	/* margin: 0 !important; */
+	padding: 0 !important;
+	background-color: transparent !important;
+	border: none !important;
 }
 
 .fw500 {
@@ -81,4 +96,26 @@ img[alt^="Download"] {
 	left: 0;
 	width: 100%;
 	height: 100%;
+}
+
+.image-compare div {
+	margin: unset !important;
+}
+
+.image-compare img {
+	max-width: unset !important;
+	display: block !important;
+}
+
+.splide ul {
+	margin-bottom: 0 !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-weight: 500;
 }

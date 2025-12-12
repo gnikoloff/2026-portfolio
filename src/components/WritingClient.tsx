@@ -1,5 +1,6 @@
 import { getSortedYears, groupWritingWorksByYear } from "@/utils/filterWorks";
 import { BlogDocument } from "../../prismicio-types";
+import PageLayout from "./PageLayout";
 import YearWritingContainer from "./YearWritingContainer";
 
 export default function WritingClient({
@@ -11,16 +12,19 @@ export default function WritingClient({
 	const sortedYears = getSortedYears(worksPerYears, "desc");
 
 	return (
-		<div className="tight-container">
-			<div className="container">
-				{sortedYears.map((year) => (
-					<YearWritingContainer
-						key={year}
-						year={Number(year)}
-						works={worksPerYears[year]}
-					/>
-				))}
+		<PageLayout>
+			<div className="tight-container">
+				<div className="container">
+					{sortedYears.map((year, i) => (
+						<YearWritingContainer
+							key={year}
+							year={Number(year)}
+							works={worksPerYears[year]}
+							hasMarginTop={i > 0}
+						/>
+					))}
+				</div>
 			</div>
-		</div>
+		</PageLayout>
 	);
 }

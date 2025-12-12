@@ -7,13 +7,15 @@ import styles from "./YearWritingContainer.module.css";
 export default function YearWritingContainer({
 	year,
 	works,
+	hasMarginTop,
 }: {
 	year: number;
 	works: BlogDocument[];
+	hasMarginTop: boolean;
 }) {
 	return (
 		<section className={styles.root}>
-			<YearSectionTitle year={year} />
+			<YearSectionTitle year={year} hasMarginTop={hasMarginTop} />
 			<div className={styles.worksWrapper}>
 				<ul>
 					{[...works]

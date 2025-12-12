@@ -1,7 +1,6 @@
 // src/app/HomeClient.tsx
 "use client";
 
-import AppNavigation from "@/components/AppNavigation/AppNavigation";
 import YearWorkContainer from "@/components/YearWorkContainer";
 import { useFilterStore } from "@/store/filterStore";
 import { FilterState } from "@/types";
@@ -10,9 +9,9 @@ import {
 	getSortedYears,
 	groupWorksByYear,
 } from "@/utils/filterWorks";
-import { PrismicRichText } from "@prismicio/react";
 import { useEffect, useRef } from "react";
 import { HomeDocument, WorkDocument } from "../../prismicio-types";
+import PageLayout from "./PageLayout";
 
 interface HomeClientProps {
 	initialWorks: WorkDocument[];
@@ -26,6 +25,7 @@ export default function HomeClient({
 	initialFilters,
 }: HomeClientProps) {
 	const { filters, setFilters } = useFilterStore();
+
 	const isInitialized = useRef(false);
 
 	// Initialize store from server-provided filters ONCE
@@ -53,28 +53,21 @@ export default function HomeClient({
 	}, []);
 
 	return (
-		<div>
-			<AppNavigation works={filteredWorks} />
-
-			<div className="container">
-				<PrismicRichText field={homePage.data.intro_text} />
-			</div>
-
-			<div className="container">
-				{filteredWorks.length === 0 ? (
-					<p>No projects match your filters.</p>
-				) : (
-					<>
-						{sortedYears.map((year) => (
-							<YearWorkContainer
-								key={year}
-								year={Number(year)}
-								works={worksPerYears[year]}
-							/>
-						))}
-					</>
-				)}
-			</div>
-		</div>
+		<PageLayout>
+			{filteredWorks.length === 0 ? (
+				<p>No projects match your filters.</p>
+			) : (
+				<>
+					{sortedYears.map((year, i) => (
+						<YearWorkContainer
+							key={year}
+							year={Number(year)}
+							works={worksPerYears[year]}
+							hasMarginTop={i > 0}
+						/>
+					))}
+				</>
+			)}
+		</PageLayout>
 	);
 }

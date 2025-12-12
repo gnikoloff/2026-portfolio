@@ -3,6 +3,7 @@
 import YearSpeakingContainer from "@/components/YearSpeakingContainer";
 import { getSortedYears, groupSpeakingWorksByYear } from "@/utils/filterWorks";
 import { SpeakingDocument } from "../../prismicio-types";
+import PageLayout from "./PageLayout";
 
 export default function SpeakingClient({
 	speakingWorks,
@@ -13,14 +14,17 @@ export default function SpeakingClient({
 	const sortedYears = getSortedYears(worksPerYears, "desc");
 
 	return (
-		<div className="container">
-			{sortedYears.map((year) => (
-				<YearSpeakingContainer
-					key={year}
-					year={Number(year)}
-					works={worksPerYears[year]}
-				/>
-			))}
-		</div>
+		<PageLayout>
+			<div className="container">
+				{sortedYears.map((year, i) => (
+					<YearSpeakingContainer
+						key={year}
+						year={Number(year)}
+						works={worksPerYears[year]}
+						hasMarginTop={i > 0}
+					/>
+				))}
+			</div>
+		</PageLayout>
 	);
 }

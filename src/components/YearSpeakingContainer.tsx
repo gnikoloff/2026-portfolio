@@ -6,13 +6,15 @@ import styles from "./YearWorkContainer.module.css";
 export default function YearSpeakingContainer({
 	year,
 	works,
+	hasMarginTop,
 }: {
 	year: number;
 	works: SpeakingDocument[];
+	hasMarginTop: boolean;
 }) {
 	return (
 		<section className={styles.root}>
-			<YearSectionTitle year={year} />
+			<YearSectionTitle year={year} hasMarginTop={hasMarginTop} />
 			<div className={styles.worksWrapper}>
 				{works.map((work) => (
 					<WorkPreview
