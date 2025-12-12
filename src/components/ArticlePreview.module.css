@@ -1,0 +1,30 @@
+.root {
+	display: block;
+}
+
+.title {
+	font-size: 1.6rem;
+	line-height: 2.1rem;
+}
+
+.date {
+	margin-right: 1rem;
+}
+
+.footer {
+	margin-top: 0.4rem;
+	font-size: 1rem;
+	display: flex;
+	align-items: center;
+	color: var(--foreground-secondary);
+}
+
+.externalIcon {
+	fill: var(--foreground-secondary);
+	margin-right: 0.25rem;
+}
+
+.externalResource {
+	display: flex;
+	align-items: center;
+}

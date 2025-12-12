@@ -68,7 +68,7 @@ export default function HomeClient({
 						{sortedYears.map((year) => (
 							<YearWorkContainer
 								key={year}
-								year={year}
+								year={Number(year)}
 								works={worksPerYears[year]}
 							/>
 						))}

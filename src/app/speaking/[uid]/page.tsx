@@ -14,7 +14,6 @@ export default async function SpeakingWork({
 	const { uid } = await params;
 	const client = createClient();
 	const speakingWorks = await client.getAllByType(SPEAKING_CUSTOM_TYPE);
-	console.log({ speakingWorks });
 
 	const page = speakingWorks.find(({ uid: pageUid }) => pageUid === uid)!;
 	const html = asHTML(page.data.project_body, { serializer: htmlSerializer });

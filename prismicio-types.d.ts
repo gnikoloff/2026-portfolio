@@ -124,6 +124,17 @@ export type AboutDocument<Lang extends string = string> =
  */
 interface BlogDocumentData {
   /**
+   * External Resource Name field in *Blog*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: blog.external_resource_name
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  external_resource_name: prismic.KeyTextField;
+
+  /**
    * External Link field in *Blog*
    *
    * - **Field Type**: Link
@@ -141,17 +152,6 @@ interface BlogDocumentData {
   >;
 
   /**
-   * External Resource Name field in *Blog*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: blog.external_resource_name
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
-   */
-  external_resource_name: prismic.RichTextField;
-
-  /**
    * SEO Description field in *Blog*
    *
    * - **Field Type**: Text
@@ -165,13 +165,24 @@ interface BlogDocumentData {
   /**
    * title field in *Blog*
    *
-   * - **Field Type**: Rich Text
+   * - **Field Type**: Text
    * - **Placeholder**: *None*
    * - **API ID Path**: blog.title
    * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   * - **Documentation**: https://prismic.io/docs/fields/text
    */
-  title: prismic.RichTextField;
+  title: prismic.KeyTextField;
+
+  /**
+   * year field in *Blog*
+   *
+   * - **Field Type**: Number
+   * - **Placeholder**: *None*
+   * - **API ID Path**: blog.year
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/number
+   */
+  year: prismic.NumberField;
 
   /**
    * body field in *Blog*

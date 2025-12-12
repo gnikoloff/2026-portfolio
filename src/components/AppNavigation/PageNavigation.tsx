@@ -1,4 +1,7 @@
-import { SPEAKING_URL_SEGMENT_NAME } from "@/constants";
+import {
+	SPEAKING_URL_SEGMENT_NAME,
+	WRITING_URL_SEGMENT_NAME,
+} from "@/constants";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import styles from "./PageNavigation.module.css";
@@ -15,7 +18,7 @@ export default function PageNavigation({}: {}) {
 					<Link href={`/${SPEAKING_URL_SEGMENT_NAME}`}>Speaking</Link>
 				</li>
 				<li>
-					<Link href={"/"}>Writing</Link>
+					<Link href={`/${WRITING_URL_SEGMENT_NAME}`}>Writing</Link>
 				</li>
 				<li>
 					<Link href={"/"}>About</Link>

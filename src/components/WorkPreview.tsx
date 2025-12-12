@@ -48,7 +48,7 @@ export default function WorkPreview({
 				<h3 className={styles.title}>{title}</h3>
 				{type ? (
 					<h5
-						className={`${styles.subtitle} ${technologies.length ? "" : styles.noBottomMargin}`}
+						className={`${styles.subtitle} ${technologies.length ? "" : styles.noBottomMargin} fw500`}
 					>
 						{type}
 					</h5>

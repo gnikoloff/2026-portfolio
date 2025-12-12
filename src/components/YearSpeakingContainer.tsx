@@ -1,17 +1,18 @@
 import { SpeakingDocument } from "../../prismicio-types";
 import WorkPreview from "./WorkPreview";
+import { YearSectionTitle } from "./YearSectionTitle";
 import styles from "./YearWorkContainer.module.css";
 
 export default function YearSpeakingContainer({
 	year,
 	works,
 }: {
-	year: string;
+	year: number;
 	works: SpeakingDocument[];
 }) {
 	return (
 		<section className={styles.root}>
-			<h2 className={styles.yearTitle}>{year}</h2>
+			<YearSectionTitle year={year} />
 			<div className={styles.worksWrapper}>
 				{works.map((work) => (
 					<WorkPreview

@@ -1,6 +1,6 @@
 import { SPEAKING_CUSTOM_TYPE } from "@/constants";
 import { createClient } from "@/prismicio";
-import SpeakingClient from "../SpeakingClient";
+import SpeakingClient from "../../components/SpeakingClient";
 
 export default async function About() {
 	const client = createClient();

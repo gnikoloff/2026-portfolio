@@ -13,16 +13,14 @@ export default function SpeakingClient({
 	const sortedYears = getSortedYears(worksPerYears, "desc");
 
 	return (
-		<div>
-			<div className="container">
-				{sortedYears.map((year) => (
-					<YearSpeakingContainer
-						key={year}
-						year={year}
-						works={worksPerYears[year]}
-					/>
-				))}
-			</div>
+		<div className="container">
+			{sortedYears.map((year) => (
+				<YearSpeakingContainer
+					key={year}
+					year={Number(year)}
+					works={worksPerYears[year]}
+				/>
+			))}
 		</div>
 	);
 }

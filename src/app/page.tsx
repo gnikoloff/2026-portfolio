@@ -4,7 +4,7 @@ import { createClient } from "@/prismicio";
 import { FilterState, Tag } from "@/types/filters";
 import { type Metadata } from "next";
 import { notFound } from "next/navigation";
-import HomeClient from "./HomeClient";
+import HomeClient from "../components/HomeClient";
 
 export default async function Home({
 	searchParams,

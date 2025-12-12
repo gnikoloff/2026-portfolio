@@ -1,6 +1,10 @@
 // src/utils/filterWorks.ts
 
-import { SpeakingDocument, WorkDocument } from "../../prismicio-types";
+import {
+	BlogDocument,
+	SpeakingDocument,
+	WorkDocument,
+} from "../../prismicio-types";
 import { FilterState, TECH_TAGS, TechTag } from "../types";
 
 /**
@@ -154,6 +158,21 @@ export function groupSpeakingWorksByYear(
 	);
 }
 
+export function groupWritingWorksByYear(
+	works: BlogDocument[],
+): Record<string, BlogDocument[]> {
+	return works.reduce(
+		(acc, work) => {
+			const year = work.data.year?.toString() ?? "Unknown";
+			if (!acc[year]) {
+				acc[year] = [];
+			}
+			acc[year].push(work);
+			return acc;
+		},
+		{} as Record<string, BlogDocument[]>,
+	);
+}
 /**
  * Get sorted years from grouped works
  */

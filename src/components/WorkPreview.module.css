@@ -23,7 +23,6 @@
 }
 
 .subtitle {
-	font-weight: 500;
 	color: var(--foreground-secondary);
 	margin: 0.5rem 0 0.5rem;
 }

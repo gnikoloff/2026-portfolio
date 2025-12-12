@@ -1,11 +1,22 @@
 {
   "id": "blog",
+  "label": "Blog",
+  "repeatable": true,
+  "status": true,
+  "format": "custom",
   "json": {
     "Main": {
       "uid": {
         "type": "UID",
         "config": {
           "label": "slug"
+        }
+      },
+      "external_resource_name": {
+        "type": "Text",
+        "config": {
+          "label": "External Resource Name",
+          "placeholder": ""
         }
       },
       "external_link": {
@@ -16,13 +27,6 @@
           "select": null
         }
       },
-      "external_resource_name": {
-        "type": "StructuredText",
-        "config": {
-          "single": "heading5",
-          "label": "External Resource Name"
-        }
-      },
       "seo_description": {
         "type": "Text",
         "config": {
@@ -30,10 +34,17 @@
         }
       },
       "title": {
-        "type": "StructuredText",
+        "type": "Text",
         "config": {
-          "single": "heading1,heading2,heading3,heading4,heading5,heading6",
-          "label": "title"
+          "label": "title",
+          "placeholder": ""
+        }
+      },
+      "year": {
+        "type": "Number",
+        "config": {
+          "label": "year",
+          "placeholder": ""
         }
       },
       "body": {
@@ -44,9 +55,5 @@
         }
       }
     }
-  },
-  "label": "Blog",
-  "repeatable": true,
-  "status": true,
-  "format": "custom"
+  }
 }

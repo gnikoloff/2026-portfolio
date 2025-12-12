@@ -57,6 +57,10 @@ code {
 	margin: 0 auto;
 }
 
+.fw500 {
+	font-weight: 500;
+}
+
 img[alt^="Download"] {
 	width: 300px !important;
 }
