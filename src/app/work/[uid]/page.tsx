@@ -1,5 +1,6 @@
 import AppNavigation from "@/components/AppNavigation/AppNavigation";
-import WorkTagsList from "@/components/WorkTagsList";
+import { SinglePageHeader } from "@/components/SinglePageHeader";
+import { WORKS_CUSTOM_TYPE } from "@/constants";
 import { createClient } from "@/prismicio";
 import { htmlSerializer } from "@/utils/htmlSerialiser";
 import { getPrevNextWorkLinks, getPrevNextWorks } from "@/utils/works";
@@ -12,7 +13,7 @@ type Params = { uid: string };
 export default async function Work({ params }: { params: Promise<Params> }) {
 	const { uid } = await params;
 	const client = createClient();
-	const works = await client.getAllByType("work");
+	const works = await client.getAllByType(WORKS_CUSTOM_TYPE);
 	const page = works.find(({ uid: pageUid }) => pageUid === uid)!;
 	const html = asHTML(page.data.project_body, { serializer: htmlSerializer });
 	const [prevWork, nextWork] = getPrevNextWorks(works, uid);
@@ -21,20 +22,12 @@ export default async function Work({ params }: { params: Promise<Params> }) {
 		<>
 			<AppNavigation works={works} />
 			<div className="tight-container">
-				<header className={styles.header}>
-					<div className={styles.titleWrapper}>
-						<h1 className={styles.pageTitle}>{page.data.project_title}</h1>
-						<h6>{page.data.project_year}</h6>
-					</div>
-					<div className={styles.secondaryWrapper}>
-						<h3>{page.data.project_type}</h3>
-						<WorkTagsList
-							tags={page.data.project_technologies_list.map(
-								({ project_tech }) => project_tech as string,
-							)}
-						/>
-					</div>
-				</header>
+				<SinglePageHeader
+					title={page.data.project_title}
+					type={page.data.project_type}
+					year={page.data.project_year}
+					technologies={page.data.project_technologies_list}
+				/>
 				<main className={`${styles.main} typeset`}>
 					<div dangerouslySetInnerHTML={{ __html: html }}></div>
 				</main>

@@ -1,4 +1,5 @@
 // src/app/page.tsx
+import { WORKS_CUSTOM_TYPE } from "@/constants";
 import { createClient } from "@/prismicio";
 import { FilterState, Tag } from "@/types/filters";
 import { type Metadata } from "next";
@@ -11,10 +12,9 @@ export default async function Home({
 	searchParams: { year?: string; language?: string; technology?: string };
 }) {
 	const params = await searchParams;
-	console.log({ params });
 	const client = createClient();
 	const page = await client.getSingle("home").catch(() => notFound());
-	const works = await client.getAllByType("work");
+	const works = await client.getAllByType(WORKS_CUSTOM_TYPE);
 
 	// Parse search params into initial filter state
 	const initialFilters: FilterState = {

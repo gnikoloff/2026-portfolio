@@ -39,6 +39,12 @@ a {
 	text-decoration: none;
 }
 
+code {
+	background-color: var(--background-secondary);
+	color: var(--foreground);
+	border-radius: 4px;
+}
+
 .container {
 	width: 100%;
 	max-width: 1600px;
@@ -54,7 +60,8 @@ a {
 img[alt^="Download"] {
 	width: 300px !important;
 }
-[data-oembed] {
+[data-oembed],
+.cp_embed_wrapper {
 	position: relative;
 	width: 100%;
 	height: 0;
@@ -63,7 +70,8 @@ img[alt^="Download"] {
 	margin-top: 2rem;
 }
 
-[data-oembed] iframe {
+[data-oembed] iframe,
+.cp_embed_wrapper iframe {
 	position: absolute;
 	top: 0;
 	left: 0;

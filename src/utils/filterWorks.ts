@@ -1,6 +1,6 @@
 // src/utils/filterWorks.ts
 
-import { WorkDocument } from "../../prismicio-types";
+import { SpeakingDocument, WorkDocument } from "../../prismicio-types";
 import { FilterState, TECH_TAGS, TechTag } from "../types";
 
 /**
@@ -138,11 +138,27 @@ export function groupWorksByYear(
 	);
 }
 
+export function groupSpeakingWorksByYear(
+	works: SpeakingDocument[],
+): Record<string, SpeakingDocument[]> {
+	return works.reduce(
+		(acc, work) => {
+			const year = work.data.project_year?.toString() ?? "Unknown";
+			if (!acc[year]) {
+				acc[year] = [];
+			}
+			acc[year].push(work);
+			return acc;
+		},
+		{} as Record<string, SpeakingDocument[]>,
+	);
+}
+
 /**
  * Get sorted years from grouped works
  */
-export function getSortedYears(
-	groupedWorks: Record<string, WorkDocument[]>,
+export function getSortedYears<T>(
+	groupedWorks: Record<string, T[]>,
 	order: "asc" | "desc" = "desc",
 ): string[] {
 	const years = Object.keys(groupedWorks);

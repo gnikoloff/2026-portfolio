@@ -1,31 +1,5 @@
-.titleWrapper {
-	display: flex;
-	justify-content: space-between;
-	align-items: baseline;
-}
-
-.secondaryWrapper {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	margin: 2rem 0;
-	border-top: 1px solid var(--subtle-border-color);
-	border-bottom: 1px solid var(--subtle-border-color);
-	padding: 1rem 0;
-}
-
-.pageTitle {
-	font-size: 2.4rem;
-}
-
 .main img {
 	width: 100%;
-}
-
-.main code {
-	background-color: var(--background-secondary);
-	color: var(--foreground);
-	border-radius: 4px;
 }
 
 .footer {

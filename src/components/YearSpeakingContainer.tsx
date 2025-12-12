@@ -1,13 +1,13 @@
-import { WorkDocument } from "../../prismicio-types";
+import { SpeakingDocument } from "../../prismicio-types";
 import WorkPreview from "./WorkPreview";
 import styles from "./YearWorkContainer.module.css";
 
-export default function YearWorkContainer({
+export default function YearSpeakingContainer({
 	year,
 	works,
 }: {
 	year: string;
-	works: WorkDocument[];
+	works: SpeakingDocument[];
 }) {
 	return (
 		<section className={styles.root}>
@@ -15,12 +15,11 @@ export default function YearWorkContainer({
 			<div className={styles.worksWrapper}>
 				{works.map((work) => (
 					<WorkPreview
-						isHomepage={true}
+						isHomepage={false}
 						key={work.uid}
 						uid={work.uid}
 						title={work.data.project_title}
 						type={work.data.project_type}
-						technologies={[...work.data.project_technologies_list]}
 						previewImageURL={work.data.project_image.url}
 					/>
 				))}

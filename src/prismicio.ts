@@ -5,6 +5,7 @@ import {
 } from "@prismicio/client";
 import { enableAutoPreviews } from "@prismicio/next";
 import sm from "../slicemachine.config.json";
+import { SPEAKING_URL_SEGMENT_NAME, WORKS_URL_SEGMENT_NAME } from "./constants";
 
 /**
  * The project's Prismic repository name.
@@ -21,7 +22,12 @@ export const repositoryName =
 const routes: Route[] = [
 	// Examples:
 	{ type: "home", path: "/" },
-	{ type: "work", path: "/work/:uid" },
+	{ type: WORKS_URL_SEGMENT_NAME, path: `/${WORKS_URL_SEGMENT_NAME}/:uid` },
+	{ type: SPEAKING_URL_SEGMENT_NAME, path: `/${SPEAKING_URL_SEGMENT_NAME}` },
+	{
+		type: SPEAKING_URL_SEGMENT_NAME,
+		path: `/${SPEAKING_URL_SEGMENT_NAME}/:uid`,
+	},
 ];
 
 /**

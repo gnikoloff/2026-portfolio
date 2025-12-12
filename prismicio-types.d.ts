@@ -437,6 +437,39 @@ interface SpeakingDocumentData {
   seo_description: prismic.KeyTextField;
 
   /**
+   * Project Title field in *speaking*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: speaking.project_title
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  project_title: prismic.KeyTextField;
+
+  /**
+   * Project Type field in *speaking*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **API ID Path**: speaking.project_type
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  project_type: prismic.SelectField<"Video Course" | "Presentation">;
+
+  /**
+   * Project Year field in *speaking*
+   *
+   * - **Field Type**: Number
+   * - **Placeholder**: *None*
+   * - **API ID Path**: speaking.project_year
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/number
+   */
+  project_year: prismic.NumberField;
+
+  /**
    * project link field in *speaking*
    *
    * - **Field Type**: Link
@@ -474,39 +507,6 @@ interface SpeakingDocumentData {
    * - **Documentation**: https://prismic.io/docs/fields/image
    */
   project_image: prismic.ImageField<never>;
-
-  /**
-   * Project Title field in *speaking*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: speaking.project_title
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
-   */
-  project_title: prismic.RichTextField;
-
-  /**
-   * Project Type field in *speaking*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: speaking.project_type
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
-   */
-  project_type: prismic.RichTextField;
-
-  /**
-   * Project Year field in *speaking*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: speaking.project_year
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
-   */
-  project_year: prismic.RichTextField;
 
   /**
    * Project Body field in *speaking*

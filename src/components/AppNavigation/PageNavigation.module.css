@@ -1,0 +1,12 @@
+.listRoot {
+	list-style: none;
+}
+
+.listRoot li {
+	display: inline-block;
+	margin-right: 1rem;
+}
+
+.listRoot li:last-of-type {
+	margin-right: 0;
+}

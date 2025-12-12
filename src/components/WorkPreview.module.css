@@ -27,3 +27,7 @@
 	color: var(--foreground-secondary);
 	margin: 0.5rem 0 0.5rem;
 }
+
+.subtitle.noBottomMargin {
+	margin-bottom: 0;
+}

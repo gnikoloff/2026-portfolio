@@ -1,11 +1,37 @@
 {
   "id": "speaking",
+  "label": "speaking",
+  "repeatable": true,
+  "status": true,
+  "format": "custom",
   "json": {
     "Main": {
       "seo_description": {
         "type": "Text",
         "config": {
           "label": "SEO description"
+        }
+      },
+      "project_title": {
+        "type": "Text",
+        "config": {
+          "label": "Project Title",
+          "placeholder": ""
+        }
+      },
+      "project_type": {
+        "type": "Select",
+        "config": {
+          "label": "Project Type",
+          "placeholder": "",
+          "options": ["Video Course", "Presentation"]
+        }
+      },
+      "project_year": {
+        "type": "Number",
+        "config": {
+          "label": "Project Year",
+          "placeholder": ""
         }
       },
       "project_link": {
@@ -30,27 +56,6 @@
           "label": "Project Image"
         }
       },
-      "project_title": {
-        "type": "StructuredText",
-        "config": {
-          "single": "heading1",
-          "label": "Project Title"
-        }
-      },
-      "project_type": {
-        "type": "StructuredText",
-        "config": {
-          "single": "heading4",
-          "label": "Project Type"
-        }
-      },
-      "project_year": {
-        "type": "StructuredText",
-        "config": {
-          "single": "heading5",
-          "label": "Project Year"
-        }
-      },
       "project_body": {
         "type": "StructuredText",
         "config": {
@@ -65,9 +70,5 @@
         }
       }
     }
-  },
-  "label": "speaking",
-  "repeatable": true,
-  "status": true,
-  "format": "custom"
+  }
 }
