@@ -6,6 +6,8 @@ import {
 import { enableAutoPreviews } from "@prismicio/next";
 import sm from "../slicemachine.config.json";
 import {
+	ABOUT_CUSTOM_TYPE,
+	ABOUT_URL_SEGMENT_NAME,
 	SPEAKING_CUSTOM_TYPE,
 	SPEAKING_URL_SEGMENT_NAME,
 	WORKS_CUSTOM_TYPE,
@@ -36,6 +38,7 @@ const routes: Route[] = [
 		path: `/${SPEAKING_URL_SEGMENT_NAME}/:uid`,
 	},
 	{ type: WRITING_CUSTOM_TYPE, path: `/${WRITING_URL_SEGMENT_NAME}` },
+	{ type: ABOUT_CUSTOM_TYPE, path: `/${ABOUT_URL_SEGMENT_NAME}` },
 ];
 
 /**

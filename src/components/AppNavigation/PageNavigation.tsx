@@ -1,4 +1,6 @@
 import {
+	ABOUT_URL_SEGMENT_NAME,
+	CONTACT_URL_SEGMENT_NAME,
 	SPEAKING_URL_SEGMENT_NAME,
 	WRITING_URL_SEGMENT_NAME,
 } from "@/constants";
@@ -19,10 +21,10 @@ export default function PageNavigation({}: {}) {
 					<Link href={`/${WRITING_URL_SEGMENT_NAME}`}>Writing</Link>
 				</li>
 				<li>
-					<Link href={"/"}>About</Link>
+					<Link href={`/${ABOUT_URL_SEGMENT_NAME}`}>About</Link>
 				</li>
 				<li>
-					<Link href={"/"}>Contact</Link>
+					<Link href={`/${CONTACT_URL_SEGMENT_NAME}`}>Contact</Link>
 				</li>
 			</ul>
 		</nav>

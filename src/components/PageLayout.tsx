@@ -32,10 +32,9 @@ function PageLayout({
 		const headerBotEdge = headerBBox.bottom;
 		const mainTopEdge = bodyBBox.top;
 		const mid = (headerBotEdge + mainTopEdge) * 0.5 + pageYOffset;
-		console.log(mid);
 
 		setInitNavigationY(mid);
-		setInitNavigationX(headerBBox.left);
+		setInitNavigationX(bodyBBox.left);
 		setNavigationInited(true);
 	}, []);
 

@@ -3,6 +3,8 @@
 	--foreground: #171717;
 
 	--subtle-border-color: rgba(0, 0, 0, 0.12);
+	--error-color: red;
+	--success-color: green;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -43,6 +45,10 @@ code {
 	background-color: var(--background-secondary) !important;
 	color: var(--foreground) !important;
 	border-radius: 4px;
+}
+
+fieldset {
+	border: none;
 }
 
 #app-header {

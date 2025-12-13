@@ -96,15 +96,15 @@ interface AboutDocumentData {
   experience: prismic.RichTextField;
 
   /**
-   * Mugshot field in *About*
+   * Work Experience field in *About*
    *
-   * - **Field Type**: Image
+   * - **Field Type**: Rich Text
    * - **Placeholder**: *None*
-   * - **API ID Path**: about.mugshot
+   * - **API ID Path**: about.work_experience
    * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/fields/image
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
    */
-  mugshot: prismic.ImageField<never>;
+  work_experience: prismic.RichTextField;
 }
 
 /**

@@ -1,5 +1,9 @@
 {
   "id": "about",
+  "label": "About",
+  "repeatable": false,
+  "status": true,
+  "format": "custom",
   "json": {
     "Main": {
       "text": {
@@ -16,18 +20,15 @@
           "label": "Experience"
         }
       },
-      "mugshot": {
-        "type": "Image",
+      "work_experience": {
+        "type": "StructuredText",
         "config": {
-          "constraint": {},
-          "thumbnails": [],
-          "label": "Mugshot"
+          "label": "Work Experience",
+          "placeholder": "",
+          "allowTargetBlank": true,
+          "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl"
         }
       }
     }
-  },
-  "label": "About",
-  "repeatable": false,
-  "status": true,
-  "format": "custom"
+  }
 }
