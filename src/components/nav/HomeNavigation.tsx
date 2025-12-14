@@ -1,12 +1,15 @@
-import { useFilterStore } from "@/store/filterStore";
+import { useHomeFilterStore } from "@/store/filterStore";
 import { getAvailableTechnologiesGrouped } from "@/utils/filterWorks";
 import { useQueryState } from "nuqs";
 import { getLanguages, getYearRange, Tag } from "../../types";
 import styles from "./HomeNavigation.module.css";
+import LanguageFilterSelector from "./LanguageFilterSelector";
+import TechnologyFilterSelector from "./TechnologyFilterSelector";
+import YearFilterSelector from "./YearFilterSelector";
 
 export default function HomeNavigation() {
 	const { filters, setYearRange, setLanguages, setTechnologies, clearFilters } =
-		useFilterStore();
+		useHomeFilterStore();
 	const languages = getLanguages();
 	const years = getYearRange();
 	const technologiesGrouped = getAvailableTechnologiesGrouped(filters);
@@ -53,62 +56,29 @@ export default function HomeNavigation() {
 		<div className={styles.root}>
 			{/* Year Filter */}
 			<div className={styles.filterGroup}>
-				<label htmlFor="year-select">Year</label>
-				<select
-					id="year-select"
-					value={filters.yearRange[0] || ""}
-					onChange={handleYearChange}
-					className={styles.select}
-				>
-					<option value="">All Years</option>
-					{[...years]
-						.sort((a, b) => b - a)
-						.map((year) => (
-							<option key={year} value={year}>
-								{year}
-							</option>
-						))}
-				</select>
+				<YearFilterSelector
+					years={years}
+					filters={filters}
+					handleYearChange={handleYearChange}
+				/>
 			</div>
 
 			{/* Language Filter */}
 			<div className={styles.filterGroup}>
-				<label htmlFor="language-select">Language</label>
-				<select
-					id="language-select"
-					value={filters.languages[0] || ""}
+				<LanguageFilterSelector
+					languages={languages}
+					filters={filters}
 					onChange={handleLanguageChange}
-					className={styles.select}
-				>
-					<option value="">All Languages</option>
-					{languages.map((lang) => (
-						<option key={lang.name} value={lang.name}>
-							{lang.name}
-						</option>
-					))}
-				</select>
+				/>
 			</div>
 
 			{/* Technology Filter */}
 			<div className={styles.filterGroup}>
-				<label htmlFor="tech-select">Technology</label>
-				<select
-					id="tech-select"
-					value={filters.technologies[0] || ""}
+				<TechnologyFilterSelector
+					technologiesGrouped={technologiesGrouped}
+					filters={filters}
 					onChange={handleTechnologyChange}
-					className={styles.select}
-				>
-					<option value="">All Technologies</option>
-					{Object.entries(technologiesGrouped).map(([category, techs]) => (
-						<optgroup key={category} label={category}>
-							{techs.map((tech) => (
-								<option key={tech.name} value={tech.name}>
-									{tech.name}
-								</option>
-							))}
-						</optgroup>
-					))}
-				</select>
+				/>
 			</div>
 
 			{/* Clear Filters Button */}

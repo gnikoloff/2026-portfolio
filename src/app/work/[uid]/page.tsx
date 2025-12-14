@@ -1,3 +1,4 @@
+import ArticleFooter from "@/components/ArticleFooter";
 import PageLayout from "@/components/PageLayout";
 import { SinglePageHeader } from "@/components/SinglePageHeader";
 import { WORKS_CUSTOM_TYPE } from "@/constants";
@@ -5,7 +6,6 @@ import { createClient } from "@/prismicio";
 import { htmlSerializer } from "@/utils/htmlSerialiser";
 import { getPrevNextWorkLinks, getPrevNextWorks } from "@/utils/works";
 import { asHTML } from "@prismicio/client";
-import Link from "next/link";
 import styles from "./page.module.css";
 
 type Params = { uid: string };
@@ -30,23 +30,12 @@ export default async function Work({ params }: { params: Promise<Params> }) {
 				<main className={`${styles.main} typeset`}>
 					<div dangerouslySetInnerHTML={{ __html: html }}></div>
 				</main>
-				<footer className={styles.footer}>
-					<Link
-						href={prevWorkLink}
-						className={`${styles.footerWorkLink} ${styles.footerWorkLinkPrev}`}
-					>
-						<i>←</i>
-						{prevWork.data.project_title}
-					</Link>
-
-					<Link
-						href={nextWorkLink}
-						className={`${styles.footerWorkLink} ${styles.footerWorkLinkNext}`}
-					>
-						{nextWork.data.project_title}
-						<i>→</i>
-					</Link>
-				</footer>
+				<ArticleFooter
+					prevWorkLink={prevWorkLink}
+					prevWorkTitle={prevWork.data.project_title}
+					nextWorkLink={nextWorkLink}
+					nextWorkTitle={nextWork.data.project_title}
+				/>
 			</div>
 		</PageLayout>
 	);

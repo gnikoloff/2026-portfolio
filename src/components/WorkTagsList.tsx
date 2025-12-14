@@ -1,13 +1,13 @@
 "use client";
 
-import { useFilterStore } from "@/store/filterStore";
+import { useHomeFilterStore } from "@/store/filterStore";
 import { Tag } from "@/types";
 import { usePathname } from "next/navigation";
 import styles from "./WorkTagsList.module.css";
 
 export default function WorkTagsList({ tags }: { tags: string[] }) {
 	const pathname = usePathname();
-	const filters = useFilterStore((state) => state.filters);
+	const filters = useHomeFilterStore((state) => state.filters);
 	return (
 		<ul className={styles.root}>
 			{tags.map((tech) => {

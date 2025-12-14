@@ -10,7 +10,7 @@ import styles from "./PageNavigation.module.css";
 export default function PageNavigation({}: {}) {
 	return (
 		<nav className={styles.root}>
-			<ul className={styles.listRoot}>
+			<ul className={"navList"}>
 				<li>
 					<Link href={"/"}>Works</Link>
 				</li>

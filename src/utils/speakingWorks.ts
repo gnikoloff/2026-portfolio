@@ -1,10 +1,10 @@
-import { WORKS_URL_SEGMENT_NAME } from "@/constants";
-import { WorkDocument } from "../../prismicio-types";
+import { SPEAKING_URL_SEGMENT_NAME } from "@/constants";
+import { SpeakingDocument } from "../../prismicio-types";
 
-export function getPrevNextWorks(
-	works: WorkDocument[],
+export function getPrevNextSpeakingWorks(
+	works: SpeakingDocument[],
 	currUid: string,
-): [WorkDocument, WorkDocument] {
+): [SpeakingDocument, SpeakingDocument] {
 	const sortedWorks = [...works].sort(
 		(
 			{ data: { project_year: projectYearA } },
@@ -21,12 +21,12 @@ export function getPrevNextWorks(
 	return [prevWork, nextWork];
 }
 
-export function getPrevNextWorkLinks(
-	works: WorkDocument[],
+export function getPrevNextSpeakingWorkLinks(
+	works: SpeakingDocument[],
 	currUid: string,
 ): [string, string] {
-	const [prevWork, nextWork] = getPrevNextWorks(works, currUid);
-	const prevWorkLink = `/${WORKS_URL_SEGMENT_NAME}/${prevWork.uid}`;
-	const nextWorkLink = `/${WORKS_URL_SEGMENT_NAME}/${nextWork.uid}`;
+	const [prevWork, nextWork] = getPrevNextSpeakingWorks(works, currUid);
+	const prevWorkLink = `/${SPEAKING_URL_SEGMENT_NAME}/${prevWork.uid}`;
+	const nextWorkLink = `/${SPEAKING_URL_SEGMENT_NAME}/${nextWork.uid}`;
 	return [prevWorkLink, nextWorkLink];
 }

@@ -6,11 +6,6 @@
 	pointer-events: none;
 }
 
-.root.dragging .draggableArea {
-	background-color: rgba(0, 0, 255, 0.4);
-	pointer-events: auto;
-}
-
 .navContainer {
 	pointer-events: auto;
 	display: flex;
@@ -24,7 +19,7 @@
 
 .navWrapper {
 	padding: 2rem;
-	background-color: #222;
+	/* background-color: #222; */
 }
 
 .draggable {
@@ -36,4 +31,9 @@
 
 .root.dragging .draggable {
 	pointer-events: none;
+}
+
+.subNavWrapper {
+	background-color: #222;
+	padding: 0.6rem 1rem;
 }

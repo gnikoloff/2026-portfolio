@@ -1,8 +1,13 @@
+import ArticleFooter from "@/components/ArticleFooter";
 import PageLayout from "@/components/PageLayout";
 import { SinglePageHeader } from "@/components/SinglePageHeader";
 import { SPEAKING_CUSTOM_TYPE } from "@/constants";
 import { createClient } from "@/prismicio";
 import { htmlSerializer } from "@/utils/htmlSerialiser";
+import {
+	getPrevNextSpeakingWorkLinks,
+	getPrevNextSpeakingWorks,
+} from "@/utils/speakingWorks";
 import { asHTML } from "@prismicio/client";
 import styles from "./page.module.css";
 
@@ -19,6 +24,11 @@ export default async function SpeakingWork({
 
 	const page = speakingWorks.find(({ uid: pageUid }) => pageUid === uid)!;
 	const html = asHTML(page.data.project_body, { serializer: htmlSerializer });
+	const [prevWork, nextWork] = getPrevNextSpeakingWorks(speakingWorks, uid);
+	const [prevWorkLink, nextWorkLink] = getPrevNextSpeakingWorkLinks(
+		speakingWorks,
+		uid,
+	);
 	return (
 		<PageLayout>
 			<div className="tight-container">
@@ -30,6 +40,12 @@ export default async function SpeakingWork({
 				<main className={`${styles.main} typeset`}>
 					<div dangerouslySetInnerHTML={{ __html: html }}></div>
 				</main>
+				<ArticleFooter
+					prevWorkLink={prevWorkLink}
+					prevWorkTitle={prevWork.data.project_title}
+					nextWorkLink={nextWorkLink}
+					nextWorkTitle={nextWork.data.project_title}
+				/>
 			</div>
 		</PageLayout>
 	);

@@ -1,3 +1,5 @@
+export const HOME_CUSTOM_TYPE = "home";
+
 export const WORKS_CUSTOM_TYPE = "work";
 export const WORKS_URL_SEGMENT_NAME = "work";
 
@@ -11,6 +13,12 @@ export const ABOUT_CUSTOM_TYPE = "about";
 export const ABOUT_URL_SEGMENT_NAME = "about";
 
 export const CONTACT_URL_SEGMENT_NAME = "contact";
+
+// about
+
+export const ABOUT_SECTION_INTRO = "about-intro";
+export const ABOUT_SECTION_SKILLS = "about-skills";
+export const ABOUT_SECTION_EXPERIENCE = "about-experience";
 
 // contact
 

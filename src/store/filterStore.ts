@@ -2,24 +2,23 @@
 import { FilterState, Tag } from "@/types";
 import { create } from "zustand";
 
-interface FilterStore {
+export interface FilterStore {
 	filters: FilterState;
 	setFilters: (filters: FilterState) => void;
 	setYearRange: (range: [number | null, number | null]) => void;
 	setLanguages: (languages: Tag[]) => void;
 	setTechnologies: (technologies: Tag[]) => void;
 	clearFilters: () => void;
-	initialize: (filters: FilterState) => void; // New method
 }
 
-const initialFilters: FilterState = {
+const getInitialFilters = (): FilterState => ({
 	yearRange: [null, null],
 	languages: [],
 	technologies: [],
-};
+});
 
-export const useFilterStore = create<FilterStore>((set) => ({
-	filters: initialFilters,
+export const useArticlesFilterStore = create<FilterStore>((set) => ({
+	filters: getInitialFilters(),
 
 	setFilters: (filters) => set({ filters }),
 
@@ -38,8 +37,28 @@ export const useFilterStore = create<FilterStore>((set) => ({
 			filters: { ...state.filters, technologies },
 		})),
 
-	clearFilters: () => set({ filters: initialFilters }),
+	clearFilters: () => set({ filters: getInitialFilters() }),
+}));
 
-	// Initialize store (can be called before hydration)
-	initialize: (filters) => set({ filters }),
+export const useHomeFilterStore = create<FilterStore>((set) => ({
+	filters: getInitialFilters(),
+
+	setFilters: (filters) => set({ filters }),
+
+	setYearRange: (range) =>
+		set((state) => ({
+			filters: { ...state.filters, yearRange: range },
+		})),
+
+	setLanguages: (languages) =>
+		set((state) => ({
+			filters: { ...state.filters, languages, technologies: [] },
+		})),
+
+	setTechnologies: (technologies) =>
+		set((state) => ({
+			filters: { ...state.filters, technologies },
+		})),
+
+	clearFilters: () => set({ filters: getInitialFilters() }),
 }));

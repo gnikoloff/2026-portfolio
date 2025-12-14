@@ -1,17 +1,50 @@
 "use client";
 
-import { WORKS_CUSTOM_TYPE } from "@/constants";
+import {
+	ABOUT_URL_SEGMENT_NAME,
+	CONTACT_URL_SEGMENT_NAME,
+	SPEAKING_URL_SEGMENT_NAME,
+	WORKS_URL_SEGMENT_NAME,
+	WRITING_URL_SEGMENT_NAME,
+} from "@/constants";
 import { useUIStore } from "@/store/uiStore";
 import { usePathname } from "next/navigation";
 import { MouseEvent, useEffect, useRef, useState } from "react";
-import { WorkDocument } from "../../../prismicio-types";
+import SingleWorkNavigation from "../nav/SingleWorkNavigation";
+import SocialList from "../SocialList";
+import AboutNavigation from "./AboutNavigation";
 import styles from "./AppNavigation.module.css";
+import BlogSingleNavigation from "./BlogSingleNavigation";
 import HomeNavigation from "./HomeNavigation";
 import PageNavigation from "./PageNavigation";
-import SingleWorkNavigation from "./SingleWorkNavigation";
+import SingleSpeakingWorkNavigation from "./SingleSpeakingWorkNavigation";
 
-export default function AppNavigation({ works }: { works: WorkDocument[] }) {
+type NavType =
+	| "home"
+	| "speaking"
+	| "speaking-single"
+	| "blog"
+	| "blog-single"
+	| "work"
+	| "about"
+	| "contact";
+
+const getNavType = (pathname: string): NavType => {
+	if (pathname === `/${WRITING_URL_SEGMENT_NAME}`) return "blog";
+	if (pathname.startsWith(`/${WRITING_URL_SEGMENT_NAME}/`))
+		return "blog-single";
+	if (pathname === `/${SPEAKING_URL_SEGMENT_NAME}`) return "speaking";
+	if (pathname.startsWith(`/${SPEAKING_URL_SEGMENT_NAME}`))
+		return "speaking-single";
+	if (pathname.includes(WORKS_URL_SEGMENT_NAME)) return "work";
+	if (pathname.includes(ABOUT_URL_SEGMENT_NAME)) return "about";
+	if (pathname.includes(CONTACT_URL_SEGMENT_NAME)) return "contact";
+	return "home";
+};
+
+export default function AppNavigation() {
 	const pathname = usePathname();
+
 	const {
 		navigationX,
 		navigationY,
@@ -147,6 +180,24 @@ export default function AppNavigation({ works }: { works: WorkDocument[] }) {
 		return () => window.removeEventListener("resize", handleResize);
 	}, [navigationX, navigationY]);
 
+	const renderNav = (navType: NavType) => {
+		switch (navType) {
+			case "home":
+				return <HomeNavigation />;
+			case "work":
+				return <SingleWorkNavigation />;
+			case "contact":
+				return <SocialList />;
+			case "about":
+				return <AboutNavigation />;
+			case "blog-single":
+				return <BlogSingleNavigation />;
+			case "speaking-single":
+				return <SingleSpeakingWorkNavigation />;
+		}
+		return <h4>Irem lopsum</h4>;
+	};
+
 	return (
 		<section
 			id="app-nav"
@@ -170,14 +221,14 @@ export default function AppNavigation({ works }: { works: WorkDocument[] }) {
 					}}
 				/>
 				<div className={styles.navWrapper}>
-					<PageNavigation />
-					{pathname === "/" ? (
-						<HomeNavigation />
-					) : pathname.includes(WORKS_CUSTOM_TYPE) ? (
-						<SingleWorkNavigation works={works} />
-					) : (
-						<h4>Irem lopsum</h4>
-					)}
+					<div className={`${styles.subNavWrapper} ${styles.mainNav}`}>
+						<PageNavigation />
+					</div>
+					<div className={styles.subNavWrapper}>
+						<div className={`${styles.subNav}`}>
+							{renderNav(getNavType(pathname))}
+						</div>
+					</div>
 				</div>
 			</div>
 		</section>

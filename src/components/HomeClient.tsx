@@ -2,7 +2,8 @@
 "use client";
 
 import YearWorkContainer from "@/components/YearWorkContainer";
-import { useFilterStore } from "@/store/filterStore";
+import { useAppData } from "@/contexts/DataContext";
+import { useHomeFilterStore } from "@/store/filterStore";
 import { FilterState } from "@/types";
 import {
 	filterWorks,
@@ -10,21 +11,14 @@ import {
 	groupWorksByYear,
 } from "@/utils/filterWorks";
 import { useEffect, useRef } from "react";
-import { HomeDocument, WorkDocument } from "../../prismicio-types";
 import PageLayout from "./PageLayout";
 
 interface HomeClientProps {
-	initialWorks: WorkDocument[];
-	homePage: HomeDocument;
 	initialFilters: FilterState;
 }
 
-export default function HomeClient({
-	initialWorks,
-	homePage,
-	initialFilters,
-}: HomeClientProps) {
-	const { filters, setFilters } = useFilterStore();
+export default function HomeClient({ initialFilters }: HomeClientProps) {
+	const { filters, setFilters } = useHomeFilterStore();
 
 	const isInitialized = useRef(false);
 
@@ -36,11 +30,13 @@ export default function HomeClient({
 		}
 	}, []);
 
+	const { works } = useAppData();
+
 	// Use initialFilters for first render, then switch to store
 	const activeFilters = isInitialized.current ? filters : initialFilters;
 
 	// Apply filters
-	const filteredWorks = filterWorks(initialWorks, activeFilters);
+	const filteredWorks = filterWorks(works, activeFilters);
 	const worksPerYears = groupWorksByYear(filteredWorks);
 	const sortedYears = getSortedYears(worksPerYears, "desc");
 

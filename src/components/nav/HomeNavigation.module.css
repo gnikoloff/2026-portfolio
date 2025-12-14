@@ -1,0 +1,13 @@
+.root {
+	display: flex;
+	align-items: center;
+}
+
+.filterGroup {
+	margin-right: 1rem;
+}
+
+.filterGroup:last-of-type {
+	margin-right: 0;
+}
+/*  */
