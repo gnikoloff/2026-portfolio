@@ -75,7 +75,7 @@ export default function ArticleClient({
 				}
 			});
 		};
-	}, [html]);
+	}, [title]);
 
 	return (
 		<PageLayout>

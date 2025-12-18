@@ -90,17 +90,19 @@ img[alt^="Download"] {
 	width: 300px !important;
 }
 [data-oembed],
-.cp_embed_wrapper {
+p:has(iframe[src*="codepen"]),
+p:has(iframe[src*="slideshare"]) {
 	position: relative;
-	width: 100%;
+	/* width: 100%; */
+	padding-top: 56%;
 	height: 0;
-	padding-top: 49.06%;
 	overflow: hidden;
 	margin-top: 2rem;
 }
 
 [data-oembed] iframe,
-.cp_embed_wrapper iframe {
+iframe[src*="codepen"],
+iframe[src*="slideshare"] {
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -152,4 +154,60 @@ h6 {
 
 .navList li:last-of-type::after {
 	content: none;
+}
+
+@media screen and (min-width: 960px) {
+	.block-img,
+	[data-oembed],
+	p:has(iframe[src*="codepen"]) {
+		margin-left: -100px !important;
+		margin-right: -100px !important;
+	}
+
+	.block-img a[href*="apple"] {
+		margin-left: 100px !important;
+		margin-right: 100px !important;
+	}
+}
+
+@media screen and (min-width: 1180px) {
+	.block-img,
+	[data-oembed],
+	p:has(iframe[src*="codepen"]),
+	p:has(iframe[src*="slideshare"]) {
+		margin-left: -150px !important;
+		margin-right: -150px !important;
+	}
+
+	[data-oembed],
+	iframe[src*="codepen"],
+	iframe[src*="slideshare"] {
+		padding-top: 66%;
+	}
+
+	.block-img a[href*="apple"] {
+		margin-left: 150px !important;
+		margin-right: 150px !important;
+	}
+}
+
+@media screen and (min-width: 1450px) {
+	.block-img,
+	[data-oembed],
+	p:has(iframe[src*="codepen"]),
+	p:has(iframe[src*="slideshare"]) {
+		margin-left: -300px !important;
+		margin-right: -300px !important;
+	}
+
+	[data-oembed],
+	iframe[src*="codepen"],
+	iframe[src*="slideshare"] {
+		padding-top: 80%;
+	}
+
+	.block-img a[href*="apple"] {
+		margin-left: 300px !important;
+		margin-right: 300px !important;
+	}
 }

@@ -15,8 +15,7 @@ async function About() {
 	const page = await client.getSingle(ABOUT_CUSTOM_TYPE);
 	return (
 		<PageLayout>
-			<div className="typeset tight-container">
-				<header>{/* <h1 style={{ marginTop: 0 }}>{title}</h1> */}</header>
+			<div className={`typeset tight-container ${styles.root}`}>
 				<section
 					id={ABOUT_SECTION_INTRO}
 					className={`${styles.section} ${styles.borderBottom} ${styles.firstSection}`}

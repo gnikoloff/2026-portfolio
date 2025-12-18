@@ -1,6 +1,5 @@
-import ArticleFooter from "@/components/ArticleFooter";
 import PageLayout from "@/components/PageLayout";
-import { SinglePageHeader } from "@/components/SinglePageHeader";
+import WorkClient from "@/components/WorkClient";
 import { WORKS_CUSTOM_TYPE } from "@/constants";
 import { createClient } from "@/prismicio";
 import { htmlSerializer } from "@/utils/htmlSerialiser";
@@ -20,17 +19,13 @@ export default async function Work({ params }: { params: Promise<Params> }) {
 	const [prevWorkLink, nextWorkLink] = getPrevNextWorkLinks(works, uid);
 	return (
 		<PageLayout>
-			<div className="tight-container">
-				<SinglePageHeader
+			<div className={`${styles.main} tight-container`}>
+				<WorkClient
 					title={page.data.project_title}
 					type={page.data.project_type}
 					year={page.data.project_year}
 					technologies={page.data.project_technologies_list}
-				/>
-				<main className={`${styles.main} typeset`}>
-					<div dangerouslySetInnerHTML={{ __html: html }}></div>
-				</main>
-				<ArticleFooter
+					html={html}
 					prevWorkLink={prevWorkLink}
 					prevWorkTitle={prevWork.data.project_title}
 					nextWorkLink={nextWorkLink}

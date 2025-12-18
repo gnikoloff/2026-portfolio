@@ -1,5 +1,7 @@
 // src/types/filters.ts
 
+import { WorkDocument } from "../prismicio-types";
+
 export type Tag =
 	| "Javascript"
 	| "Swift"
@@ -176,10 +178,23 @@ export function getTechnologiesByCategory(): Record<TechCategory, TechTag[]> {
 /**
  * Get array of years from 2014 to current year
  */
-export function getYearRange(): number[] {
-	const currentYear = new Date().getFullYear();
-	const years: number[] = [];
-	for (let year = 2014; year <= currentYear; year++) {
+export function getYearRange(works: WorkDocument[]): number[] {
+	const min = works.reduce((acc, work) => {
+		const year = work.data.project_year ?? new Date().getFullYear();
+		if (year < acc) {
+			acc = year;
+		}
+		return acc;
+	}, Number.MAX_SAFE_INTEGER);
+	const max = works.reduce((acc, work) => {
+		const year = work.data.project_year ?? new Date().getFullYear();
+		if (year > acc) {
+			acc = year;
+		}
+		return acc;
+	}, Number.MIN_SAFE_INTEGER);
+	const years = [];
+	for (let year = min; year <= max; year++) {
 		years.push(year);
 	}
 	return years;

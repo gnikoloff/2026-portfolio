@@ -1,3 +1,4 @@
+import { useAppData } from "@/contexts/DataContext";
 import { useHomeFilterStore } from "@/store/filterStore";
 import { getAvailableTechnologiesGrouped } from "@/utils/filterWorks";
 import { useQueryState } from "nuqs";
@@ -10,8 +11,9 @@ import YearFilterSelector from "./YearFilterSelector";
 export default function HomeNavigation() {
 	const { filters, setYearRange, setLanguages, setTechnologies, clearFilters } =
 		useHomeFilterStore();
+	const { works } = useAppData();
 	const languages = getLanguages();
-	const years = getYearRange();
+	const years = getYearRange(works);
 	const technologiesGrouped = getAvailableTechnologiesGrouped(filters);
 	const [, setYearParam] = useQueryState("year");
 	const [, setLanguageParam] = useQueryState("language");

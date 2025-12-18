@@ -15,7 +15,7 @@ function AboutNavigation() {
 					<a href={`#${ABOUT_SECTION_SKILLS}`}>Skills</a>
 				</li>
 				<li>
-					<a href={`#${ABOUT_SECTION_EXPERIENCE}`}>Works</a>
+					<a href={`#${ABOUT_SECTION_EXPERIENCE}`}>Experience</a>
 				</li>
 			</ul>
 		</nav>

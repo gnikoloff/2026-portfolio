@@ -1,9 +1,18 @@
+body[class*="medium-zoom--opened"] .root {
+	opacity: 0;
+}
+
+body[class*="medium-zoom--opened"] .navContainer {
+	pointer-events: none;
+}
+
 .root {
 	position: fixed;
 	top: 0;
 	left: 0;
 	z-index: 999;
 	pointer-events: none;
+	transition: opacity 0.1s ease-out;
 }
 
 .navContainer {
