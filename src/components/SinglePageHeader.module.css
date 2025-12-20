@@ -9,8 +9,8 @@
 	justify-content: space-between;
 	align-items: center;
 	margin: 2rem 0;
-	border-top: 1px solid var(--subtle-border-color);
-	border-bottom: 1px solid var(--subtle-border-color);
+	border-top: 1px solid var(--subtler-border-color);
+	border-bottom: 1px solid var(--subtler-border-color);
 	padding: 1rem 0;
 }
 

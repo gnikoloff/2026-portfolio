@@ -1,6 +1,8 @@
 import { FilterState } from "@/types";
 import { ChangeEvent } from "react";
 
+import styles from "./FilterSelector.module.css";
+
 function YearFilterSelector({
 	years,
 	filters,
@@ -10,10 +12,14 @@ function YearFilterSelector({
 	filters: FilterState;
 	handleYearChange: (e: ChangeEvent<HTMLSelectElement>) => void;
 }) {
+	const val = filters.yearRange[0] || "";
+	const isActive = val !== "";
+
 	return (
 		<select
 			id="year-select"
-			value={filters.yearRange[0] || ""}
+			className={`${styles.input} ${isActive ? styles.inputFocus : ""} btn ${isActive ? "active" : ""}`}
+			value={val}
 			onChange={handleYearChange}
 		>
 			<option value="">All Years</option>

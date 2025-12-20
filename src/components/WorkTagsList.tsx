@@ -15,8 +15,11 @@ export default function WorkTagsList({ tags }: { tags: string[] }) {
 					(pathname === "/" && filters.languages.includes(tech as Tag)) ||
 					filters.technologies.includes(tech as Tag);
 				return (
-					<li key={tech}>
-						<h5>{isMarked ? <mark>{tech}</mark> : tech}</h5>
+					<li
+						className={`${styles.listItem} ${isMarked ? styles.marked : ""}`}
+						key={tech}
+					>
+						<h5 className={styles.tag}>{tech}</h5>
 					</li>
 				);
 			})}

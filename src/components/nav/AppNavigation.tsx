@@ -8,6 +8,7 @@ import {
 	WRITING_URL_SEGMENT_NAME,
 } from "@/constants";
 import { useUIStore } from "@/store/uiStore";
+import { NavType } from "@/types";
 import { usePathname } from "next/navigation";
 import { MouseEvent, useEffect, useRef, useState } from "react";
 import SingleWorkNavigation from "../nav/SingleWorkNavigation";
@@ -18,16 +19,6 @@ import BlogSingleNavigation from "./BlogSingleNavigation";
 import HomeNavigation from "./HomeNavigation";
 import PageNavigation from "./PageNavigation";
 import SingleSpeakingWorkNavigation from "./SingleSpeakingWorkNavigation";
-
-type NavType =
-	| "home"
-	| "speaking"
-	| "speaking-single"
-	| "blog"
-	| "blog-single"
-	| "work"
-	| "about"
-	| "contact";
 
 const getNavType = (pathname: string): NavType => {
 	if (pathname === `/${WRITING_URL_SEGMENT_NAME}`) return "blog";
@@ -41,6 +32,10 @@ const getNavType = (pathname: string): NavType => {
 	if (pathname.includes(CONTACT_URL_SEGMENT_NAME)) return "contact";
 	return "home";
 };
+
+const HANDLE_DOTS_COL_COUNT = 3;
+const HANDLE_DOTS_TOTAL_COUNT = HANDLE_DOTS_COL_COUNT * 2;
+const HANDLE_ACTIVE_TRANSITION_DURATION = 0.125;
 
 export default function AppNavigation() {
 	const pathname = usePathname();
@@ -57,10 +52,14 @@ export default function AppNavigation() {
 
 	const [isDragging, setIsDragging] = useState(false);
 
+	const draggableAreaRef = useRef<HTMLDivElement>(null);
 	const mouseRef = useRef({ x: initNavigationX, y: initNavigationY });
 	const mouseTargetRef = useRef({ x: initNavigationX, y: initNavigationY });
 	const navContainerRef = useRef<HTMLDivElement>(null);
 	const rafIdRef = useRef<number>(-1);
+
+	const [draggableWidth, setDraggableWidth] = useState(0);
+	const [draggableHeight, setDraggableHeight] = useState(0);
 
 	// Function to clamp position within viewport bounds
 	const clampToViewport = (x: number, y: number) => {
@@ -87,9 +86,9 @@ export default function AppNavigation() {
 		}
 		const rect = navContainerRef.current.getBoundingClientRect();
 		mouseRef.current.x = initNavigationX;
-		mouseRef.current.y = initNavigationY - rect.height * 0.5;
+		mouseRef.current.y = initNavigationY - rect.height * 0.5 + 200;
 		mouseTargetRef.current.x = initNavigationX;
-		mouseTargetRef.current.y = initNavigationY - rect.height * 0.5;
+		mouseTargetRef.current.y = initNavigationY - rect.height * 0.5 + 200;
 	}, [initNavigationX, initNavigationY]);
 
 	// Continuous animation loop - runs independently of dragging
@@ -140,13 +139,14 @@ export default function AppNavigation() {
 
 		const handleMouseMove = (e: globalThis.MouseEvent) => {
 			e.preventDefault();
-			mouseTargetRef.current.x = e.pageX - 56;
-			mouseTargetRef.current.y = e.pageY - 56 - window.pageYOffset;
+			mouseTargetRef.current.x = e.pageX - draggableWidth * 0.5;
+			mouseTargetRef.current.y =
+				e.pageY - draggableHeight * 0.5 - window.pageYOffset;
 		};
 
 		const handleMouseUp = () => {
 			setIsDragging(false);
-			document.body.style.cursor = "unset";
+			document.body.classList.remove("dragging");
 
 			// Clamp to viewport bounds on mouse up
 			const clamped = clampToViewport(
@@ -164,7 +164,7 @@ export default function AppNavigation() {
 			document.removeEventListener("mousemove", handleMouseMove);
 			document.removeEventListener("mouseup", handleMouseUp);
 		};
-	}, [isDragging]);
+	}, [isDragging, draggableWidth, draggableHeight]);
 
 	// Handle window resize to keep navigation in bounds
 	useEffect(() => {
@@ -180,6 +180,16 @@ export default function AppNavigation() {
 		return () => window.removeEventListener("resize", handleResize);
 	}, [navigationX, navigationY]);
 
+	useEffect(() => {
+		const draggableArea = draggableAreaRef.current;
+		if (draggableArea == null) {
+			return;
+		}
+		const bbox = draggableArea.getBoundingClientRect();
+		setDraggableWidth(bbox.width);
+		setDraggableHeight(bbox.height);
+	}, []);
+
 	const renderNav = (navType: NavType) => {
 		switch (navType) {
 			case "home":
@@ -187,7 +197,11 @@ export default function AppNavigation() {
 			case "work":
 				return <SingleWorkNavigation />;
 			case "contact":
-				return <SocialList />;
+				return (
+					<div className="sub-nav-container">
+						<SocialList smallerPadding={true} />
+					</div>
+				);
 			case "about":
 				return <AboutNavigation />;
 			case "blog-single":
@@ -211,23 +225,52 @@ export default function AppNavigation() {
 				}}
 			>
 				<div
+					ref={draggableAreaRef}
 					className={styles.draggable}
 					onMouseDown={(e: MouseEvent) => {
 						e.preventDefault();
 						setIsDragging(true);
-						mouseTargetRef.current.x = e.pageX - 56;
-						mouseTargetRef.current.y = e.pageY - 56 - window.pageYOffset;
-						document.body.style.cursor = "grabbing";
+						mouseTargetRef.current.x = e.pageX - draggableWidth * 0.5;
+						mouseTargetRef.current.y =
+							e.pageY - draggableHeight * 0.5 - window.pageYOffset;
+						document.body.classList.add("dragging");
 					}}
-				/>
+				>
+					<div className={styles.dotWrapper}>
+						<div className={`${styles.dotColumn} ${styles.dotColumnLeft}`}>
+							{new Array(HANDLE_DOTS_COL_COUNT).fill(null).map((_, i) => (
+								<div
+									key={i}
+									className={styles.dot}
+									style={{
+										transitionDuration: `${HANDLE_ACTIVE_TRANSITION_DURATION}s`,
+										transitionDelay: `${(i / HANDLE_DOTS_TOTAL_COUNT) * HANDLE_ACTIVE_TRANSITION_DURATION}s`,
+									}}
+								/>
+							))}
+						</div>
+						<div className={styles.dotColumn}>
+							{new Array(HANDLE_DOTS_COL_COUNT).fill(null).map((_, i) => (
+								<div
+									key={i}
+									className={styles.dot}
+									style={{
+										transitionDuration: `${HANDLE_ACTIVE_TRANSITION_DURATION}s`,
+										transitionDelay: `${((i + HANDLE_DOTS_COL_COUNT) / HANDLE_DOTS_TOTAL_COUNT) * HANDLE_ACTIVE_TRANSITION_DURATION}s`,
+									}}
+								/>
+							))}
+						</div>
+					</div>
+				</div>
 				<div className={styles.navWrapper}>
 					<div className={`${styles.subNavWrapper} ${styles.mainNav}`}>
-						<PageNavigation />
-					</div>
-					<div className={styles.subNavWrapper}>
-						<div className={`${styles.subNav}`}>
-							{renderNav(getNavType(pathname))}
+						<div className="sub-nav-container">
+							<PageNavigation navType={getNavType(pathname)} />
 						</div>
+					</div>
+					<div className={`${styles.subNavWrapper} ${styles.subNav}`}>
+						{renderNav(getNavType(pathname))}
 					</div>
 				</div>
 			</div>

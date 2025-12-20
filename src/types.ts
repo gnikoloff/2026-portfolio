@@ -2,7 +2,26 @@
 
 import { WorkDocument } from "../prismicio-types";
 
+export interface CharData {
+	positions: number[];
+	normals: number[];
+	uvs: number[];
+	tangents: number[];
+	indices: number[];
+}
+
+export type NavType =
+	| "home"
+	| "speaking"
+	| "speaking-single"
+	| "blog"
+	| "blog-single"
+	| "work"
+	| "about"
+	| "contact";
+
 export type Tag =
+	| ""
 	| "Javascript"
 	| "Swift"
 	| "C"

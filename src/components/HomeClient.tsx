@@ -49,9 +49,11 @@ export default function HomeClient({ initialFilters }: HomeClientProps) {
 	}, []);
 
 	return (
-		<PageLayout>
+		<PageLayout hasMainPaddingBottom={true}>
 			{filteredWorks.length === 0 ? (
-				<p>No projects match your filters.</p>
+				<div className="tight-container">
+					<p>No projects match your filters.</p>
+				</div>
 			) : (
 				<>
 					{sortedYears.map((year, i) => (

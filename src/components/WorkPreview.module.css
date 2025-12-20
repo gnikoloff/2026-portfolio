@@ -1,6 +1,7 @@
 .root {
-	background: var(--background-secondary);
-	border-radius: 20px;
+	/* background: var(--background-secondary); */
+	border-radius: var(--border-radius);
+	border: 1px solid var(--subtler-border-color);
 	overflow: hidden;
 }
 

@@ -17,14 +17,14 @@ function ArticleFooter({
 		<footer className={styles.root}>
 			<Link
 				href={prevWorkLink}
-				className={`${styles.workLink} ${styles.prevLink}`}
+				className={`${styles.workLink} ${styles.prevLink} btn`}
 			>
 				<i>←</i>
 				{prevWorkTitle}
 			</Link>
 			<Link
 				href={nextWorkLink}
-				className={`${styles.workLink} ${styles.nextLink}`}
+				className={`${styles.workLink} ${styles.nextLink} btn`}
 			>
 				{nextWorkTitle}
 				<i>→</i>

@@ -1,0 +1,17 @@
+.root {
+	display: flex;
+}
+
+.subNavWrapper {
+	flex: 1;
+	text-align: center;
+}
+
+.backWrapper {
+	margin: 0;
+	border-right: 1px solid var(--subtler-border-color);
+}
+
+.backWrapper a {
+	margin: 0;
+}

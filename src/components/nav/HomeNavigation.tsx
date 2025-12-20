@@ -55,8 +55,7 @@ export default function HomeNavigation() {
 		filters.technologies.length > 0;
 
 	return (
-		<div className={styles.root}>
-			{/* Year Filter */}
+		<div className={`${styles.root} sub-nav-container`}>
 			<div className={styles.filterGroup}>
 				<YearFilterSelector
 					years={years}
@@ -65,7 +64,6 @@ export default function HomeNavigation() {
 				/>
 			</div>
 
-			{/* Language Filter */}
 			<div className={styles.filterGroup}>
 				<LanguageFilterSelector
 					languages={languages}
@@ -74,7 +72,6 @@ export default function HomeNavigation() {
 				/>
 			</div>
 
-			{/* Technology Filter */}
 			<div className={styles.filterGroup}>
 				<TechnologyFilterSelector
 					technologiesGrouped={technologiesGrouped}
@@ -83,12 +80,15 @@ export default function HomeNavigation() {
 				/>
 			</div>
 
-			{/* Clear Filters Button */}
-			{hasActiveFilters && (
-				<button onClick={handleClearFilters} className={styles.clearButton}>
-					Clear Filters
-				</button>
-			)}
+			{/* {hasActiveFilters && (
+				
+			)} */}
+			<button
+				onClick={handleClearFilters}
+				className={`${styles.clearButton} ${hasActiveFilters ? "active" : ""} btn`}
+			>
+				Clear Filters
+			</button>
 		</div>
 	);
 }

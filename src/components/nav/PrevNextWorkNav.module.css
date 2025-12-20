@@ -1,0 +1,24 @@
+.root {
+	display: flex;
+}
+
+.link {
+	width: 50%;
+	display: flex;
+}
+
+.link:first-of-type {
+	border-right: 1px solid var(--subtler-border-color);
+}
+
+.link:last-of-type {
+	justify-content: flex-end;
+}
+
+.prevArrow {
+	margin-right: 1rem;
+}
+
+.nextArrow {
+	margin-left: 1rem;
+}

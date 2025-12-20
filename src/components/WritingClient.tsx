@@ -12,7 +12,7 @@ export default function WritingClient({
 	const sortedYears = getSortedYears(worksPerYears, "desc");
 
 	return (
-		<PageLayout>
+		<PageLayout hasMainPaddingBottom={true}>
 			<div className="tight-container">
 				<div className="container">
 					{sortedYears.map((year, i) => (

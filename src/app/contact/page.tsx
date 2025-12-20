@@ -68,7 +68,7 @@ function Contact() {
 					<input
 						type="text"
 						id="name"
-						className={styles.fullWidth}
+						className={`${styles.fullWidth} ${styles.input}`}
 						value={formData.name}
 						required
 						onChange={(e) => {
@@ -84,7 +84,7 @@ function Contact() {
 					<input
 						type="email"
 						id="email"
-						className={styles.fullWidth}
+						className={`${styles.fullWidth} ${styles.input}`}
 						value={formData.email}
 						required
 						onChange={(e) => {
@@ -99,7 +99,7 @@ function Contact() {
 					</label>
 					<select
 						name="subject"
-						className={styles.fullWidth}
+						className={`${styles.fullWidth} ${styles.select}`}
 						value={formData.contactReason}
 						onChange={(e) => {
 							const t = e.target;
@@ -125,6 +125,7 @@ function Contact() {
 								id="budget"
 								value={formData.budget}
 								required
+								className={`${styles.budgetInput} ${styles.input}`}
 								onChange={(e) => {
 									const t = e.target as HTMLInputElement;
 									setFormData({ ...formData, budget: t.value });
@@ -141,7 +142,7 @@ function Contact() {
 					<textarea
 						id="message"
 						name="message"
-						className={styles.fullWidth}
+						className={`${styles.fullWidth} ${styles.input}`}
 						value={formData.message}
 						onChange={(e) =>
 							setFormData({ ...formData, message: e.target.value })
@@ -151,7 +152,9 @@ function Contact() {
 					/>
 				</section>
 				<section className={styles.section}>
-					<button type="submit">Send Message</button>
+					<button className={`btn ${styles.sendBtn}`} type="submit">
+						Send Message
+					</button>
 				</section>
 			</fieldset>
 		</form>

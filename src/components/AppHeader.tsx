@@ -1,10 +1,16 @@
+// import LogoViz from "@/logo-viz/LogoViz";
+import dynamic from "next/dynamic";
 import { forwardRef } from "react";
-import Logo from "./Logo";
+
+const LogoViz = dynamic(() => import("@/logo-viz/LogoViz"), {
+	ssr: false,
+});
 
 const AppHeader = forwardRef<HTMLElement>((props, ref) => {
 	return (
-		<header ref={ref} id="app-header" className={`container`}>
-			<Logo />
+		<header ref={ref} id="app-header" className={`tight-container`}>
+			{/* <Logo /> */}
+			<LogoViz />
 		</header>
 	);
 });

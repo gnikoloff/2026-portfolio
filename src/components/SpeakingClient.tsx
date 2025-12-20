@@ -14,7 +14,7 @@ export default function SpeakingClient({
 	const sortedYears = getSortedYears(worksPerYears, "desc");
 
 	return (
-		<PageLayout>
+		<PageLayout hasMainPaddingBottom={true}>
 			<div className="container">
 				{sortedYears.map((year, i) => (
 					<YearSpeakingContainer

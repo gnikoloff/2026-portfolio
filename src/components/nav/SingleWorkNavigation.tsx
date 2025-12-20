@@ -2,6 +2,7 @@ import { useAppData } from "@/contexts/DataContext";
 import { getPrevNextWorkLinks, getPrevNextWorks } from "@/utils/works";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import PrevNextWorkNav from "./PrevNextWorkNav";
 import styles from "./SingleWorkNavigation.module.css";
 
 export default function SingleWorkNavigation() {
@@ -12,11 +13,17 @@ export default function SingleWorkNavigation() {
 	const [prevWorkLink, nextWorkLink] = getPrevNextWorkLinks(works, uid);
 	return (
 		<div className={styles.root}>
-			<Link href="/">Back</Link>
-			&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;
-			<Link href={prevWorkLink}>{prevWork.data.project_title}</Link>
-			&nbsp;|&nbsp;
-			<Link href={nextWorkLink}>{nextWork.data.project_title}</Link>
+			<Link href="/" className="btn">
+				<div className={`${styles.backWrapper} sub-nav-container`}>Back</div>
+			</Link>
+			<div className={styles.subNavWrapper}>
+				<PrevNextWorkNav
+					nextLink={nextWorkLink}
+					nextTitle={nextWork.data.project_title}
+					prevLink={prevWorkLink}
+					prevTitle={prevWork.data.project_title}
+				/>
+			</div>
 		</div>
 	);
 }

@@ -1,6 +1,8 @@
 import { FilterState, TechTag } from "@/types";
 import { ChangeEvent } from "react";
 
+import styles from "./FilterSelector.module.css";
+
 function LanguageFilterSelector({
 	languages,
 	filters,
@@ -10,10 +12,13 @@ function LanguageFilterSelector({
 	filters: FilterState;
 	onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
 }) {
+	const val = filters.languages[0] || "";
+	const isActive = val !== "";
 	return (
 		<select
 			id="language-select"
-			value={filters.languages[0] || ""}
+			className={`${styles.input} ${isActive ? styles.inputFocus : ""} btn ${isActive ? "active" : ""}`}
+			value={val}
 			onChange={onChange}
 		>
 			<option value="">All Languages</option>

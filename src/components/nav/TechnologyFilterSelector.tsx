@@ -1,6 +1,8 @@
 import { FilterState, TechTag } from "@/types";
 import { ChangeEvent } from "react";
 
+import styles from "./FilterSelector.module.css";
+
 function TechnologyFilterSelector({
 	technologiesGrouped,
 	filters,
@@ -10,10 +12,14 @@ function TechnologyFilterSelector({
 	filters: FilterState;
 	onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
 }) {
+	const val = filters.technologies[0] || "";
+	const isActive = val !== "";
+
 	return (
 		<select
 			id="tech-select"
-			value={filters.technologies[0] || ""}
+			className={`${styles.input} ${isActive ? styles.inputFocus : ""} btn ${isActive ? "active" : ""}`}
+			value={val}
 			onChange={onChange}
 		>
 			<option value="">All Technologies</option>

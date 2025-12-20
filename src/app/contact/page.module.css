@@ -1,4 +1,10 @@
 .section {
+	margin-bottom: 1rem;
+}
+
+.label {
+	display: block;
+	margin-bottom: 0.26rem;
 }
 
 .fullWidth {
@@ -6,6 +12,7 @@
 }
 
 .fieldset {
+	font-size: 16px;
 	transition: opacity 0.1s ease-out;
 }
 
@@ -13,13 +20,46 @@
 	opacity: 0.1;
 }
 
-.label {
-	display: block;
+.input,
+.textarea,
+.select {
+	padding: 12px;
+	border-radius: 0;
+	border: none;
+	font-size: 16px;
+	color: var(--foreground);
+	background: var(--input-background);
+	border: 1px solid var(--subtler-border-color);
+}
+
+.textarea {
+	resize: vertical;
+}
+
+.select {
+	padding: 12px 40px 12px 16px;
+	background-repeat: no-repeat;
+	background-position: right 12px center;
+	background-size: 12px;
 }
 
 .budgetWrapper {
 	display: flex;
 	align-items: center;
+}
+
+.budgetInput {
+	margin-right: 0.5rem;
+}
+
+.sendBtn {
+	background-color: var(--confirm-btn-background);
+	padding: 1rem;
+	border-radius: var(--border-radius);
+	color: white;
+	border: none;
+	margin: 1rem 0 1.6rem 0;
+	cursor: pointer;
 }
 
 .loaderWrapper {

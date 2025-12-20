@@ -1,16 +1,28 @@
-.root li {
+.root {
+	margin: -0.16rem;
+}
+
+.listItem {
 	display: inline-block;
-	border: 1px solid white;
-	padding: 8px 12px;
-	border-radius: 50px;
+	border: 1px solid var(--subtler-border-color);
+	padding: 2px 8px 0px 8px;
+	border-radius: var(--border-radius);
+	background-color: var(--subtler-border-color);
+	margin: 0.16rem;
 }
 
-.root li {
-	margin-right: 0.5rem;
-	font-size: 14px;
-	padding: 0px 6px;
+.listItem.marked {
+	background-color: yellow;
+	color: #111;
 }
 
-.root li:last-of-type {
+.listItem:last-of-type {
 	margin-right: unset;
+}
+
+.tag {
+	font-size: 11px;
+	font-weight: 700;
+	text-transform: uppercase;
+	font-family: monospace;
 }

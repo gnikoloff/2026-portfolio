@@ -2,12 +2,17 @@
 
 import { useUIStore } from "@/store/uiStore";
 import { useEffect, useRef } from "react";
+import AppFooter from "./AppFooter";
 import AppHeader from "./AppHeader";
+
+import styles from "./PageLayout.module.css";
 
 function PageLayout({
 	children,
+	hasMainPaddingBottom = false,
 }: Readonly<{
 	children: React.ReactNode;
+	hasMainPaddingBottom?: boolean;
 }>) {
 	const {
 		initedNavigation,
@@ -41,9 +46,14 @@ function PageLayout({
 	return (
 		<div>
 			<AppHeader ref={headerRef} />
-			<main id="app-main" className="container" ref={bodyRef}>
+			<main
+				id="app-main"
+				className={`container ${hasMainPaddingBottom ? styles.paddingBottom : ""}`}
+				ref={bodyRef}
+			>
 				{children}
 			</main>
+			<AppFooter />
 		</div>
 	);
 }

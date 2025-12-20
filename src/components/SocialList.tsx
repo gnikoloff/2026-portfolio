@@ -1,9 +1,9 @@
 import styles from "./SocialList.module.css";
 
-function SocialList() {
+function SocialList({ smallerPadding = false }: { smallerPadding?: boolean }) {
 	return (
 		<nav className={styles.root}>
-			<ul className={"navList"}>
+			<ul className={`navList ${smallerPadding ? "smaller" : ""}`}>
 				<li>
 					<a href="https://x.com/georgiNikoloff" target="_blank">
 						X

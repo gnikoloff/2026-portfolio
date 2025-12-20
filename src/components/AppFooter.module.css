@@ -1,0 +1,17 @@
+.root {
+	padding: 8rem 0;
+	border-top: 1px solid var(--subtler-border-color);
+}
+
+.root a {
+	text-decoration: underline;
+}
+
+.header {
+	display: flex;
+	justify-content: space-between;
+}
+
+.footer {
+	padding-top: 16rem;
+}

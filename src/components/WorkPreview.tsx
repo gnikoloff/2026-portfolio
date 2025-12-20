@@ -39,6 +39,7 @@ export default function WorkPreview({
 					<Image
 						fill
 						src={previewImageURL}
+						sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 20vw"
 						alt={`Thumbnail Preview Image`}
 						className={styles.image}
 					/>
