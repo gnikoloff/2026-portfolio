@@ -7,7 +7,7 @@ import {
 } from "@/libs/hwoa-rang-gl2/dist";
 import { CharData } from "@/types";
 import { HDRImageElement } from "@/types/hdrpng";
-import { loadHDRTexture } from "@/utils/load-hdr";
+import { loadHDR, makeHDRGLTexture } from "@/utils/load-hdr";
 import { loadImg } from "@/utils/load-img";
 import { vec3 } from "gl-matrix";
 import Char3D from "./Char3D";
@@ -25,12 +25,50 @@ const MODELS = ["/assets/georgi_2.json"];
 
 const BDRFlut = "/assets/brdfLUT.png";
 
-const PBR_TEXTURES = [
-	"/assets/Metal007_1K-PNG_Color-512.webp",
-	"/assets/Metal007_1K-PNG_Metalness-512.webp",
-	"/assets/Metal007_1K-PNG_Roughness-512.webp",
-	"/assets/Metal007_1K-PNG_NormalGL-512.webp",
+const CUBEMAP_SIZE = 256;
+const IBL_DIFFUSE_SIZE = 32;
+const IBL_SPECULAR_SIZE = 128;
+interface Asset {
+	pbrTextureURLs: string[];
+	skyboxURL: string;
+	bloomMixFactor: number;
+}
+
+const ASSETS: Asset[] = [
+	{
+		pbrTextureURLs: [
+			"/assets/Metal007_1K-PNG_Color-512.webp",
+			"/assets/Metal007_1K-PNG_Metalness-512.webp",
+			"/assets/Metal007_1K-PNG_Roughness-512.webp",
+			"/assets/Metal007_1K-PNG_NormalGL-512.webp",
+		],
+		skyboxURL: "/assets/StandardCubeMap_0.hdr",
+		bloomMixFactor: 0.05,
+	},
+	{
+		pbrTextureURLs: [
+			"/assets/PaintedMetal007_1K-PNG_Color-512.webp",
+			"/assets/PaintedMetal007_1K-PNG_Metalness-512.webp",
+			"/assets/PaintedMetal007_1K-PNG_Roughness-512.webp",
+			"/assets/PaintedMetal007_1K-PNG_NormalGL-512.webp",
+		],
+		skyboxURL: "/assets/StandardCubeMap_2.hdr",
+		bloomMixFactor: 0.2,
+	},
+	{
+		pbrTextureURLs: [
+			"/assets/PaintedMetal009_1K-PNG_Color-512.webp",
+			"/assets/PaintedMetal009_1K-PNG_Metalness-512.webp",
+			"/assets/PaintedMetal009_1K-PNG_Roughness-512.webp",
+			"/assets/PaintedMetal009_1K-PNG_NormalGL-512.webp",
+		],
+		skyboxURL: "/assets/StandardCubeMap_12.hdr",
+		bloomMixFactor: 0.2,
+	},
 ];
+
+const loadIdx = Math.floor(Math.random() * ASSETS.length);
+const ASSET_TO_LOAD = ASSETS[loadIdx]!;
 
 const CAMERA_UBO_NAME = "Camera";
 const CAMERA_UBO_FIELDS = [
@@ -45,6 +83,14 @@ const CAMERA_UBO_FIELDS = [
 const loadModel = (src: string): Promise<CharData> => {
 	return fetch(src).then((res) => res.json());
 };
+
+interface ConvolutionState {
+	width: number;
+	height: number;
+	image: HDRImageElement;
+	step: 0;
+	maxSteps: 5; // hdr gl texture, cubemap, irradiance, prefilter
+}
 
 const scale = vec3.fromValues(1, 1, 1);
 export default class LogoVizApp {
@@ -62,10 +108,16 @@ export default class LogoVizApp {
 	private geoLoaded = false;
 	private oldTime = 0;
 
+	private state: ConvolutionState | null = null;
+	private pbrTexImages: HTMLImageElement[] = [];
+
 	private iblDiffuseTexture!: WebGLTexture;
 	private iblSpecularTexture!: WebGLTexture;
 	private brdfLutTexture!: WebGLTexture;
 	private pbrTextures: WebGLTexture[] = [];
+
+	private skyboxCubeCrossTexture!: WebGLTexture;
+	private skyboxCubemapTexture!: WebGLTexture;
 
 	private mainSceneBuffers!: MainSceneMSAAFramebufferResult;
 
@@ -79,12 +131,20 @@ export default class LogoVizApp {
 	constructor(
 		private canvas: HTMLCanvasElement,
 		private gl: WebGL2RenderingContext,
+		private onAnimStart: () => void,
 	) {
 		this.canvas.style.opacity = `0`;
 
 		// Enable HDR extensions
-		gl.getExtension("EXT_color_buffer_float");
-		gl.getExtension("OES_texture_float_linear");
+		const ext =
+			gl.getExtension("EXT_color_buffer_float") ||
+			gl.getExtension("OES_texture_float_linear");
+
+		if (ext == null) {
+			throw new Error(
+				"Need EXT_color_buffer_float / OES_texture_float_linear to render",
+			);
+		}
 
 		const bbox = canvas.getBoundingClientRect();
 		this.perspCamera = new PerspectiveCamera(
@@ -117,7 +177,10 @@ export default class LogoVizApp {
 			canvas.height,
 		);
 
-		this.blitMainSceneFX = new FullscreenCompositeTriangle(gl);
+		this.blitMainSceneFX = new FullscreenCompositeTriangle(
+			gl,
+			ASSET_TO_LOAD.bloomMixFactor,
+		);
 		this.blurThresholdFX = new FullscreenBlurTriangle(
 			gl,
 			canvas.width,
@@ -126,27 +189,33 @@ export default class LogoVizApp {
 
 		Promise.all([
 			Promise.all(MODELS.map(loadModel)),
-			loadHDRTexture(gl, "/assets/StandardCubeMap.hdr"),
+			loadHDR(ASSET_TO_LOAD.skyboxURL),
 			loadImg(BDRFlut),
-			Promise.all(PBR_TEXTURES.map(loadImg)),
-		]).then(this.onResourcesLoaded);
+			Promise.all(ASSET_TO_LOAD.pbrTextureURLs.map(loadImg)),
+		])
+			.then(this.onResourcesLoaded)
+			.catch((err) => {
+				console.error(err);
+			});
 	}
 
 	private onResourcesLoaded = ([
 		allModels,
-		[skyboxCubeImage, skyboxCubeTex],
+		skyboxCubeImage,
 		brdfLUTImg,
 		pbrTextureImgs,
-	]: [
-		CharData[],
-		[HDRImageElement, WebGLTexture],
-		HTMLImageElement,
-		HTMLImageElement[],
-	]) => {
+	]: [CharData[], HDRImageElement, HTMLImageElement, HTMLImageElement[]]) => {
 		this.opacityTTarget = 1;
 
 		const gl = this.gl;
-		this.geoLoaded = true;
+
+		this.state = {
+			width: skyboxCubeImage.width,
+			height: skyboxCubeImage.height,
+			image: skyboxCubeImage,
+			step: 0,
+			maxSteps: 5,
+		};
 
 		const brdfLUT = gl.createTexture();
 		gl.bindTexture(gl.TEXTURE_2D, brdfLUT);
@@ -156,49 +225,11 @@ export default class LogoVizApp {
 		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
 		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
 
-		this.pbrTextures = pbrTextureImgs.map((img) => {
-			const tex = gl.createTexture();
-			gl.bindTexture(gl.TEXTURE_2D, tex);
-			gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA8, gl.RGBA, gl.UNSIGNED_BYTE, img);
-			gl.texParameteri(
-				gl.TEXTURE_2D,
-				gl.TEXTURE_MIN_FILTER,
-				gl.LINEAR_MIPMAP_LINEAR,
-			);
-			gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-			gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.REPEAT);
-			gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.REPEAT);
-			gl.generateMipmap(gl.TEXTURE_2D);
-			return tex;
-		});
+		this.pbrTexImages = pbrTextureImgs;
 
 		this.brdfLutTexture = brdfLUT;
 
-		const CUBEMAP_SIZE = 256;
-		const IBL_DIFFUSE_SIZE = 32;
-		const IBL_SPECULAR_SIZE = 128;
-
-		const cubemapConvert = new CubemapGenerator(gl, CUBEMAP_SIZE);
-		cubemapConvert.convert(skyboxCubeTex);
-		cubemapConvert.dispose();
-		gl.deleteTexture(skyboxCubeTex);
-
-		const iblDiffuse = new DiffuseIBLGenerator(gl, IBL_DIFFUSE_SIZE);
-		iblDiffuse.convert(cubemapConvert.outTexture);
-		iblDiffuse.dispose();
-
-		const iblSpecular = new SpecularIBLGenerator(
-			gl,
-			IBL_SPECULAR_SIZE,
-			CUBEMAP_SIZE,
-		);
-		iblSpecular.convert(cubemapConvert.outTexture);
-
 		this.skybox = new Skybox(gl);
-		this.skybox.envTexture = cubemapConvert.outTexture;
-
-		this.iblDiffuseTexture = iblDiffuse.outTexture;
-		this.iblSpecularTexture = iblSpecular.outTexture;
 
 		allModels.forEach((model, i) => {
 			this.mesh = new Char3D(gl, model);
@@ -223,9 +254,77 @@ export default class LogoVizApp {
 	drawFrame(ts: number) {
 		ts *= 0.001;
 
+		const gl = this.gl;
+
 		const dt = ts - this.oldTime;
 		this.oldTime = ts;
 
+		// const error = gl.getError();
+		// if (error !== gl.NO_ERROR) {
+		// 	console.error("WebGL error before render:", error);
+		// 	debugger;
+		// }
+
+		if (this.state != null) {
+			const stepMS = 50;
+			if (this.state.step === 0 * stepMS) {
+				this.pbrTextures = this.pbrTexImages.map((img) => {
+					const tex = gl.createTexture();
+					gl.bindTexture(gl.TEXTURE_2D, tex);
+					gl.texImage2D(
+						gl.TEXTURE_2D,
+						0,
+						gl.RGBA8,
+						gl.RGBA,
+						gl.UNSIGNED_BYTE,
+						img,
+					);
+					gl.generateMipmap(gl.TEXTURE_2D);
+					gl.texParameteri(
+						gl.TEXTURE_2D,
+						gl.TEXTURE_MIN_FILTER,
+						gl.LINEAR_MIPMAP_LINEAR,
+					);
+					gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+					gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.REPEAT);
+					gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.REPEAT);
+
+					return tex;
+				});
+				gl.bindTexture(gl.TEXTURE_2D, null);
+			}
+			if (this.state.step === 1 * stepMS) {
+				this.skyboxCubeCrossTexture = makeHDRGLTexture(gl, this.state.image);
+			} else if (this.state.step === 2 * stepMS) {
+				const cubemapConvert = new CubemapGenerator(gl, CUBEMAP_SIZE);
+				cubemapConvert.convert(this.skyboxCubeCrossTexture);
+				cubemapConvert.dispose();
+				gl.deleteTexture(this.skyboxCubeCrossTexture);
+				this.skyboxCubemapTexture = cubemapConvert.outTexture;
+				this.skybox.envTexture = cubemapConvert.outTexture;
+			} else if (this.state.step === 3 * stepMS) {
+				const iblDiffuse = new DiffuseIBLGenerator(gl, IBL_DIFFUSE_SIZE);
+				iblDiffuse.convert(this.skyboxCubemapTexture);
+				iblDiffuse.dispose();
+				this.iblDiffuseTexture = iblDiffuse.outTexture;
+			} else if (this.state.step === 4 * stepMS) {
+				const iblSpecular = new SpecularIBLGenerator(
+					gl,
+					IBL_SPECULAR_SIZE,
+					CUBEMAP_SIZE,
+				);
+				iblSpecular.convert(this.skyboxCubemapTexture);
+				iblSpecular.dispose();
+				this.iblSpecularTexture = iblSpecular.outTexture;
+				this.state = null;
+				this.geoLoaded = true;
+				this.onAnimStart();
+				console.log("call 4");
+				return;
+			}
+			this.state.step++;
+			return;
+		}
 		if (!this.geoLoaded) {
 			return;
 		}
@@ -240,8 +339,6 @@ export default class LogoVizApp {
 		if (this.opacityT > 0.7 && this.loadingTTargetTarget === 0) {
 			this.loadingTTargetTarget = 1;
 		}
-
-		const gl = this.gl;
 
 		// 1. Render to MSAA framebuffer
 		gl.bindFramebuffer(gl.FRAMEBUFFER, this.mainSceneBuffers.msaaFramebuffer);

@@ -62,6 +62,7 @@ const out = `#version 300 es
   #ifdef IS_FULLSCREEN_TRIANGLE
     uniform sampler2D inTexture;
     uniform sampler2D bloomTexture;
+    uniform float bloomMixFactor;
   #endif
 
   #ifdef IS_GAUSSIAN_BLUR
@@ -79,7 +80,7 @@ const out = `#version 300 es
   void main() {
 
     #ifdef IS_SKYBOX
-      vec3 envColor = texture(u_environmentMap, vWorldPos, 2.0).rgb;
+      vec3 envColor = texture(u_environmentMap, vWorldPos).rgb;
       #ifdef USE_MRT
         fragColor = vec4(envColor, 1.0);
         brightColor = vec4(0.0);
@@ -172,12 +173,13 @@ const out = `#version 300 es
               vec3 bloomColor = texture(bloomTexture, vUv).rgb;
               vec3 sceneColor = texture(inTexture, vUv).rgb;
 
-              vec3 color = sceneColor + bloomColor * 0.05;
-              // vec3 color = sceneColor + bloomColor * 0.06;
+              vec3 color = sceneColor + bloomColor * bloomMixFactor;
 
               finalColor.rgb = lottes(color);
               finalColor.rgb = pow(color, vec3(1.0 / 2.2));
               finalColor.a = 1.0;
+
+              // finalColor = vec4(vUv, 0.0, 1.0);
 
               // finalColor = vec4(bloomColor, 1.0);
             #endif

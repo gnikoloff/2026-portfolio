@@ -3,12 +3,16 @@ import FullscreenTriangle from "./FullscreenTriangle";
 export class FullscreenCompositeTriangle extends FullscreenTriangle {
 	public inBloomTexture?: WebGLTexture;
 
-	constructor(gl: WebGL2RenderingContext) {
+	constructor(gl: WebGL2RenderingContext, bloomMixFactor: number) {
 		super(gl);
 
 		this.setUniform("bloomTexture", {
 			type: gl.INT,
 			value: 1,
+		});
+		this.setUniform("bloomMixFactor", {
+			type: gl.FLOAT,
+			value: bloomMixFactor,
 		});
 	}
 

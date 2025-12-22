@@ -1,0 +1,38 @@
+.root {
+	display: inline-block;
+	position: relative;
+	overflow: hidden;
+}
+
+.root.loading:before {
+	opacity: 1;
+}
+
+.root::before {
+	z-index: 1;
+	content: "";
+	background: linear-gradient(
+		90deg,
+		rgba(255, 255, 255, 0),
+		rgba(255, 255, 255, 0.05),
+		rgba(255, 255, 255, 0)
+	);
+	width: 100px;
+	height: 200px;
+	display: block;
+	position: absolute;
+	top: 0;
+	left: 0;
+	opacity: 0;
+	transition: opacity 0.1s ease-out;
+	animation: load 1.2s infinite ease-in-out;
+}
+
+@keyframes load {
+	0% {
+		transform: skewX(-12deg) translateX(-200px);
+	}
+	100% {
+		transform: skewX(-12deg) translateX(calc(100% + 300px));
+	}
+}

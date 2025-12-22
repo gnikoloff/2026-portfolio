@@ -98,14 +98,5 @@ export default class SpecularIBLGenerator extends IBLGenerator {
 
 		gl.bindFramebuffer(gl.FRAMEBUFFER, null);
 		gl.bindVertexArray(null);
-		// gl.viewport(0, 0, this.texSize, this.texSize);
-		// gl.framebufferRenderbuffer(
-		// 	gl.FRAMEBUFFER,
-		// 	gl.DEPTH_ATTACHMENT,
-		// 	gl.RENDERBUFFER,
-		// 	this.depthRenderbuffer,
-		// );
-		// gl.activeTexture(gl.TEXTURE0);
-		// gl.bindTexture(gl.TEXTURE_CUBE_MAP, sourceTexture);
 	}
 }

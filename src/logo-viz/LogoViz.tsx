@@ -3,16 +3,17 @@
 import { useEffect, useRef, useState } from "react";
 import LogoVizApp from "./LogoVizApp";
 
+import styles from "./LogoVizApp.module.css";
+
 function LogoViz() {
 	const canvasRef = useRef<HTMLCanvasElement>(null);
 
+	const [loadingAnim, setLoadingAnim] = useState(false);
 	const [noGL2Supported, setNoGL2Supported] = useState(false);
 
 	useEffect(() => {
 		const c = canvasRef.current;
-		if (c == null) {
-			return;
-		}
+		if (c == null) return;
 
 		const gl = c.getContext("webgl2", {
 			antialias: false,
@@ -31,24 +32,44 @@ function LogoViz() {
 		c.style.width = `${w}px`;
 		c.style.height = `${h}px`;
 
-		const viz = new LogoVizApp(c, gl);
+		let viz: LogoVizApp | null = null;
+		let raf: number;
 
-		let raf = requestAnimationFrame(drawFrame);
+		try {
+			setLoadingAnim(true);
+			viz = new LogoVizApp(c, gl, () => {
+				setLoadingAnim(false);
+			});
 
-		function drawFrame(ts: number) {
+			function drawFrame(ts: number) {
+				try {
+					viz!.drawFrame(ts); // Wrap in try-catch
+					raf = requestAnimationFrame(drawFrame);
+				} catch (error) {
+					console.error("Error in draw loop:", error);
+					setNoGL2Supported(true);
+					cancelAnimationFrame(raf);
+				}
+			}
+
 			raf = requestAnimationFrame(drawFrame);
-
-			viz.drawFrame(ts);
+		} catch (error) {
+			setNoGL2Supported(true);
+			console.error("Error initializing:", error);
 		}
 
 		return () => {
-			viz.dispose();
-			cancelAnimationFrame(raf);
+			if (raf) {
+				cancelAnimationFrame(raf);
+			}
+			if (viz) {
+				viz.dispose();
+			}
 		};
 	}, []);
 
 	return (
-		<div>
+		<div className={`${styles.root} ${loadingAnim ? styles.loading : ""}`}>
 			<canvas
 				id="logo"
 				ref={canvasRef}
