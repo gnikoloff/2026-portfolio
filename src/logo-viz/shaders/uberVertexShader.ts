@@ -1,13 +1,16 @@
+import boxTwistChunk from "./boxTwist";
 import ubosChunk from "./ubos";
 
 const out = `#version 300 es
 
   -- DEFINES_HOOK --
 
+  ${boxTwistChunk}
+
   #ifdef USE_UBOS
     ${ubosChunk}
   #else
-    uniform mat4 u_projectionViewMatrix;
+    uniform mat4 projViewMatrix;
   #endif
 
   // uniform PostFX {
@@ -28,10 +31,19 @@ const out = `#version 300 es
     out vec3 vNormal;
   #endif
 
+  #ifdef USE_TANGENT
+    in vec4 aTangent;
+    out vec3 vTangent;
+    out vec3 vBitangent;
+  #endif
+
   #ifdef USE_WORLD_POS
     out vec3 vWorldPos;
   #endif
 
+  #ifdef HAS_LOADING_ANIM
+    uniform float loadingT;
+  #endif
 
   void main () {
     vec4 worldPos = u_worldMatrix * aPosition;
@@ -42,14 +54,26 @@ const out = `#version 300 es
       gl_Position = clipPos.xyww;
     #else
       #ifdef USE_UBOS
+        float u_deformAngle = 2.0 - loadingT * 2.0;
+        float ang = (aPosition.x * 0.5 + 0.5) * sin(u_deformAngle) * u_deformAngle;
+        worldPos = doBoxTwist(worldPos, ang);
         gl_Position = projMatrix * viewMatrix * worldPos;
       #else
-        gl_Position = u_projectionViewMatrix * worldPos;
+        #ifdef IS_FULLSCREEN_TRIANGLE
+          gl_Position = aPosition;
+        #else
+          gl_Position = projViewMatrix * worldPos;
+        #endif
       #endif
     #endif
     
     #ifdef USE_NORMAL
-      vNormal = mat3(u_worldMatrix) * aNormal;
+      vNormal = aNormal;
+    #endif
+
+    #ifdef USE_TANGENT
+      vTangent = normalize(aTangent.xyz);
+      vBitangent = cross(vNormal, vTangent) * aTangent.w;
     #endif
 
     #ifdef USE_UV

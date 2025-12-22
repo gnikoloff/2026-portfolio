@@ -14,15 +14,18 @@ function LogoViz() {
 			return;
 		}
 
-		const gl = c.getContext("webgl2");
+		const gl = c.getContext("webgl2", {
+			antialias: false,
+			depth: false,
+		});
 
 		if (gl == null) {
 			setNoGL2Supported(true);
 			return;
 		}
 
-		const w = 500;
-		const h = 180;
+		const w = 300;
+		const h = 120;
 		c.width = w * devicePixelRatio;
 		c.height = h * devicePixelRatio;
 		c.style.width = `${w}px`;
@@ -39,6 +42,7 @@ function LogoViz() {
 		}
 
 		return () => {
+			viz.dispose();
 			cancelAnimationFrame(raf);
 		};
 	}, []);

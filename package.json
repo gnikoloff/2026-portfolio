@@ -19,6 +19,7 @@
 		"@prismicio/next": "^2.0.2",
 		"@prismicio/react": "^3.2.2",
 		"@splidejs/splide": "^4.1.4",
+		"gl-matrix": "^3.4.4",
 		"highlight.js": "^11.11.1",
 		"html-to-formatted-text": "^2.7.0",
 		"image-compare-viewer": "^1.6.2",
@@ -39,6 +40,7 @@
 		"eslint": "^9",
 		"eslint-config-next": "16.0.8",
 		"slice-machine-ui": "^2.20.2",
+		"spectorjs": "^0.9.30",
 		"typescript": "^5"
 	}
 }

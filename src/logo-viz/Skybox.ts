@@ -3,7 +3,7 @@ import { createBox, Drawable } from "@/libs/hwoa-rang-gl2/dist";
 import fragShaderSrc from "./shaders/uberFragShader";
 import vertShaderSrc from "./shaders/uberVertexShader";
 
-const geometry = createBox({ flipUVy: false, useCubemapCrossLayout: true });
+const geometry = createBox({ useCubemapCrossLayout: true });
 
 export default class Skybox extends Drawable {
 	private cameraUBOIndex: number;
@@ -15,7 +15,7 @@ export default class Skybox extends Drawable {
 			USE_UBOS: true,
 			IS_SKYBOX: true,
 			USE_WORLD_POS: true,
-			USE_UV: true,
+			USE_MRT: true,
 		});
 
 		const { vertexCount, vertexStride, interleavedArray, indicesArray } =
@@ -24,7 +24,6 @@ export default class Skybox extends Drawable {
 		this.vertexCount = vertexCount;
 
 		const aPosition = gl.getAttribLocation(this.program, "aPosition");
-		const aUv = gl.getAttribLocation(this.program, "aUv");
 
 		const interleavedBuffer = gl.createBuffer();
 		const indexBuffer = gl.createBuffer();
@@ -42,16 +41,6 @@ export default class Skybox extends Drawable {
 			false,
 			vertexStride * Float32Array.BYTES_PER_ELEMENT,
 			0 * Float32Array.BYTES_PER_ELEMENT,
-		);
-
-		gl.enableVertexAttribArray(aUv);
-		gl.vertexAttribPointer(
-			aUv,
-			2,
-			gl.FLOAT,
-			false,
-			vertexStride * Float32Array.BYTES_PER_ELEMENT,
-			6 * Float32Array.BYTES_PER_ELEMENT,
 		);
 
 		gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
@@ -74,8 +63,8 @@ export default class Skybox extends Drawable {
 		gl.cullFace(gl.FRONT);
 
 		if (this.envTexture != null) {
-			gl.bindTexture(gl.TEXTURE_2D, this.envTexture);
-			// debugger;
+			gl.activeTexture(gl.TEXTURE0);
+			gl.bindTexture(gl.TEXTURE_CUBE_MAP, this.envTexture);
 		}
 
 		gl.uniformBlockBinding(this.program, this.cameraUBOIndex, 0);

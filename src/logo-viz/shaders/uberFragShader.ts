@@ -1,9 +1,15 @@
+import fresnelSchlickRoughness from "./pbr/fresnelSchlickRoughness";
+import lottes from "./tonemapping/lottes";
+import uchimura from "./tonemapping/uchimura";
 import ubosChunk from "./ubos";
 
 const out = `#version 300 es
   precision highp float;
 
   -- DEFINES_HOOK --
+
+  ${uchimura}
+  ${lottes}
 
   #ifdef USE_UBOS
     ${ubosChunk}
@@ -14,6 +20,10 @@ const out = `#version 300 es
   #endif
 
   #ifdef IS_SKYBOX
+    uniform samplerCube u_environmentMap;
+  #endif
+
+  #ifdef IS_TO_CUBEMAP_CONVERT
     uniform sampler2D u_environmentMap;
   #endif
 
@@ -21,14 +31,161 @@ const out = `#version 300 es
     in vec3 vWorldPos;
   #endif
 
-  out vec4 finalColor;
+  #ifdef USE_NORMAL
+    in vec3 vNormal;
+  #endif
+
+  #ifdef USE_TANGENT
+    in vec3 vTangent;
+    in vec3 vBitangent;
+  #endif
+
+  #ifdef USE_PBR
+    // uniform sampler2D u_aoMap;
+    // uniform sampler2D u_heightMap;
+    uniform sampler2D u_albedoMap;
+    uniform sampler2D u_metallicMap;
+    uniform sampler2D u_roughnessMap;
+    uniform sampler2D u_normalMap;
+
+    uniform samplerCube u_irradianceMap;
+    uniform samplerCube u_prefilterMap;
+    uniform sampler2D u_brdfLUT;
+
+    ${fresnelSchlickRoughness}
+  #endif
+
+  #ifdef HAS_LOADING_ANIM
+    uniform float loadingT;
+  #endif
+
+  #ifdef IS_FULLSCREEN_TRIANGLE
+    uniform sampler2D inTexture;
+    uniform sampler2D bloomTexture;
+  #endif
+
+  #ifdef IS_GAUSSIAN_BLUR
+    uniform vec2 u_resolution;
+    uniform vec2 u_direction;
+  #endif
+
+  #ifdef USE_MRT
+    layout(location = 0) out vec4 fragColor;
+    layout(location = 1) out vec4 brightColor;
+  #else
+    out vec4 finalColor;
+  #endif
 
   void main() {
+
     #ifdef IS_SKYBOX
-      vec3 envColor = texture(u_environmentMap, vUv).rgb;
-      finalColor = vec4(envColor, 1.0);
+      vec3 envColor = texture(u_environmentMap, vWorldPos, 2.0).rgb;
+      #ifdef USE_MRT
+        fragColor = vec4(envColor, 1.0);
+        brightColor = vec4(0.0);
+      #else
+        finalColor = vec4(envColor, 1.0);
+      #endif
     #else
-      finalColor = vec4(vUv, 0.0, 1.0);
+      #ifdef IS_TO_CUBEMAP_CONVERT
+        vec3 envColor = texture(u_environmentMap, vUv).rgb;
+        finalColor = vec4(envColor, 1.0);
+      #else
+        #ifdef USE_PBR
+          vec3 N = normalize(vNormal);
+          vec3 T = normalize(vTangent);
+        
+          // Gram-Schmidt orthogonalization
+          T = normalize(T - dot(T, N) * N);
+        
+        // Reconstruct bitangent
+        vec3 B = cross(N, T);
+        
+        mat3 TBN = mat3(T, B, N);
+          vec2 uv = vUv * 1.0;
+          vec3 normalMap = texture(u_normalMap, uv).xyz * 2.0 - 1.0;
+          N = normalize(TBN * normalMap);
+
+          vec3 albedo = texture(u_albedoMap, uv).xyz; // vec3(1.0, 1.0, 1.0);
+          float metallic = texture(u_metallicMap, uv).r;
+          float roughness = texture(u_roughnessMap, uv).r;
+          float ao = 1.0; // texture(u_aoMap, uv).r;
+
+          vec3 V = normalize(cameraPosition - vWorldPos);
+          float NdotV = max(dot(N, V), 0.0000001);
+          vec3 F0 = mix(vec3(0.04), albedo, metallic);
+
+          vec3 Lo = vec3(0.0);
+
+          vec3 F = fresnelSchlickRoughness(NdotV, F0, roughness);
+          vec3 kS = F;
+          vec3 kD = 1.0 - kS;
+          kD *= 1.0 - metallic;
+
+          vec3 irradiance = texture(u_irradianceMap, N).rgb;
+          vec3 diffuse = irradiance * albedo * 1.0; // diffuseEnvLightMixFactor;
+
+          vec3 R = reflect(-V, N);
+          vec3 prefilteredColor = textureLod(u_prefilterMap, R, roughness * MAX_REFLECTION_LOD).rgb;   
+          vec2 envBRDF = texture(u_brdfLUT, vec2(NdotV, roughness)).rg;
+          vec3 specular = prefilteredColor * (F * envBRDF.x + envBRDF.y) * 1.0; // specularEnvLightMixFactor;
+
+          vec3 ambient = (kD * diffuse + specular) * ao;
+  
+          vec3 color = ambient + Lo;
+          fragColor = vec4(color, 1.0);
+
+          #ifdef HAS_LOADING_ANIM
+            fragColor.a = loadingT;
+          #endif
+
+          // fragColor = vec4(N, 1.0);
+          
+
+          float brightness = dot(color, vec3(0.2126, 0.7152, 0.0722)); // Luminance
+          vec3 bloomColor = vec3(0.0);
+          if (brightness > 1.0) { // Threshold - only bright areas
+            bloomColor = color;
+          }
+          brightColor = vec4(bloomColor, 1.0);
+
+        #else
+          #ifdef IS_FULLSCREEN_TRIANGLE
+            #ifdef IS_GAUSSIAN_BLUR
+              vec2 texelSize = 1.0 / u_resolution;
+    
+              // 9-tap Gaussian blur
+              vec4 color = vec4(0.0);
+              
+              color += texture(inTexture, vUv + vec2(-4.0) * u_direction * texelSize) * 0.05;
+              color += texture(inTexture, vUv + vec2(-3.0) * u_direction * texelSize) * 0.09;
+              color += texture(inTexture, vUv + vec2(-2.0) * u_direction * texelSize) * 0.12;
+              color += texture(inTexture, vUv + vec2(-1.0) * u_direction * texelSize) * 0.15;
+              color += texture(inTexture, vUv) * 0.16;
+              color += texture(inTexture, vUv + vec2(1.0) * u_direction * texelSize) * 0.15;
+              color += texture(inTexture, vUv + vec2(2.0) * u_direction * texelSize) * 0.12;
+              color += texture(inTexture, vUv + vec2(3.0) * u_direction * texelSize) * 0.09;
+              color += texture(inTexture, vUv + vec2(4.0) * u_direction * texelSize) * 0.05;
+              
+              finalColor = color;
+            #else
+              vec3 bloomColor = texture(bloomTexture, vUv).rgb;
+              vec3 sceneColor = texture(inTexture, vUv).rgb;
+
+              vec3 color = sceneColor + bloomColor * 0.05;
+              // vec3 color = sceneColor + bloomColor * 0.06;
+
+              finalColor.rgb = lottes(color);
+              finalColor.rgb = pow(color, vec3(1.0 / 2.2));
+              finalColor.a = 1.0;
+
+              // finalColor = vec4(bloomColor, 1.0);
+            #endif
+          #else
+            finalColor = vec4(vUv, 0.0, 1.0);
+          #endif
+        #endif
+      #endif
     #endif
   }
 `;
