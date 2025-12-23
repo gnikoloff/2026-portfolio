@@ -1,6 +1,7 @@
 .root {
 	font-size: 3rem;
 	margin: 4rem 0;
+	line-height: 1;
 }
 
 .root.noMarginTop {

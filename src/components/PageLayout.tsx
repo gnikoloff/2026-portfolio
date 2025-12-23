@@ -3,7 +3,6 @@
 import { useUIStore } from "@/store/uiStore";
 import { useEffect, useRef } from "react";
 import AppFooter from "./AppFooter";
-import AppHeader from "./AppHeader";
 
 import styles from "./PageLayout.module.css";
 
@@ -21,31 +20,30 @@ function PageLayout({
 		setNavigationInited,
 	} = useUIStore();
 
-	const headerRef = useRef<HTMLDivElement>(null);
+	// const headerRef = useRef<HTMLDivElement>(null);
 	const bodyRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
-		if (!(headerRef.current && bodyRef.current)) {
+		if (!bodyRef.current) {
 			return;
 		}
 		if (initedNavigation) {
 			return;
 		}
-		const headerBBox = headerRef.current.getBoundingClientRect();
+		// const headerBBox = headerRef.current.getBoundingClientRect();
 		const bodyBBox = bodyRef.current.getBoundingClientRect();
 
-		const headerBotEdge = headerBBox.bottom;
+		const headerBotEdge = 0; // headerBBox.bottom;
 		const mainTopEdge = bodyBBox.top;
 		const mid = (headerBotEdge + mainTopEdge) * 0.5 + pageYOffset;
 
-		setInitNavigationY(mid);
-		setInitNavigationX(bodyBBox.left);
+		setInitNavigationY(30);
+		setInitNavigationX(innerWidth / 2 - 712 / 2);
 		setNavigationInited(true);
 	}, []);
 
 	return (
 		<div>
-			<AppHeader ref={headerRef} />
 			<main
 				id="app-main"
 				className={`container ${hasMainPaddingBottom ? styles.paddingBottom : ""}`}

@@ -1,6 +1,10 @@
+"use client";
+
 // import LogoViz from "@/logo-viz/LogoViz";
 import dynamic from "next/dynamic";
 import { forwardRef } from "react";
+
+import styles from "./AppHeader.module.css";
 
 const LogoViz = dynamic(() => import("@/logo-viz/LogoViz"), {
 	ssr: false,
@@ -10,7 +14,18 @@ const AppHeader = forwardRef<HTMLElement>((props, ref) => {
 	return (
 		<header ref={ref} id="app-header" className={`tight-container`}>
 			{/* <Logo /> */}
-			<LogoViz />
+			<div className={styles.headerWrapper}>
+				<div
+					className={styles.logoWrapper}
+					style={{ width: `300px`, height: `120px` }}
+				>
+					<LogoViz />
+				</div>
+				{/* <p className={styles.description}>
+					A programmer with deep experience in computer graphics, user
+					interfaces, and GPU programming.
+				</p> */}
+			</div>
 		</header>
 	);
 });

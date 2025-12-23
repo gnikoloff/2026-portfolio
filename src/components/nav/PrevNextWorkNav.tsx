@@ -16,16 +16,16 @@ function PrevNextWorkNav({
 }) {
 	return (
 		<div className={styles.root}>
-			<Link className={`${styles.link} btn`} href={prevLink}>
+			<Link className={`${styles.link} btn-simple`} href={prevLink}>
 				<div className={"sub-nav-container"}>
-					<i className={styles.prevArrow}>←</i>
+					<i className={`${styles.arrow} ${styles.prevArrow}`}>←</i>
 					{prevTitle}
 				</div>
 			</Link>
-			<Link className={`${styles.link} btn`} href={nextLink}>
+			<Link className={`${styles.link} btn-simple`} href={nextLink}>
 				<div className={"sub-nav-container"}>
 					{nextTitle}
-					<i className={styles.nextArrow}>→</i>
+					<i className={`${styles.arrow} ${styles.nextArrow}`}>→</i>
 				</div>
 			</Link>
 		</div>

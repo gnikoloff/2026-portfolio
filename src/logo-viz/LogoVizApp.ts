@@ -256,7 +256,10 @@ export default class LogoVizApp {
 
 		const gl = this.gl;
 
-		const dt = ts - this.oldTime;
+		let dt = ts - this.oldTime;
+		if (dt > 0.5) {
+			dt = 0.5;
+		}
 		this.oldTime = ts;
 
 		// const error = gl.getError();

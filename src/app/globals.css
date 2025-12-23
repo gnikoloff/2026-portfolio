@@ -4,7 +4,9 @@
 
 	--border-radius: 26px;
 
+	--subtle-border-color: rgba(0, 0, 0, 0.5);
 	--subtler-border-color: rgba(0, 0, 0, 0.12);
+	--subtlerer-border-color: rgba(0, 0, 0, 0.06);
 	--error-color: red;
 	--success-color: green;
 
@@ -23,6 +25,9 @@
 		--foreground-secondary: #aaa;
 		--subtle-border-color: rgba(255, 255, 255, 0.5);
 		--subtler-border-color: rgba(255, 255, 255, 0.12);
+		--subtlerer-border-color: rgba(255, 255, 255, 0.06);
+
+		--subtle-border-color-dark: rgba(0, 0, 0, 0.5);
 	}
 }
 
@@ -75,11 +80,15 @@ button {
 }
 
 #app-header {
-	padding-bottom: 10rem;
+	/* height: 120px; */
+	margin-top: 180px;
+	margin-bottom: 60px;
+	display: flex;
+	justify-content: center;
 }
 
 #app-main {
-	padding-top: 10rem;
+	/* padding-top: 10rem; */
 }
 
 .dragging {
@@ -204,6 +213,32 @@ h6 {
 	padding: 0 1rem;
 }
 
+.btn-simple {
+	position: relative;
+}
+
+.btn-simple:before {
+	content: "";
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	height: 2px;
+	background-color: var(--subtler-border-color);
+	transform-origin: 100% 0;
+	transform: scaleX(0);
+	transition: transform 0.15s ease-in-out;
+}
+
+.btn-simple:hover {
+	color: var(--foreground);
+}
+
+.btn-simple:hover:before {
+	transform: scaleX(1);
+	transform-origin: 0 0;
+}
+
 .btn {
 	transition:
 		background-color 0.1s ease-in-out,
@@ -214,6 +249,10 @@ h6 {
 .btn.active {
 	background-color: var(--foreground);
 	color: var(--background);
+}
+
+.link-simple:hover {
+	color: white;
 }
 
 @media screen and (min-width: 960px) {

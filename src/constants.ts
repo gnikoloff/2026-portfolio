@@ -28,3 +28,6 @@ export const CONTACT_FORM_ENDPOINT = "/api/submit-form";
 export const CONTACT_INQUIRY_PROJECT = "Project";
 export const CONTACT_INQUIRY_COLLABORATION = "Collaboration";
 export const CONTACT_INQUIRY_GENERAL_INQUIRY = "General Inquiry";
+
+export const LOGO_ANIM_WIDTH = 300;
+export const LOGO_ANIM_HEIGHT = 120;

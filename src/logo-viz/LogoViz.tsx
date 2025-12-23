@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import LogoVizApp from "./LogoVizApp";
 
+import { LOGO_ANIM_HEIGHT, LOGO_ANIM_WIDTH } from "@/constants";
 import styles from "./LogoVizApp.module.css";
 
 function LogoViz() {
@@ -25,12 +26,10 @@ function LogoViz() {
 			return;
 		}
 
-		const w = 300;
-		const h = 120;
-		c.width = w * devicePixelRatio;
-		c.height = h * devicePixelRatio;
-		c.style.width = `${w}px`;
-		c.style.height = `${h}px`;
+		c.width = LOGO_ANIM_WIDTH * devicePixelRatio;
+		c.height = LOGO_ANIM_HEIGHT * devicePixelRatio;
+		c.style.width = `${LOGO_ANIM_WIDTH}px`;
+		c.style.height = `${LOGO_ANIM_HEIGHT}px`;
 
 		let viz: LogoVizApp | null = null;
 		let raf: number;
@@ -69,7 +68,9 @@ function LogoViz() {
 	}, []);
 
 	return (
-		<div className={`${styles.root} ${loadingAnim ? styles.loading : ""}`}>
+		<div
+			className={`${styles.root} ${loadingAnim ? styles.loading : ""} ${noGL2Supported ? styles.noGL : ""}`}
+		>
 			<canvas
 				id="logo"
 				ref={canvasRef}

@@ -31,7 +31,7 @@ function AboutNavigation() {
 			<ul className={"navList smaller"}>
 				<li>
 					<a
-						className={isIntro ? styles.active : ""}
+						className={`${isIntro ? styles.active : ""} link-simple`}
 						href={`#${ABOUT_SECTION_INTRO}`}
 					>
 						Intro
@@ -39,7 +39,7 @@ function AboutNavigation() {
 				</li>
 				<li>
 					<a
-						className={isSkills ? styles.active : ""}
+						className={`${isSkills ? styles.active : ""} link-simple`}
 						href={`#${ABOUT_SECTION_SKILLS}`}
 					>
 						Skills
@@ -47,7 +47,7 @@ function AboutNavigation() {
 				</li>
 				<li>
 					<a
-						className={isExperience ? styles.active : ""}
+						className={`${isExperience ? styles.active : ""} link-simple`}
 						href={`#${ABOUT_SECTION_EXPERIENCE}`}
 					>
 						Experience

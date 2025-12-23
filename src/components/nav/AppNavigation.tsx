@@ -86,9 +86,9 @@ export default function AppNavigation() {
 		}
 		const rect = navContainerRef.current.getBoundingClientRect();
 		mouseRef.current.x = initNavigationX;
-		mouseRef.current.y = initNavigationY - rect.height * 0.5 + 200;
+		mouseRef.current.y = initNavigationY;
 		mouseTargetRef.current.x = initNavigationX;
-		mouseTargetRef.current.y = initNavigationY - rect.height * 0.5 + 200;
+		mouseTargetRef.current.y = initNavigationY;
 	}, [initNavigationX, initNavigationY]);
 
 	// Continuous animation loop - runs independently of dragging

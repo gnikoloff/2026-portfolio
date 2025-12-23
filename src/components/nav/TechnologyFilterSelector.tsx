@@ -16,23 +16,25 @@ function TechnologyFilterSelector({
 	const isActive = val !== "";
 
 	return (
-		<select
-			id="tech-select"
-			className={`${styles.input} ${isActive ? styles.inputFocus : ""} btn ${isActive ? "active" : ""}`}
-			value={val}
-			onChange={onChange}
-		>
-			<option value="">All Technologies</option>
-			{Object.entries(technologiesGrouped).map(([category, techs]) => (
-				<optgroup key={category} label={category}>
-					{techs.map((tech) => (
-						<option key={tech.name} value={tech.name}>
-							{tech.name}
-						</option>
-					))}
-				</optgroup>
-			))}
-		</select>
+		<div className={`${styles.root} btn-simple`}>
+			<select
+				id="tech-select"
+				className={`${styles.input} ${isActive ? styles.inputFocus : ""} ${isActive ? "active" : ""}`}
+				value={val}
+				onChange={onChange}
+			>
+				<option value="">All Technologies</option>
+				{Object.entries(technologiesGrouped).map(([category, techs]) => (
+					<optgroup key={category} label={category}>
+						{techs.map((tech) => (
+							<option key={tech.name} value={tech.name}>
+								{tech.name}
+							</option>
+						))}
+					</optgroup>
+				))}
+			</select>
+		</div>
 	);
 }
 

@@ -15,10 +15,21 @@
 	justify-content: flex-end;
 }
 
+.arrow {
+	transition: transform 0.1s ease-out;
+}
+
 .prevArrow {
 	margin-right: 1rem;
 }
 
 .nextArrow {
 	margin-left: 1rem;
+}
+
+.link:hover .prevArrow {
+	transform: translateX(-1px);
+}
+.link:hover .nextArrow {
+	transform: translateX(1px);
 }

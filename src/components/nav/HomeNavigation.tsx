@@ -85,7 +85,7 @@ export default function HomeNavigation() {
 			)} */}
 			<button
 				onClick={handleClearFilters}
-				className={`${styles.clearButton} ${hasActiveFilters ? "active" : ""} btn`}
+				className={`${styles.clearButton} ${hasActiveFilters ? styles.clearActive : ""}`}
 			>
 				Clear Filters
 			</button>

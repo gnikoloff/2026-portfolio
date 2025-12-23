@@ -4,7 +4,9 @@ import { NuqsAdapter } from "nuqs/adapters/next/app";
 import "./globals.css";
 import "./typeset.min.css";
 
+import AppHeader from "@/components/AppHeader";
 import AppNavigation from "@/components/nav/AppNavigation";
+import ScrollToTop from "@/components/ScrollToTop";
 import {
 	ABOUT_CUSTOM_TYPE,
 	HOME_CUSTOM_TYPE,
@@ -44,6 +46,7 @@ export default async function RootLayout({
 	return (
 		<html lang="en">
 			<body>
+				<ScrollToTop />
 				<DataProvider
 					data={{
 						home,
@@ -55,6 +58,7 @@ export default async function RootLayout({
 				>
 					<NuqsAdapter>
 						<AppNavigation />
+						<AppHeader />
 						{children}
 					</NuqsAdapter>
 				</DataProvider>

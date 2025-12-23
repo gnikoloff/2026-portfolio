@@ -1,0 +1,15 @@
+.headerWrapper {
+	font-size: 1rem;
+	display: flex;
+	/* padding: 1rem;
+	border: 1px solid var(--subtler-border-color); */
+}
+
+.logoWrapper {
+	height: 120px;
+	margin-right: 1rem;
+}
+
+.description {
+	/* max-width: 320px; */
+}

@@ -16,21 +16,23 @@ function YearFilterSelector({
 	const isActive = val !== "";
 
 	return (
-		<select
-			id="year-select"
-			className={`${styles.input} ${isActive ? styles.inputFocus : ""} btn ${isActive ? "active" : ""}`}
-			value={val}
-			onChange={handleYearChange}
-		>
-			<option value="">All Years</option>
-			{[...years]
-				.sort((a, b) => b - a)
-				.map((year) => (
-					<option key={year} value={year}>
-						{year}
-					</option>
-				))}
-		</select>
+		<div className={`${styles.root} btn-simple`}>
+			<select
+				id="year-select"
+				className={`${styles.input} ${isActive ? styles.inputFocus : ""} ${isActive ? "active" : ""}`}
+				value={val}
+				onChange={handleYearChange}
+			>
+				<option value="">All Years</option>
+				{[...years]
+					.sort((a, b) => b - a)
+					.map((year) => (
+						<option key={year} value={year}>
+							{year}
+						</option>
+					))}
+			</select>
+		</div>
 	);
 }
 

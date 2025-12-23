@@ -22,3 +22,8 @@
 	color: var(--nav-secondary-color);
 	cursor: pointer;
 }
+
+.clearButton.clearActive {
+	background-color: var(--foreground);
+	color: var(--background);
+}

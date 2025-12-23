@@ -15,19 +15,21 @@ function LanguageFilterSelector({
 	const val = filters.languages[0] || "";
 	const isActive = val !== "";
 	return (
-		<select
-			id="language-select"
-			className={`${styles.input} ${isActive ? styles.inputFocus : ""} btn ${isActive ? "active" : ""}`}
-			value={val}
-			onChange={onChange}
-		>
-			<option value="">All Languages</option>
-			{languages.map((lang) => (
-				<option key={lang.name} value={lang.name}>
-					{lang.name}
-				</option>
-			))}
-		</select>
+		<div className={`${styles.root} btn-simple`}>
+			<select
+				id="language-select"
+				className={`${styles.input} ${isActive ? styles.inputFocus : ""} ${isActive ? "active" : ""}`}
+				value={val}
+				onChange={onChange}
+			>
+				<option value="">All Languages</option>
+				{languages.map((lang) => (
+					<option key={lang.name} value={lang.name}>
+						{lang.name}
+					</option>
+				))}
+			</select>
+		</div>
 	);
 }
 
