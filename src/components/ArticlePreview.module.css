@@ -5,6 +5,7 @@
 .title {
 	font-size: 1.6rem;
 	line-height: 2.1rem;
+	text-decoration: underline;
 }
 
 .date {

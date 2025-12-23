@@ -1,3 +1,5 @@
+export const BASE_URL = "https://georgi-nikolov.com";
+
 export const HOME_CUSTOM_TYPE = "home";
 
 export const WORKS_CUSTOM_TYPE = "work";
@@ -28,6 +30,10 @@ export const CONTACT_FORM_ENDPOINT = "/api/submit-form";
 export const CONTACT_INQUIRY_PROJECT = "Project";
 export const CONTACT_INQUIRY_COLLABORATION = "Collaboration";
 export const CONTACT_INQUIRY_GENERAL_INQUIRY = "General Inquiry";
+
+// Misc
+
+export const HTML_SITEMAP_URL_SEGMENT_NAME = "html-sitemap";
 
 export const LOGO_ANIM_WIDTH = 300;
 export const LOGO_ANIM_HEIGHT = 120;
