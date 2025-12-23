@@ -1,0 +1,13 @@
+.root {
+	text-align: center;
+	padding: 2rem 0 8rem;
+}
+
+.root a {
+	text-decoration: underline;
+}
+
+.title {
+	font-size: 8rem;
+	line-height: 1;
+}
