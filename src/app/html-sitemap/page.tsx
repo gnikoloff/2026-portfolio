@@ -22,7 +22,7 @@ async function HTMLSitemap() {
 		<PageLayout>
 			<div className="tight-container typeset">
 				<h1>HTML Sitemap</h1>
-				<h2>Root Pages</h2>
+				<h2 id="root-pages">Root Pages</h2>
 				<ul>
 					<li>
 						<Link href={`/`}>Works</Link>
@@ -40,7 +40,7 @@ async function HTMLSitemap() {
 						<Link href={`/${CONTACT_URL_SEGMENT_NAME}`}>Contact</Link>
 					</li>
 				</ul>
-				<h2>Works</h2>
+				<h2 id="works">Works</h2>
 				<ul>
 					{[...works]
 						.sort(
@@ -61,7 +61,7 @@ async function HTMLSitemap() {
 							</li>
 						))}
 				</ul>
-				<h2>Speaking</h2>
+				<h2 id="speaking">Speaking</h2>
 				<ul>
 					{[...speakingWorks]
 						.sort(
@@ -82,7 +82,7 @@ async function HTMLSitemap() {
 							</li>
 						))}
 				</ul>
-				<h2>Writing</h2>
+				<h2 id="writing">Writing</h2>
 				<ul>
 					{[...articles]
 						.sort(

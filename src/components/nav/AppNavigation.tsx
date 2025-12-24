@@ -3,6 +3,9 @@
 import {
 	ABOUT_URL_SEGMENT_NAME,
 	CONTACT_URL_SEGMENT_NAME,
+	HTML_SITEMAP_URL_SEGMENT_NAME,
+	IMPRINT_URL_SEGMENT_NAME,
+	PRIVACY_POLICY_URL_SEGMENT_NAME,
 	SPEAKING_URL_SEGMENT_NAME,
 	WORKS_URL_SEGMENT_NAME,
 	WRITING_URL_SEGMENT_NAME,
@@ -17,7 +20,10 @@ import AboutNavigation from "./AboutNavigation";
 import styles from "./AppNavigation.module.css";
 import BlogNavigation from "./BlogNavigation";
 import HomeNavigation from "./HomeNavigation";
+import HTMLSitemapNavigation from "./HTMLSitemapNavigation";
+import ImprintNavigation from "./ImprintNavigation";
 import PageNavigation from "./PageNavigation";
+import PrivacyPolicyNavigation from "./PrivacyPolicyNavigation";
 import SingleBlogNavigation from "./SingleBlogNavigation";
 import SingleSpeakingWorkNavigation from "./SingleSpeakingWorkNavigation";
 import SpeakingNavigation from "./SpeakingNavigation";
@@ -32,6 +38,10 @@ const getNavType = (pathname: string): NavType => {
 	if (pathname.includes(WORKS_URL_SEGMENT_NAME)) return "work";
 	if (pathname.includes(ABOUT_URL_SEGMENT_NAME)) return "about";
 	if (pathname.includes(CONTACT_URL_SEGMENT_NAME)) return "contact";
+	if (pathname.includes(HTML_SITEMAP_URL_SEGMENT_NAME)) return "html-sitemap";
+	if (pathname.includes(PRIVACY_POLICY_URL_SEGMENT_NAME))
+		return "privacy-policy";
+	if (pathname.includes(IMPRINT_URL_SEGMENT_NAME)) return "imprint";
 	return "home";
 };
 
@@ -214,6 +224,12 @@ export default function AppNavigation() {
 				return <SpeakingNavigation />;
 			case "speaking-single":
 				return <SingleSpeakingWorkNavigation />;
+			case "html-sitemap":
+				return <HTMLSitemapNavigation />;
+			case "privacy-policy":
+				return <PrivacyPolicyNavigation />;
+			case "imprint":
+				return <ImprintNavigation />;
 		}
 	};
 

@@ -3,12 +3,17 @@
 import { TableContentsEntry } from "@/types";
 import { useEffect, useState } from "react";
 
-import { WRITING_URL_SEGMENT_NAME } from "@/constants";
 import Link from "next/link";
 import inputStyles from "./FilterSelector.module.css";
 import styles from "./TableContentsSelect.module.css";
 
-function TableContentsSelect({ entries }: { entries: TableContentsEntry[] }) {
+function TableContentsSelect({
+	entries,
+	backURL = undefined,
+}: {
+	entries: TableContentsEntry[];
+	backURL?: string;
+}) {
 	const [selectedId, setSelectedId] = useState<string>("");
 
 	useEffect(() => {
@@ -82,9 +87,11 @@ function TableContentsSelect({ entries }: { entries: TableContentsEntry[] }) {
 
 	return (
 		<div className={`${styles.root}`}>
-			<Link href={`/${WRITING_URL_SEGMENT_NAME}`} className="btn-simple">
-				<div className={`${styles.backWrapper} sub-nav-container`}>Back</div>
-			</Link>
+			{backURL ? (
+				<Link href={backURL} className="btn-simple">
+					<div className={`${styles.backWrapper} sub-nav-container`}>Back</div>
+				</Link>
+			) : null}
 
 			<div
 				className={`${styles.selectWrapper} ${entries.length === 0 ? "" : styles.hoverable}`}

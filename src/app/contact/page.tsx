@@ -6,6 +6,7 @@ import {
 	CONTACT_INQUIRY_COLLABORATION,
 	CONTACT_INQUIRY_GENERAL_INQUIRY,
 	CONTACT_INQUIRY_PROJECT,
+	SENT_MAIL_SUCCESS_TIMEOUT_MSG_MS,
 } from "@/constants";
 import { FormEvent, useState } from "react";
 
@@ -52,7 +53,7 @@ function Contact() {
 		setShowSendStatusMsg(true);
 		setTimeout(() => {
 			setShowSendStatusMsg(false);
-		}, 2800);
+		}, SENT_MAIL_SUCCESS_TIMEOUT_MSG_MS);
 	};
 
 	const form = (

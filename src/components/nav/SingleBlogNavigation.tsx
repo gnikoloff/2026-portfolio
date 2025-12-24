@@ -1,3 +1,4 @@
+import { WRITING_URL_SEGMENT_NAME } from "@/constants";
 import { useAppData } from "@/contexts/DataContext";
 import { TableContentsEntry } from "@/types";
 import { usePathname } from "next/navigation";
@@ -12,7 +13,12 @@ function SingleBlogNavigation() {
 	if (
 		!(page && page.data.table_of_contents && page.data.table_of_contents[0])
 	) {
-		return <TableContentsSelect entries={[]} />;
+		return (
+			<TableContentsSelect
+				entries={[]}
+				backURL={`/${WRITING_URL_SEGMENT_NAME}`}
+			/>
+		);
 	}
 
 	const entries: TableContentsEntry[] = JSON.parse(
@@ -21,7 +27,10 @@ function SingleBlogNavigation() {
 
 	return (
 		<div>
-			<TableContentsSelect entries={entries} />
+			<TableContentsSelect
+				entries={entries}
+				backURL={`/${WRITING_URL_SEGMENT_NAME}`}
+			/>
 		</div>
 	);
 }

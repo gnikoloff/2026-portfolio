@@ -33,11 +33,15 @@ export const CONTACT_INQUIRY_GENERAL_INQUIRY = "General Inquiry";
 
 // Misc
 
+export const HTML_SITEMAP_URL_SEGMENT_NAME = "html-sitemap";
+export const PRIVACY_POLICY_URL_SEGMENT_NAME = "privacy-policy";
+export const IMPRINT_URL_SEGMENT_NAME = "imprint";
+
+export const SENT_MAIL_SUCCESS_TIMEOUT_MSG_MS = 4000;
+
 export const QUERY_PARAM_YEAR = "year";
 export const QUERY_PARAM_TECHNOLOGY = "technology";
 export const QUERY_PARAM_LANGUAGE = "language";
-
-export const HTML_SITEMAP_URL_SEGMENT_NAME = "html-sitemap";
 
 export const LOGO_ANIM_WIDTH = 300 * 0.75;
 export const LOGO_ANIM_HEIGHT = 120 * 0.75;

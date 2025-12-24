@@ -4,7 +4,7 @@
 }
 
 .root a {
-	text-decoration: underline;
+	/* text-decoration: underline; */
 }
 
 .header {
@@ -14,4 +14,8 @@
 
 .footer {
 	padding-top: 16rem;
+}
+
+.copyright {
+	color: var(--foreground-secondary);
 }

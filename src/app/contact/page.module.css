@@ -53,7 +53,7 @@
 }
 
 .sendBtn {
-	background-color: var(--confirm-btn-background);
+	background-color: var(--subtler-border-color);
 	padding: 1rem;
 	border-radius: var(--border-radius);
 	color: white;

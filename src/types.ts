@@ -29,7 +29,10 @@ export type NavType =
 	| "blog-single"
 	| "work"
 	| "about"
-	| "contact";
+	| "contact"
+	| "html-sitemap"
+	| "privacy-policy"
+	| "imprint";
 
 export type WorkTag =
 	| ""
