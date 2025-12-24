@@ -12,6 +12,43 @@
           "label": "slug"
         }
       },
+      "article_technologies": {
+        "type": "Group",
+        "config": {
+          "label": "Article Technologies",
+          "repeat": true,
+          "fields": {
+            "article_tech": {
+              "type": "Select",
+              "config": {
+                "label": "Article Tech",
+                "placeholder": "",
+                "options": [
+                  "Javascript",
+                  "Swift",
+                  "WebGL",
+                  "WebGPU",
+                  "Metal",
+                  "HTML",
+                  "CSS",
+                  "SVG",
+                  "Three.js",
+                  "React"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "table_of_contents": {
+        "type": "StructuredText",
+        "config": {
+          "label": "Table of Contents",
+          "placeholder": "",
+          "allowTargetBlank": true,
+          "multi": "preformatted"
+        }
+      },
       "external_resource_name": {
         "type": "Text",
         "config": {

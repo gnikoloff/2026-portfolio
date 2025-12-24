@@ -17,6 +17,7 @@ export default async function Work({ params }: { params: Promise<Params> }) {
 	const html = asHTML(page.data.project_body, { serializer: htmlSerializer });
 	const [prevWork, nextWork] = getPrevNextWorks(works, uid);
 	const [prevWorkLink, nextWorkLink] = getPrevNextWorkLinks(works, uid);
+
 	return (
 		<PageLayout>
 			<div className={`${styles.main} tight-container`}>

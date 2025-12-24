@@ -38,7 +38,7 @@ function PageLayout({
 		const mid = (headerBotEdge + mainTopEdge) * 0.5 + pageYOffset;
 
 		setInitNavigationY(30);
-		setInitNavigationX(innerWidth / 2 - 712 / 2);
+		setInitNavigationX(innerWidth / 2 - 718 / 2);
 		setNavigationInited(true);
 	}, []);
 

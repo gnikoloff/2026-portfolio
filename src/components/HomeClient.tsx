@@ -3,7 +3,7 @@
 
 import YearWorkContainer from "@/components/YearWorkContainer";
 import { useAppData } from "@/contexts/DataContext";
-import { useHomeFilterStore } from "@/store/filterStore";
+import { useHomeFilterStore } from "@/store/homeFilterStore";
 import { FilterState } from "@/types";
 import {
 	filterWorks,
@@ -11,6 +11,7 @@ import {
 	groupWorksByYear,
 } from "@/utils/filterWorks";
 import { useEffect, useRef } from "react";
+import NoResults from "./NoResults";
 import PageLayout from "./PageLayout";
 
 interface HomeClientProps {
@@ -51,9 +52,7 @@ export default function HomeClient({ initialFilters }: HomeClientProps) {
 	return (
 		<PageLayout hasMainPaddingBottom={true}>
 			{filteredWorks.length === 0 ? (
-				<div className="tight-container">
-					<p>No projects match your filters.</p>
-				</div>
+				<NoResults />
 			) : (
 				<>
 					{sortedYears.map((year, i) => (

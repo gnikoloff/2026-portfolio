@@ -120,9 +120,59 @@ export type AboutDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithoutUID<Simplify<AboutDocumentData>, "about", Lang>;
 
 /**
+ * Item in *Blog → Article Technologies*
+ */
+export interface BlogDocumentDataArticleTechnologiesItem {
+  /**
+   * Article Tech field in *Blog → Article Technologies*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **API ID Path**: blog.article_technologies[].article_tech
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  article_tech: prismic.SelectField<
+    | "Javascript"
+    | "Swift"
+    | "WebGL"
+    | "WebGPU"
+    | "Metal"
+    | "HTML"
+    | "CSS"
+    | "SVG"
+    | "Three.js"
+    | "React"
+  >;
+}
+
+/**
  * Content for Blog documents
  */
 interface BlogDocumentData {
+  /**
+   * Article Technologies field in *Blog*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: blog.article_technologies[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  article_technologies: prismic.GroupField<
+    Simplify<BlogDocumentDataArticleTechnologiesItem>
+  >;
+
+  /**
+   * Table of Contents field in *Blog*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: blog.table_of_contents
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  table_of_contents: prismic.RichTextField;
+
   /**
    * External Resource Name field in *Blog*
    *
@@ -774,6 +824,7 @@ declare module "@prismicio/client" {
       AboutDocumentData,
       BlogDocument,
       BlogDocumentData,
+      BlogDocumentDataArticleTechnologiesItem,
       CvDocument,
       CvDocumentData,
       CvDocumentDataWorkItem,

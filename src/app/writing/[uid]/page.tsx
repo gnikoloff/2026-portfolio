@@ -19,15 +19,18 @@ export default async function WritingWork({
 	const html = asHTML(page.data.body, { serializer: htmlSerializer });
 
 	return (
-		<div className="tight-container">
-			{/* <SinglePageHeader
+		<>
+			<div className="tight-container">
+				{/* <SinglePageHeader
 				title={page.data.title}
 				// type={page.data.}
 				year={page.data.year}
 			/> */}
-			<main className={styles.main}>
-				<ArticleClient title={page.data.title} html={html} />
-			</main>
-		</div>
+
+				<main className={styles.main}>
+					<ArticleClient title={page.data.title} html={html} />
+				</main>
+			</div>
+		</>
 	);
 }

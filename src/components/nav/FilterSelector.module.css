@@ -2,7 +2,41 @@
 	height: 100%;
 }
 
+.wrapper {
+	display: flex;
+	padding: 0;
+	font-size: 16px;
+}
+
+.filterGroup {
+	/* margin-right: 1rem; */
+	flex: 1;
+	height: 100%;
+}
+
+.filterGroup:last-of-type {
+	margin-right: 0;
+}
+
+.clearButton {
+	height: 100%;
+	padding: 0 1rem;
+	border: none;
+	background-color: transparent;
+	color: var(--nav-secondary-color);
+	cursor: not-allowed;
+}
+
+.clearButton.clearActive {
+	background-color: var(--foreground);
+	color: var(--background);
+	cursor: pointer;
+}
+
 .input {
+	display: flex;
+	align-items: center;
+
 	width: 100%;
 	height: 100%;
 	border: none;
@@ -17,7 +51,12 @@
 	cursor: pointer;
 }
 
-.input:not(.inputFocus):hover {
+.input.noArrow {
+	cursor: unset;
+	background-image: none !important;
+}
+
+.input:not(.inputFocus):not(.noArrow):hover {
 	color: white;
 	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23fff' d='M6 9L1 4h10z'/%3E%3C/svg%3E") !important;
 }

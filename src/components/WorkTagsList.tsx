@@ -1,19 +1,26 @@
 "use client";
 
-import { useHomeFilterStore } from "@/store/filterStore";
-import { Tag } from "@/types";
+import { WRITING_URL_SEGMENT_NAME } from "@/constants";
+import { FilterState } from "@/types";
 import { usePathname } from "next/navigation";
 import styles from "./WorkTagsList.module.css";
 
-export default function WorkTagsList({ tags }: { tags: string[] }) {
+export default function WorkTagsList({
+	tags,
+	filters = undefined,
+}: {
+	tags: string[];
+	filters?: FilterState;
+}) {
 	const pathname = usePathname();
-	const filters = useHomeFilterStore((state) => state.filters);
 	return (
 		<ul className={styles.root}>
 			{tags.map((tech) => {
 				const isMarked =
-					(pathname === "/" && filters.languages.includes(tech as Tag)) ||
-					filters.technologies.includes(tech as Tag);
+					(filters &&
+						(pathname === "/" || pathname === `/${WRITING_URL_SEGMENT_NAME}`) &&
+						filters.languages.some((lang) => lang === tech)) ||
+					(filters && filters.technologies.some((lang) => lang === tech));
 				return (
 					<li
 						className={`${styles.listItem} ${isMarked ? styles.marked : ""}`}

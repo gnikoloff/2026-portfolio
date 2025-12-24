@@ -15,9 +15,10 @@ import SingleWorkNavigation from "../nav/SingleWorkNavigation";
 import SocialList from "../SocialList";
 import AboutNavigation from "./AboutNavigation";
 import styles from "./AppNavigation.module.css";
-import BlogSingleNavigation from "./BlogSingleNavigation";
+import BlogNavigation from "./BlogNavigation";
 import HomeNavigation from "./HomeNavigation";
 import PageNavigation from "./PageNavigation";
+import SingleBlogNavigation from "./SingleBlogNavigation";
 import SingleSpeakingWorkNavigation from "./SingleSpeakingWorkNavigation";
 
 const getNavType = (pathname: string): NavType => {
@@ -204,12 +205,15 @@ export default function AppNavigation() {
 				);
 			case "about":
 				return <AboutNavigation />;
+			case "blog":
+				return <BlogNavigation />;
 			case "blog-single":
-				return <BlogSingleNavigation />;
+				return <SingleBlogNavigation />;
+			case "speaking":
+				return <SpeakingNavigation />;
 			case "speaking-single":
 				return <SingleSpeakingWorkNavigation />;
 		}
-		return <h4>Irem lopsum</h4>;
 	};
 
 	return (

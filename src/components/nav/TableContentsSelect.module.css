@@ -1,0 +1,42 @@
+.root {
+	display: flex;
+}
+
+.selectContainer {
+	height: 100%;
+}
+
+.selectWrapper {
+	position: relative;
+	flex: 1;
+	cursor: not-allowed;
+}
+
+.selectWrapper.hoverable {
+	cursor: unset;
+}
+
+.selectWrapper.hoverable:hover .icon {
+	stroke: var(--foreground);
+}
+
+.backWrapper {
+	margin: 0;
+	border-right: 1px solid var(--subtler-border-color);
+}
+
+.icon {
+	position: absolute;
+	top: 15px;
+	left: 12px;
+	width: 18px;
+	height: 18px;
+	stroke: var(--foreground-secondary);
+	pointer-events: none;
+	transition: stroke 0.15s ease-in-out;
+}
+
+.input {
+	padding-left: 40px;
+	border: none;
+}

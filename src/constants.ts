@@ -35,5 +35,5 @@ export const CONTACT_INQUIRY_GENERAL_INQUIRY = "General Inquiry";
 
 export const HTML_SITEMAP_URL_SEGMENT_NAME = "html-sitemap";
 
-export const LOGO_ANIM_WIDTH = 300;
-export const LOGO_ANIM_HEIGHT = 120;
+export const LOGO_ANIM_WIDTH = 300 * 0.75;
+export const LOGO_ANIM_HEIGHT = 120 * 0.75;

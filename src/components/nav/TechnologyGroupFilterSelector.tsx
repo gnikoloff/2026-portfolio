@@ -3,12 +3,12 @@ import { ChangeEvent } from "react";
 
 import styles from "./FilterSelector.module.css";
 
-function TechnologyFilterSelector({
-	technologies,
+function TechnologyGroupFilterSelector({
+	technologiesGrouped,
 	filters,
 	onChange,
 }: {
-	technologies: WorkTechTag[];
+	technologiesGrouped: Record<string, WorkTechTag[]>;
 	filters: FilterState;
 	onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
 }) {
@@ -24,16 +24,20 @@ function TechnologyFilterSelector({
 				onChange={onChange}
 			>
 				<option value="">All Technologies</option>
-				{technologies.map((tech) => (
-					<option key={tech.name} value={tech.name as string}>
-						{tech.name}
-					</option>
+				{Object.entries(technologiesGrouped).map(([category, techs]) => (
+					<optgroup key={category} label={category}>
+						{techs.map((tech) => (
+							<option key={tech.name} value={tech.name}>
+								{tech.name}
+							</option>
+						))}
+					</optgroup>
 				))}
 			</select>
 		</div>
 	);
 }
 
-TechnologyFilterSelector.displayName = "TechnologyFilterSelector";
+TechnologyGroupFilterSelector.displayName = "TechnologyFilterSelector";
 
-export default TechnologyFilterSelector;
+export default TechnologyGroupFilterSelector;

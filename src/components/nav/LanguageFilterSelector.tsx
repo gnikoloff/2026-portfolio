@@ -1,4 +1,4 @@
-import { FilterState, TechTag } from "@/types";
+import { FilterState, WorkTechTag } from "@/types";
 import { ChangeEvent } from "react";
 
 import styles from "./FilterSelector.module.css";
@@ -8,7 +8,7 @@ function LanguageFilterSelector({
 	filters,
 	onChange,
 }: {
-	languages: TechTag[];
+	languages: WorkTechTag[];
 	filters: FilterState;
 	onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
 }) {

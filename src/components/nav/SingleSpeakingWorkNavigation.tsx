@@ -6,7 +6,8 @@ import {
 } from "@/utils/speakingWorks";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-
+import PrevNextWorkNav from "./PrevNextWorkNav";
+import styles from "./SingleWorkNavigation.module.css";
 function SingleSpeakingWorkNavigation() {
 	const pathname = usePathname();
 	const uid = pathname.split("/").pop()!;
@@ -17,12 +18,18 @@ function SingleSpeakingWorkNavigation() {
 		uid,
 	);
 	return (
-		<div>
-			<Link href={`/${SPEAKING_URL_SEGMENT_NAME}`}>Back</Link>
-			&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;
-			<Link href={prevWorkLink}>{prevWork.data.project_title}</Link>
-			&nbsp;|&nbsp;
-			<Link href={nextWorkLink}>{nextWork.data.project_title}</Link>
+		<div className={styles.root}>
+			<Link href={`/${SPEAKING_URL_SEGMENT_NAME}`} className="btn-simple">
+				<div className={`${styles.backWrapper} sub-nav-container`}>Back</div>
+			</Link>
+			<div className={styles.subNavWrapper}>
+				<PrevNextWorkNav
+					nextLink={nextWorkLink}
+					nextTitle={nextWork.data.project_title}
+					prevLink={prevWorkLink}
+					prevTitle={prevWork.data.project_title}
+				/>
+			</div>
 		</div>
 	);
 }

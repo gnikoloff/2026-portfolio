@@ -1,12 +1,13 @@
 .root {
 	/* background: var(--background-secondary); */
 	/* border-radius: var(--border-radius); */
-	border: 1px solid var(--subtlerer-border-color);
+	/* border: 1px solid var(--subtlerer-border-color); */
 	overflow: hidden;
 }
 
 .body {
-	padding: 0.75rem 0.5rem;
+	/* padding: 0.75rem 0.5rem; */
+	padding: 0.75rem 0;
 }
 
 .imageWrapper {

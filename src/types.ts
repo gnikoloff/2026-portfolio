@@ -1,6 +1,13 @@
 // src/types/filters.ts
 
-import { WorkDocument } from "../prismicio-types";
+import { NumberField } from "@prismicio/client";
+import { BlogDocument, WorkDocument } from "../prismicio-types";
+
+export interface TableContentsEntry {
+	id: string;
+	label: string;
+	children?: TableContentsEntry[];
+}
 
 export interface CharData {
 	positions: number[];
@@ -20,7 +27,7 @@ export type NavType =
 	| "about"
 	| "contact";
 
-export type Tag =
+export type WorkTag =
 	| ""
 	| "Javascript"
 	| "Swift"
@@ -51,19 +58,28 @@ export type TechCategory =
 	| "graphics-3d"
 	| "graphics-ar-vr";
 
-export interface TechTag {
-	name: Tag;
+export interface WorkTechTag {
+	name: WorkTag;
 	category: TechCategory;
-	compatibleLanguages?: Tag[];
+	compatibleLanguages?: WorkTag[];
 }
 
 export interface FilterState {
 	yearRange: [number | null, number | null];
-	languages: Tag[];
-	technologies: Tag[];
+	languages: WorkTag[];
+	technologies: WorkTag[];
 }
 
-export const TECH_TAGS: TechTag[] = [
+export interface FilterStore {
+	filters: FilterState;
+	setFilters: (filters: FilterState) => void;
+	setYearRange: (range: [number | null, number | null]) => void;
+	setLanguages: (languages: WorkTag[]) => void;
+	setTechnologies: (technologies: WorkTag[]) => void;
+	clearFilters: () => void;
+}
+
+export const TECH_TAGS: WorkTechTag[] = [
 	// Languages
 	{ name: "Javascript", category: "language" },
 	{ name: "Swift", category: "language" },
@@ -167,16 +183,25 @@ export const TECH_CATEGORY_LABELS: Record<TechCategory, string> = {
 };
 
 // Helper functions
-export function getLanguages(): TechTag[] {
-	return TECH_TAGS.filter((tag) => tag.category === "language");
+export function getLanguages(inputs: WorkTechTag[] = []): WorkTechTag[] {
+	const out = TECH_TAGS.filter((tag) => tag.category === "language");
+	if (inputs.length === 0) {
+		return out;
+	}
+	return out.filter((tag) =>
+		inputs.some((inputTag) => inputTag.name === tag.name),
+	);
 }
 
-export function getTechnologies(): TechTag[] {
+export function getTechnologies(): WorkTechTag[] {
 	return TECH_TAGS.filter((tag) => tag.category !== "language");
 }
 
-export function getTechnologiesByCategory(): Record<TechCategory, TechTag[]> {
-	const grouped: Record<TechCategory, TechTag[]> = {
+export function getTechnologiesByCategory(): Record<
+	TechCategory,
+	WorkTechTag[]
+> {
+	const grouped: Record<TechCategory, WorkTechTag[]> = {
 		language: [],
 		frontend: [],
 		backend: [],
@@ -197,7 +222,7 @@ export function getTechnologiesByCategory(): Record<TechCategory, TechTag[]> {
 /**
  * Get array of years from 2014 to current year
  */
-export function getYearRange(works: WorkDocument[]): number[] {
+export function getWorksYearRange(works: WorkDocument[]): number[] {
 	const min = works.reduce((acc, work) => {
 		const year = work.data.project_year ?? new Date().getFullYear();
 		if (year < acc) {
@@ -217,4 +242,14 @@ export function getYearRange(works: WorkDocument[]): number[] {
 		years.push(year);
 	}
 	return years;
+}
+
+export function getBlogYearRange(articles: BlogDocument[]): NumberField[] {
+	return articles.reduce((acc: NumberField[], article) => {
+		if (acc.includes(article.data.year)) {
+			return acc;
+		}
+		acc.push(article.data.year);
+		return acc;
+	}, []);
 }

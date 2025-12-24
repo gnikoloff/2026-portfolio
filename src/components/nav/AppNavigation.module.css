@@ -97,6 +97,6 @@ body[class*="medium-zoom--opened"] .navContainer {
 .subNav {
 	line-height: 1;
 	font-size: 16px;
-	min-width: 660px;
+	min-width: 666px;
 	color: var(--nav-secondary-color);
 }

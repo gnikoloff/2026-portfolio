@@ -5,28 +5,56 @@ import {
 	SpeakingDocument,
 	WorkDocument,
 } from "../../prismicio-types";
-import { FilterState, TECH_TAGS, TechTag } from "../types";
+import { FilterState, TECH_TAGS, WorkTechTag } from "../types";
 
 /**
  * Get available technologies based on selected languages
  */
-export function getAvailableTechnologies(filters: FilterState): TechTag[] {
+export function getAvailableTechnologies(filters: FilterState): WorkTechTag[] {
 	const technologies = TECH_TAGS.filter((tag) => tag.category !== "language");
 
-	// If no languages selected, show all technologies
 	if (filters.languages.length === 0) {
 		return technologies;
 	}
 
-	// Filter to only technologies compatible with selected languages
 	return technologies.filter((tech) => {
 		if (!tech.compatibleLanguages) return false;
 
-		// Tech must be compatible with at least one selected language
 		return tech.compatibleLanguages.some((lang) =>
 			filters.languages.includes(lang),
 		);
 	});
+}
+
+// In filterWorks.ts - update this function
+export function getAllArticleTechnologies(
+	articles: BlogDocument[],
+): WorkTechTag[] {
+	const techSet = new Set<string>();
+	const technologies: WorkTechTag[] = [];
+
+	articles.forEach((article) => {
+		article.data.article_technologies.forEach((tech) => {
+			if (tech.article_tech && !techSet.has(tech.article_tech)) {
+				techSet.add(tech.article_tech);
+
+				// Find the full tag definition from TECH_TAGS
+				const fullTag = TECH_TAGS.find((tag) => tag.name === tech.article_tech);
+
+				if (fullTag) {
+					technologies.push(fullTag);
+				} else {
+					// Fallback if not in TECH_TAGS
+					technologies.push({
+						name: tech.article_tech,
+						category: "frontend",
+					});
+				}
+			}
+		});
+	});
+
+	return technologies;
 }
 
 /**
@@ -34,10 +62,10 @@ export function getAvailableTechnologies(filters: FilterState): TechTag[] {
  */
 export function getAvailableTechnologiesGrouped(
 	filters: FilterState,
-): Record<string, TechTag[]> {
+): Record<string, WorkTechTag[]> {
 	const availableTechs = getAvailableTechnologies(filters);
 
-	const grouped: Record<string, TechTag[]> = {
+	const grouped: Record<string, WorkTechTag[]> = {
 		Frontend: [],
 		Backend: [],
 		"2D Graphics": [],
@@ -115,6 +143,53 @@ export function filterWorks(
 		if (filters.technologies.length > 0) {
 			const hasMatchingTech = filters.technologies.some((tech) =>
 				workTechs.includes(tech),
+			);
+			if (!hasMatchingTech) return false;
+		}
+
+		return true;
+	});
+}
+
+export function filterArticles(
+	works: BlogDocument[],
+	filters: FilterState,
+): BlogDocument[] {
+	return works.filter((work) => {
+		// Get all technologies from the work
+		const workTechs =
+			work.data.article_technologies
+				?.map((t) => t.article_tech)
+				.filter((tech) => tech !== null && tech !== undefined) || [];
+
+		if (workTechs.length === 0) return false;
+
+		// Filter by year range
+		if (filters.yearRange[0] !== null || filters.yearRange[1] !== null) {
+			const workYear = Number(work.data.year);
+
+			if (filters.yearRange[0] !== null && workYear < filters.yearRange[0]) {
+				return false;
+			}
+			if (filters.yearRange[1] !== null && workYear > filters.yearRange[1]) {
+				return false;
+			}
+		}
+
+		// Filter by language
+		if (filters.languages.length > 0) {
+			const hasMatchingLanguage = filters.languages.some((lang) =>
+				workTechs.some((workTech) => workTech === lang),
+			);
+			if (!hasMatchingLanguage) {
+				return false;
+			}
+		}
+
+		// Filter by technology
+		if (filters.technologies.length > 0) {
+			const hasMatchingTech = filters.technologies.some((tech) =>
+				workTechs.some((workTech) => workTech === tech),
 			);
 			if (!hasMatchingTech) return false;
 		}

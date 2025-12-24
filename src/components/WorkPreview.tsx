@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { SPEAKING_URL_SEGMENT_NAME, WORKS_URL_SEGMENT_NAME } from "@/constants";
+import { useHomeFilterStore } from "@/store/homeFilterStore";
 import { KeyTextField } from "@prismicio/client";
 import Image from "next/image";
 import { WorkDocumentDataProjectTechnologiesListItem } from "../../prismicio-types";
@@ -56,6 +57,7 @@ export default function WorkPreview({
 				) : null}
 				<WorkTagsList
 					tags={technologies.map(({ project_tech }) => project_tech as string)}
+					filters={useHomeFilterStore().filters}
 				/>
 			</section>
 		</Link>

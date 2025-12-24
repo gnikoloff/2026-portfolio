@@ -41,6 +41,7 @@ export default function YearWritingContainer({
 										uid={work.uid}
 										title={work.data.title}
 										date={new Date(work.first_publication_date)}
+										tags={work.data.article_technologies}
 									/>
 								</li>
 							);
