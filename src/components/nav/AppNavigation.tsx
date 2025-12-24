@@ -20,6 +20,7 @@ import HomeNavigation from "./HomeNavigation";
 import PageNavigation from "./PageNavigation";
 import SingleBlogNavigation from "./SingleBlogNavigation";
 import SingleSpeakingWorkNavigation from "./SingleSpeakingWorkNavigation";
+import SpeakingNavigation from "./SpeakingNavigation";
 
 const getNavType = (pathname: string): NavType => {
 	if (pathname === `/${WRITING_URL_SEGMENT_NAME}`) return "blog";

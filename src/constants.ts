@@ -33,6 +33,10 @@ export const CONTACT_INQUIRY_GENERAL_INQUIRY = "General Inquiry";
 
 // Misc
 
+export const QUERY_PARAM_YEAR = "year";
+export const QUERY_PARAM_TECHNOLOGY = "technology";
+export const QUERY_PARAM_LANGUAGE = "language";
+
 export const HTML_SITEMAP_URL_SEGMENT_NAME = "html-sitemap";
 
 export const LOGO_ANIM_WIDTH = 300 * 0.75;

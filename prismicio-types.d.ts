@@ -483,6 +483,23 @@ export type PdfCvDocument<Lang extends string = string> =
   >;
 
 /**
+ * Item in *speaking → Project Technologies*
+ */
+export interface SpeakingDocumentDataProjectTechnologiesItem {
+  /**
+   * Technology field in *speaking → Project Technologies*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **API ID Path**: speaking.project_technologies[].technology
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  technology: prismic.SelectField<
+    "Javascript" | "Swift" | "WebGL" | "Metal" | "HTML" | "CSS" | "SVG"
+  >;
+}
+
+/**
  * Content for speaking documents
  */
 interface SpeakingDocumentData {
@@ -507,6 +524,19 @@ interface SpeakingDocumentData {
    * - **Documentation**: https://prismic.io/docs/fields/text
    */
   project_title: prismic.KeyTextField;
+
+  /**
+   * Project Technologies field in *speaking*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: speaking.project_technologies[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  project_technologies: prismic.GroupField<
+    Simplify<SpeakingDocumentDataProjectTechnologiesItem>
+  >;
 
   /**
    * Project Type field in *speaking*
@@ -834,6 +864,7 @@ declare module "@prismicio/client" {
       PdfCvDocumentData,
       SpeakingDocument,
       SpeakingDocumentData,
+      SpeakingDocumentDataProjectTechnologiesItem,
       WorkDocument,
       WorkDocumentData,
       WorkDocumentDataProjectTechnologiesListItem,

@@ -16,11 +16,14 @@ function TechnologyFilterSelector({
 	const isActive = val !== "";
 
 	return (
-		<div className={`${styles.root} btn-simple`}>
+		<div
+			className={`${styles.root} ${technologies.length === 0 ? "" : "btn-simple"}`}
+		>
 			<select
 				id="tech-group-select"
-				className={`${styles.input} ${isActive ? styles.inputFocus : ""} ${isActive ? "active" : ""}`}
+				className={`${styles.input} ${isActive ? styles.inputFocus : ""} ${isActive ? "active" : ""} ${technologies.length === 0 ? styles.nonInteractable : ""}`}
 				value={val}
+				disabled={technologies.length === 0}
 				onChange={onChange}
 			>
 				<option value="">All Technologies</option>

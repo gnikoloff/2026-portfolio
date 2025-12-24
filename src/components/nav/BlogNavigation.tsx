@@ -1,3 +1,8 @@
+import {
+	QUERY_PARAM_LANGUAGE,
+	QUERY_PARAM_TECHNOLOGY,
+	QUERY_PARAM_YEAR,
+} from "@/constants";
 import { useAppData } from "@/contexts/DataContext";
 import { useBlogFilterStore } from "@/store/blogFilterStore";
 import { getBlogYearRange, WorkTag } from "@/types";
@@ -6,18 +11,18 @@ import {
 	getAvailableTechnologies,
 } from "@/utils/filterWorks";
 import { useQueryState } from "nuqs";
-import styles from "./FilterSelector.module.css";
 import LanguageFilterSelector from "./LanguageFilterSelector";
 import TechnologyFilterSelector from "./TechnologyFilterSelector";
 import YearFilterSelector from "./YearFilterSelector";
 
+import styles from "./FilterSelector.module.css";
 function BlogNavigation() {
 	const { filters, setYearRange, setLanguages, setTechnologies, clearFilters } =
 		useBlogFilterStore();
 
-	const [, setYearParam] = useQueryState("year");
-	const [, setTechnologyParam] = useQueryState("technology");
-	const [, setLanguageParam] = useQueryState("language");
+	const [, setYearParam] = useQueryState(QUERY_PARAM_YEAR);
+	const [, setTechnologyParam] = useQueryState(QUERY_PARAM_TECHNOLOGY);
+	const [, setLanguageParam] = useQueryState(QUERY_PARAM_LANGUAGE);
 	const { articles } = useAppData();
 
 	const allTechnologies = getAllArticleTechnologies(articles);

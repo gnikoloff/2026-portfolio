@@ -1,10 +1,9 @@
 import Link from "next/link";
 
 import { SPEAKING_URL_SEGMENT_NAME, WORKS_URL_SEGMENT_NAME } from "@/constants";
-import { useHomeFilterStore } from "@/store/homeFilterStore";
+import { FilterState } from "@/types";
 import { KeyTextField } from "@prismicio/client";
 import Image from "next/image";
-import { WorkDocumentDataProjectTechnologiesListItem } from "../../prismicio-types";
 import styles from "./WorkPreview.module.css";
 import WorkTagsList from "./WorkTagsList";
 
@@ -15,13 +14,15 @@ export default function WorkPreview({
 	technologies = [],
 	uid,
 	previewImageURL,
+	filters,
 }: {
 	isHomepage: boolean;
 	title: KeyTextField;
 	type?: KeyTextField;
-	technologies?: WorkDocumentDataProjectTechnologiesListItem[];
+	technologies?: string[];
 	uid: string;
 	previewImageURL: string | null | undefined;
+	filters: FilterState;
 }) {
 	const rootSegment = isHomepage
 		? WORKS_URL_SEGMENT_NAME
@@ -55,10 +56,7 @@ export default function WorkPreview({
 						{type}
 					</h5>
 				) : null}
-				<WorkTagsList
-					tags={technologies.map(({ project_tech }) => project_tech as string)}
-					filters={useHomeFilterStore().filters}
-				/>
+				<WorkTagsList tags={technologies} filters={filters} />
 			</section>
 		</Link>
 	);

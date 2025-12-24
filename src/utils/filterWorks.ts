@@ -26,7 +26,6 @@ export function getAvailableTechnologies(filters: FilterState): WorkTechTag[] {
 	});
 }
 
-// In filterWorks.ts - update this function
 export function getAllArticleTechnologies(
 	articles: BlogDocument[],
 ): WorkTechTag[] {
@@ -47,6 +46,36 @@ export function getAllArticleTechnologies(
 					// Fallback if not in TECH_TAGS
 					technologies.push({
 						name: tech.article_tech,
+						category: "frontend",
+					});
+				}
+			}
+		});
+	});
+
+	return technologies;
+}
+
+export function getAllSpeakingTechnologies(
+	articles: SpeakingDocument[],
+): WorkTechTag[] {
+	const techSet = new Set<string>();
+	const technologies: WorkTechTag[] = [];
+
+	articles.forEach((article) => {
+		article.data.project_technologies.forEach((tech) => {
+			if (tech.technology && !techSet.has(tech.technology)) {
+				techSet.add(tech.technology);
+
+				// Find the full tag definition from TECH_TAGS
+				const fullTag = TECH_TAGS.find((tag) => tag.name === tech.technology);
+
+				if (fullTag) {
+					technologies.push(fullTag);
+				} else {
+					// Fallback if not in TECH_TAGS
+					technologies.push({
+						name: tech.technology,
 						category: "frontend",
 					});
 				}
@@ -167,6 +196,53 @@ export function filterArticles(
 		// Filter by year range
 		if (filters.yearRange[0] !== null || filters.yearRange[1] !== null) {
 			const workYear = Number(work.data.year);
+
+			if (filters.yearRange[0] !== null && workYear < filters.yearRange[0]) {
+				return false;
+			}
+			if (filters.yearRange[1] !== null && workYear > filters.yearRange[1]) {
+				return false;
+			}
+		}
+
+		// Filter by language
+		if (filters.languages.length > 0) {
+			const hasMatchingLanguage = filters.languages.some((lang) =>
+				workTechs.some((workTech) => workTech === lang),
+			);
+			if (!hasMatchingLanguage) {
+				return false;
+			}
+		}
+
+		// Filter by technology
+		if (filters.technologies.length > 0) {
+			const hasMatchingTech = filters.technologies.some((tech) =>
+				workTechs.some((workTech) => workTech === tech),
+			);
+			if (!hasMatchingTech) return false;
+		}
+
+		return true;
+	});
+}
+
+export function filterSpeakingWorks(
+	works: SpeakingDocument[],
+	filters: FilterState,
+): SpeakingDocument[] {
+	return works.filter((work) => {
+		// Get all technologies from the work
+		const workTechs =
+			work.data.project_technologies
+				?.map((t) => t.technology)
+				.filter((tech) => tech !== null && tech !== undefined) || [];
+
+		if (workTechs.length === 0) return false;
+
+		// Filter by year range
+		if (filters.yearRange[0] !== null || filters.yearRange[1] !== null) {
+			const workYear = Number(work.data.project_year);
 
 			if (filters.yearRange[0] !== null && workYear < filters.yearRange[0]) {
 				return false;

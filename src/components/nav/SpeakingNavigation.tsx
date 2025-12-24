@@ -4,25 +4,38 @@ import {
 	QUERY_PARAM_YEAR,
 } from "@/constants";
 import { useAppData } from "@/contexts/DataContext";
-import { useHomeFilterStore } from "@/store/homeFilterStore";
-import { getAvailableTechnologiesGrouped } from "@/utils/filterWorks";
+import { useSpeakingFilterStore } from "@/store/speakingFilterStore";
+import { getSpeakingYearRange, WorkTag } from "@/types";
+import {
+	getAllSpeakingTechnologies,
+	getAvailableTechnologies,
+} from "@/utils/filterWorks";
 import { useQueryState } from "nuqs";
-import { getLanguages, getWorksYearRange, WorkTag } from "../../types";
+
 import styles from "./FilterSelector.module.css";
 import LanguageFilterSelector from "./LanguageFilterSelector";
-import TechnologyGroupFilterSelector from "./TechnologyGroupFilterSelector";
+import TechnologyFilterSelector from "./TechnologyFilterSelector";
 import YearFilterSelector from "./YearFilterSelector";
 
-export default function HomeNavigation() {
+function SpeakingNavigation() {
 	const { filters, setYearRange, setLanguages, setTechnologies, clearFilters } =
-		useHomeFilterStore();
-	const { works } = useAppData();
-	const languages = getLanguages();
-	const years = getWorksYearRange(works);
-	const technologiesGrouped = getAvailableTechnologiesGrouped(filters);
+		useSpeakingFilterStore();
+
 	const [, setYearParam] = useQueryState(QUERY_PARAM_YEAR);
-	const [, setLanguageParam] = useQueryState(QUERY_PARAM_LANGUAGE);
 	const [, setTechnologyParam] = useQueryState(QUERY_PARAM_TECHNOLOGY);
+	const [, setLanguageParam] = useQueryState(QUERY_PARAM_LANGUAGE);
+	const { speakingWorks } = useAppData();
+
+	const allTechnologies = getAllSpeakingTechnologies(speakingWorks);
+	const languages = allTechnologies.filter(
+		(tech) => tech.category === "language",
+	);
+
+	const availableTechnologies = getAvailableTechnologies(filters);
+	const technologies = availableTechnologies.filter((tech) =>
+		allTechnologies.some((t) => t.name === tech.name),
+	);
+	const years = getSpeakingYearRange(speakingWorks);
 
 	const handleYearChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
 		const value = e.target.value;
@@ -36,6 +49,8 @@ export default function HomeNavigation() {
 		const newLanguages = value ? [value] : [];
 		setLanguages(newLanguages);
 		setLanguageParam(value || null);
+		// Clear technology when language changes
+		setTechnologies([]);
 		setTechnologyParam(null);
 	};
 
@@ -63,12 +78,11 @@ export default function HomeNavigation() {
 		<div className={`${styles.wrapper} sub-nav-container`}>
 			<div className={styles.filterGroup}>
 				<YearFilterSelector
-					years={years}
+					years={years.map(Number)}
 					filters={filters}
 					handleYearChange={handleYearChange}
 				/>
 			</div>
-
 			<div className={styles.filterGroup}>
 				<LanguageFilterSelector
 					languages={languages}
@@ -76,18 +90,13 @@ export default function HomeNavigation() {
 					onChange={handleLanguageChange}
 				/>
 			</div>
-
 			<div className={styles.filterGroup}>
-				<TechnologyGroupFilterSelector
-					technologiesGrouped={technologiesGrouped}
+				<TechnologyFilterSelector
+					technologies={technologies}
 					filters={filters}
 					onChange={handleTechnologyChange}
 				/>
 			</div>
-
-			{/* {hasActiveFilters && (
-				
-			)} */}
 			<button
 				onClick={handleClearFilters}
 				className={`${styles.clearButton} ${hasActiveFilters ? styles.clearActive : ""}`}
@@ -97,3 +106,7 @@ export default function HomeNavigation() {
 		</div>
 	);
 }
+
+SpeakingNavigation.displayName = "SpeakingNavigation";
+
+export default SpeakingNavigation;

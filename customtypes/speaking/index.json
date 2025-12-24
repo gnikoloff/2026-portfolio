@@ -19,6 +19,31 @@
           "placeholder": ""
         }
       },
+      "project_technologies": {
+        "type": "Group",
+        "config": {
+          "label": "Project Technologies",
+          "repeat": true,
+          "fields": {
+            "technology": {
+              "type": "Select",
+              "config": {
+                "label": "Technology",
+                "placeholder": "",
+                "options": [
+                  "Javascript",
+                  "Swift",
+                  "WebGL",
+                  "Metal",
+                  "HTML",
+                  "CSS",
+                  "SVG"
+                ]
+              }
+            }
+          }
+        }
+      },
       "project_type": {
         "type": "Select",
         "config": {

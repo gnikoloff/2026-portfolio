@@ -1,7 +1,7 @@
 import WritingClient from "@/components/WritingClient";
 import { WRITING_CUSTOM_TYPE } from "@/constants";
 import { createClient } from "@/prismicio";
-import { FilterState } from "@/types";
+import { FilterState, WorkTag } from "@/types";
 
 export default async function Writing({
 	searchParams,
@@ -16,8 +16,8 @@ export default async function Writing({
 		yearRange: params.year
 			? [Number(params.year), Number(params.year)]
 			: [null, null],
-		languages: params.language ? [params.language as Tag] : [],
-		technologies: params.technology ? [params.technology as Tag] : [],
+		languages: params.language ? [params.language as WorkTag] : [],
+		technologies: params.technology ? [params.technology as WorkTag] : [],
 	};
 
 	return (

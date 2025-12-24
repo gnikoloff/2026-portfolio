@@ -1,7 +1,11 @@
 // src/types/filters.ts
 
 import { NumberField } from "@prismicio/client";
-import { BlogDocument, WorkDocument } from "../prismicio-types";
+import {
+	BlogDocument,
+	SpeakingDocument,
+	WorkDocument,
+} from "../prismicio-types";
 
 export interface TableContentsEntry {
 	id: string;
@@ -250,6 +254,18 @@ export function getBlogYearRange(articles: BlogDocument[]): NumberField[] {
 			return acc;
 		}
 		acc.push(article.data.year);
+		return acc;
+	}, []);
+}
+
+export function getSpeakingYearRange(
+	articles: SpeakingDocument[],
+): NumberField[] {
+	return articles.reduce((acc: NumberField[], article) => {
+		if (acc.includes(article.data.project_year)) {
+			return acc;
+		}
+		acc.push(article.data.project_year);
 		return acc;
 	}, []);
 }
