@@ -1,6 +1,6 @@
+import Link from "@/components/CustomLink";
 import { useAppData } from "@/contexts/DataContext";
 import { getPrevNextWorkLinks, getPrevNextWorks } from "@/utils/works";
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import PrevNextWorkNav from "./PrevNextWorkNav";
 import styles from "./SingleWorkNavigation.module.css";

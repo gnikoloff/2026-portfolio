@@ -29,9 +29,9 @@ body[class*="medium-zoom--opened"] .navContainer {
 	display: flex;
 	opacity: 0;
 	transition: opacity 0.1s ease-in;
-	background-color: #222c;
-	backdrop-filter: blur(30px);
-	border: 1px solid var(--subtler-border-color);
+	/* background-color: #222c;
+	backdrop-filter: blur(30px); */
+	/* border: 1px solid var(--subtler-border-color); */
 }
 
 .navContainer.inited {
@@ -41,13 +41,71 @@ body[class*="medium-zoom--opened"] .navContainer {
 .navWrapper {
 }
 
+.subNavWrapper {
+	position: relative;
+	height: 48px;
+	line-height: 1;
+	font-size: 16px;
+	min-width: 666px;
+	color: var(--nav-secondary-color);
+	background-color: #222c;
+	backdrop-filter: blur(30px);
+
+	transform-origin: 50% 100%;
+
+	perspective: 500px;
+	perspective-origin: 50%;
+}
+
+.navTransition {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	transition: transform 0.25s ease-out;
+	/* transition: transform 20s ease-out; */
+	transform-origin: 50% 50%;
+	backface-visibility: hidden;
+	border: 1px solid var(--subtler-border-color);
+	background-color: #222c;
+}
+
+.currNav {
+	transform-origin: 50% 50% -24px; /* Center, pushed back */
+	/* background-color: red; */
+	opacity: 0.8;
+	transform: rotateX(0deg);
+}
+
+.currNav.willTransition {
+	transform: rotateX(-90deg);
+	transition: none;
+}
+
+.prevNav {
+	transform: rotateX(0deg);
+	transform-origin: 50% 50% -24px; /* Same center point */
+	/* background-color: green; */
+	opacity: 0.8;
+}
+
+.prevNav.isTransitioning {
+	transform: rotateX(90deg);
+}
+
 .draggable {
 	width: 52px;
 	cursor: grab;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	border-right: 1px solid var(--subtler-border-color);
+	background-color: #222c;
+	backdrop-filter: blur(30px);
+	border-top: 1px solid var(--subtler-border-color);
+	border-left: 1px solid var(--subtler-border-color);
+
+	border-bottom: 1px solid var(--subtler-border-color);
 }
 
 .draggable:hover .dot,
@@ -85,18 +143,49 @@ body[class*="medium-zoom--opened"] .navContainer {
 .root.dragging .draggable {
 	pointer-events: none;
 }
-
-.subNavWrapper {
-}
-
 .mainNav {
+	position: relative;
 	color: var(--nav-main-color);
-	border-bottom: 1px solid var(--subtler-border-color);
+	background-color: #222c;
+	backdrop-filter: blur(30px);
+	border-top: 1px solid var(--subtler-border-color);
+	border-left: 1px solid var(--subtler-border-color);
+	border-right: 1px solid var(--subtler-border-color);
 }
 
-.subNav {
-	line-height: 1;
-	font-size: 16px;
-	min-width: 666px;
-	color: var(--nav-secondary-color);
+.mainNav:before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 2px;
+	background-color: var(--subtler-border-color);
+	opacity: 0;
+	transition: opacity 0.1s ease-in-out;
+}
+
+@keyframes loading {
+	0% {
+		transform-origin: 0 0;
+		transform: scaleX(0);
+	}
+	49.9% {
+		transform-origin: 0 0;
+	}
+	50% {
+		transform-origin: 100% 0;
+		transform: scaleX(1);
+	}
+	99.9% {
+		transform-origin: 100% 0;
+	}
+	100% {
+		transform: scaleX(0);
+	}
+}
+
+.mainNav.isLoading:before {
+	animation: loading infinite 1s ease-in-out;
+	opacity: 1;
 }

@@ -1,9 +1,9 @@
+import Link from "@/components/CustomLink";
 import {
 	HTML_SITEMAP_URL_SEGMENT_NAME,
 	IMPRINT_URL_SEGMENT_NAME,
 	PRIVACY_POLICY_URL_SEGMENT_NAME,
 } from "@/constants";
-import Link from "next/link";
 import styles from "./AppFooter.module.css";
 import SocialList from "./SocialList";
 

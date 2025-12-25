@@ -1,3 +1,12 @@
+.root {
+	/* transition: opacity 0.1s ease-out; */
+}
+
+.root.hidden {
+	/* opacity: 0;
+	pointer-events: none; */
+}
+
 .paddingBottom {
 	padding-bottom: 8rem;
 }

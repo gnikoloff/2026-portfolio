@@ -1,7 +1,12 @@
 import WritingClient from "@/components/WritingClient";
-import { WRITING_CUSTOM_TYPE } from "@/constants";
+import { PAGE_TITLE, WRITING_CUSTOM_TYPE } from "@/constants";
 import { createClient } from "@/prismicio";
 import { FilterState, WorkTag } from "@/types";
+
+export const metadata = {
+	title: `Writing - ${PAGE_TITLE}`,
+	description: "Get in touch with Georgi Nikolov",
+};
 
 export default async function Writing({
 	searchParams,

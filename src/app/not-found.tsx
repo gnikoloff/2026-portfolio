@@ -1,6 +1,6 @@
 import PageLayout from "@/components/PageLayout";
 
-import Link from "next/link";
+import Link from "@/components/CustomLink";
 import styles from "./not-found.module.css";
 
 function NotFound() {

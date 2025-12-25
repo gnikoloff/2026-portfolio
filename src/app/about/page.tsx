@@ -4,10 +4,12 @@ import {
 	ABOUT_SECTION_EXPERIENCE,
 	ABOUT_SECTION_INTRO,
 	ABOUT_SECTION_SKILLS,
+	PAGE_TITLE,
 } from "@/constants";
 import { createClient } from "@/prismicio";
 import { PrismicRichText } from "@prismicio/react";
 
+import { Metadata } from "next";
 import styles from "./page.module.css";
 
 async function About() {
@@ -39,3 +41,13 @@ async function About() {
 About.displayName = "About";
 
 export default About;
+
+export async function generateMetadata(): Promise<Metadata> {
+	return {
+		title: `About - ${PAGE_TITLE}`,
+		// description: page.data.meta_description,
+		// openGraph: {
+		// 	images: [{ url: asImageSrc(page.data.meta_image) ?? "" }],
+		// },
+	};
+}

@@ -1,3 +1,4 @@
+import Link from "@/components/CustomLink";
 import {
 	ABOUT_URL_SEGMENT_NAME,
 	CONTACT_URL_SEGMENT_NAME,
@@ -5,7 +6,6 @@ import {
 	WRITING_URL_SEGMENT_NAME,
 } from "@/constants";
 import { NavType } from "@/types";
-import Link from "next/link";
 import styles from "./PageNavigation.module.css";
 
 export default function PageNavigation({ navType }: { navType: NavType }) {

@@ -1,7 +1,12 @@
-import { SPEAKING_CUSTOM_TYPE } from "@/constants";
+import { PAGE_TITLE, SPEAKING_CUSTOM_TYPE } from "@/constants";
 import { createClient } from "@/prismicio";
 import { FilterState, WorkTag } from "@/types";
 import SpeakingClient from "../../components/SpeakingClient";
+
+export const metadata = {
+	title: `Speaking - ${PAGE_TITLE}`,
+	description: "Get in touch with Georgi Nikolov",
+};
 
 export default async function About({
 	searchParams,

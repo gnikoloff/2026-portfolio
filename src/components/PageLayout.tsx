@@ -4,6 +4,7 @@ import { useUIStore } from "@/store/uiStore";
 import { useEffect, useRef } from "react";
 import AppFooter from "./AppFooter";
 
+import { usePathname } from "next/navigation";
 import styles from "./PageLayout.module.css";
 
 function PageLayout({
@@ -15,10 +16,19 @@ function PageLayout({
 }>) {
 	const {
 		initedNavigation,
+		isLoadingPage,
 		setInitNavigationX,
 		setInitNavigationY,
 		setNavigationInited,
+		setIsLoadingPage,
 	} = useUIStore();
+
+	const pathname = usePathname();
+	// const searchParams = useSearchParams()
+
+	useEffect(() => {
+		setIsLoadingPage(false);
+	}, [pathname]);
 
 	// const headerRef = useRef<HTMLDivElement>(null);
 	const bodyRef = useRef<HTMLDivElement>(null);
@@ -43,7 +53,7 @@ function PageLayout({
 	}, []);
 
 	return (
-		<div>
+		<div className={`${styles.root} ${isLoadingPage ? styles.hidden : ""}`}>
 			<main
 				id="app-main"
 				className={`container ${hasMainPaddingBottom ? styles.paddingBottom : ""}`}

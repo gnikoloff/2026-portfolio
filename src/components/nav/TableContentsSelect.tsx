@@ -3,7 +3,7 @@
 import { TableContentsEntry } from "@/types";
 import { useEffect, useState } from "react";
 
-import Link from "next/link";
+import Link from "@/components/CustomLink";
 import inputStyles from "./FilterSelector.module.css";
 import styles from "./TableContentsSelect.module.css";
 

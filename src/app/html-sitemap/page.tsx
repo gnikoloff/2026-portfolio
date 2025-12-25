@@ -1,7 +1,9 @@
+import Link from "@/components/CustomLink";
 import PageLayout from "@/components/PageLayout";
 import {
 	ABOUT_URL_SEGMENT_NAME,
 	CONTACT_URL_SEGMENT_NAME,
+	PAGE_TITLE,
 	SPEAKING_CUSTOM_TYPE,
 	SPEAKING_URL_SEGMENT_NAME,
 	WORKS_CUSTOM_TYPE,
@@ -10,7 +12,11 @@ import {
 	WRITING_URL_SEGMENT_NAME,
 } from "@/constants";
 import { createClient } from "@/prismicio";
-import Link from "next/link";
+
+export const metadata = {
+	title: `HTML Sitemap - ${PAGE_TITLE}`,
+	description: "Get in touch with Georgi Nikolov",
+};
 
 async function HTMLSitemap() {
 	const client = createClient();

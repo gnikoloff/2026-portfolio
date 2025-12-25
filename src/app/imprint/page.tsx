@@ -1,6 +1,11 @@
+import Link from "@/components/CustomLink";
 import PageLayout from "@/components/PageLayout";
-import { BASE_URL, CONTACT_URL_SEGMENT_NAME } from "@/constants";
-import Link from "next/link";
+import { BASE_URL, CONTACT_URL_SEGMENT_NAME, PAGE_TITLE } from "@/constants";
+
+export const metadata = {
+	title: `Imprint - ${PAGE_TITLE}`,
+	description: "Get in touch with Georgi Nikolov",
+};
 
 function Imprint() {
 	return (

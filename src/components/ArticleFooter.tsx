@@ -1,5 +1,5 @@
+import Link from "@/components/CustomLink";
 import { KeyTextField } from "@prismicio/client";
-import Link from "next/link";
 import styles from "./ArticleFooter.module.css";
 
 function ArticleFooter({

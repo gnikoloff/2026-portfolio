@@ -1,12 +1,31 @@
-import { WRITING_CUSTOM_TYPE } from "@/constants";
+import { PAGE_TITLE, WRITING_CUSTOM_TYPE } from "@/constants";
 import { createClient } from "@/prismicio";
 import { htmlSerializer } from "@/utils/htmlSerialiser";
 import { asHTML } from "@prismicio/client";
 
 import ArticleClient from "@/components/ArticleClient";
+import { Metadata } from "next";
 import styles from "./page.module.css";
 
 type Params = { uid: string };
+
+export async function generateMetadata({
+	params,
+}: {
+	params: Promise<Params>;
+}): Promise<Metadata> {
+	const { uid } = await params;
+	const client = createClient();
+	const page = await client.getByUID(WRITING_CUSTOM_TYPE, uid);
+
+	return {
+		title: `${page.data.title} - ${PAGE_TITLE}`,
+		description: page.data.seo_description,
+		// openGraph: {
+		// 	images: [{ url: asImageSrc(page.data.meta_image) ?? "" }],
+		// },
+	};
+}
 
 export default async function WritingWork({
 	params,

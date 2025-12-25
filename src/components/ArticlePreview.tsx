@@ -1,8 +1,8 @@
+import Link from "@/components/CustomLink";
 import { WRITING_URL_SEGMENT_NAME } from "@/constants";
 import { useBlogFilterStore } from "@/store/blogFilterStore";
 import { getFormattedDate } from "@/utils/date";
 import { KeyTextField } from "@prismicio/client";
-import Link from "next/link";
 import { BlogDocumentDataArticleTechnologiesItem } from "../../prismicio-types";
 import styles from "./ArticlePreview.module.css";
 import WorkTagsList from "./WorkTagsList";

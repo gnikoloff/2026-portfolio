@@ -1,6 +1,6 @@
+import Link from "@/components/CustomLink";
 import PageLayout from "@/components/PageLayout";
-import { CONTACT_URL_SEGMENT_NAME } from "@/constants";
-import Link from "next/link";
+import { CONTACT_URL_SEGMENT_NAME, PAGE_TITLE } from "@/constants";
 
 function PrivacyPolicy() {
 	return (
@@ -79,3 +79,8 @@ function PrivacyPolicy() {
 PrivacyPolicy.displayName = "PrivacyPolicy";
 
 export default PrivacyPolicy;
+
+export const metadata = {
+	title: `Privacy Policy - ${PAGE_TITLE}`,
+	description: "Get in touch with Georgi Nikolov",
+};

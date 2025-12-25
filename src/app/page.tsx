@@ -1,4 +1,5 @@
 // src/app/page.tsx
+import { PAGE_TITLE } from "@/constants";
 import { FilterState, Tag } from "@/types/filters";
 import { type Metadata } from "next";
 import HomeClient from "../components/HomeClient";
@@ -24,7 +25,7 @@ export default async function Home({
 
 export async function generateMetadata(): Promise<Metadata> {
 	return {
-		// title: page.data.meta_title,
+		title: PAGE_TITLE,
 		// description: page.data.meta_description,
 		// openGraph: {
 		// 	images: [{ url: asImageSrc(page.data.meta_image) ?? "" }],

@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/CustomLink";
 
 import { SPEAKING_URL_SEGMENT_NAME, WORKS_URL_SEGMENT_NAME } from "@/constants";
 import { FilterState } from "@/types";

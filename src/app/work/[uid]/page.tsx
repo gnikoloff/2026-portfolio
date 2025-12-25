@@ -1,13 +1,32 @@
 import PageLayout from "@/components/PageLayout";
 import WorkClient from "@/components/WorkClient";
-import { WORKS_CUSTOM_TYPE } from "@/constants";
+import { PAGE_TITLE, WORKS_CUSTOM_TYPE } from "@/constants";
 import { createClient } from "@/prismicio";
 import { htmlSerializer } from "@/utils/htmlSerialiser";
 import { getPrevNextWorkLinks, getPrevNextWorks } from "@/utils/works";
 import { asHTML } from "@prismicio/client";
+import { Metadata } from "next";
 import styles from "./page.module.css";
 
 type Params = { uid: string };
+
+export async function generateMetadata({
+	params,
+}: {
+	params: Promise<Params>;
+}): Promise<Metadata> {
+	const { uid } = await params;
+	const client = createClient();
+	const page = await client.getByUID(WORKS_CUSTOM_TYPE, uid);
+
+	return {
+		title: `${page.data.project_title} - ${PAGE_TITLE}`,
+		description: page.data.meta_description,
+		// openGraph: {
+		// 	images: [{ url: asImageSrc(page.data.meta_image) ?? "" }],
+		// },
+	};
+}
 
 export default async function Work({ params }: { params: Promise<Params> }) {
 	const { uid } = await params;

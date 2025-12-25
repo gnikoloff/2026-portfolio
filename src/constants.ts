@@ -1,3 +1,5 @@
+export const PAGE_TITLE = "Georgi Nikolov";
+
 export const BASE_URL = "https://georgi-nikolov.com";
 
 export const HOME_CUSTOM_TYPE = "home";

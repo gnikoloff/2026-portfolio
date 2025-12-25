@@ -2,9 +2,14 @@
 	display: block;
 }
 
+.root:hover .title {
+	transform: scale(1.01);
+}
+
 .title {
 	font-size: 1.6rem;
 	line-height: 2.1rem;
+	transition: transform 0.1s ease-out;
 	/* text-decoration: underline; */
 }
 

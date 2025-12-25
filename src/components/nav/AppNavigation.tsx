@@ -14,7 +14,6 @@ import { useUIStore } from "@/store/uiStore";
 import { NavType } from "@/types";
 import { usePathname } from "next/navigation";
 import { MouseEvent, useEffect, useRef, useState } from "react";
-import SingleWorkNavigation from "../nav/SingleWorkNavigation";
 import SocialList from "../SocialList";
 import AboutNavigation from "./AboutNavigation";
 import styles from "./AppNavigation.module.css";
@@ -26,6 +25,7 @@ import PageNavigation from "./PageNavigation";
 import PrivacyPolicyNavigation from "./PrivacyPolicyNavigation";
 import SingleBlogNavigation from "./SingleBlogNavigation";
 import SingleSpeakingWorkNavigation from "./SingleSpeakingWorkNavigation";
+import SingleWorkNavigation from "./SingleWorkNavigation";
 import SpeakingNavigation from "./SpeakingNavigation";
 
 const getNavType = (pathname: string): NavType => {
@@ -45,12 +45,28 @@ const getNavType = (pathname: string): NavType => {
 	return "home";
 };
 
+function usePrevious<T>(value: T): T | undefined {
+	const ref = useRef<T>();
+	useEffect(() => {
+		ref.current = value;
+	});
+	return ref.current;
+}
+
 const HANDLE_DOTS_COL_COUNT = 3;
 const HANDLE_DOTS_TOTAL_COUNT = HANDLE_DOTS_COL_COUNT * 2;
 const HANDLE_ACTIVE_TRANSITION_DURATION = 0.125;
 
 export default function AppNavigation() {
 	const pathname = usePathname();
+	const previousPathname = usePrevious(pathname);
+	const currentNavType = getNavType(pathname);
+	const previousNavType = usePrevious(currentNavType);
+
+	const [previousNavTypeState, setPreviousNavTypeState] =
+		useState<NavType | null>(null);
+	const [isTransitioning, setIsTransitioning] = useState(false);
+	const [willTransition, setWillTransition] = useState(false);
 
 	const {
 		navigationX,
@@ -58,6 +74,7 @@ export default function AppNavigation() {
 		initNavigationX,
 		initNavigationY,
 		initedNavigation,
+		isLoadingPage,
 		setNavigationX,
 		setNavigationY,
 	} = useUIStore();
@@ -103,7 +120,6 @@ export default function AppNavigation() {
 		mouseTargetRef.current.y = initNavigationY;
 	}, [initNavigationX, initNavigationY]);
 
-	// Continuous animation loop - runs independently of dragging
 	useEffect(() => {
 		let oldTime = performance.now() * 0.001;
 
@@ -145,7 +161,6 @@ export default function AppNavigation() {
 		};
 	}, [setNavigationX, setNavigationY]);
 
-	// Dragging handlers - only update target position
 	useEffect(() => {
 		if (!isDragging) return;
 
@@ -178,7 +193,6 @@ export default function AppNavigation() {
 		};
 	}, [isDragging, draggableWidth, draggableHeight]);
 
-	// Handle window resize to keep navigation in bounds
 	useEffect(() => {
 		const handleResize = () => {
 			const clamped = clampToViewport(navigationX, navigationY);
@@ -202,7 +216,21 @@ export default function AppNavigation() {
 		setDraggableHeight(bbox.height);
 	}, []);
 
-	const renderNav = (navType: NavType) => {
+	useEffect(() => {
+		if (currentNavType !== previousNavType && previousNavType !== undefined) {
+			setPreviousNavTypeState(previousNavType);
+			setWillTransition(true);
+
+			requestAnimationFrame(() => {
+				setWillTransition(false);
+				setIsTransitioning(true);
+			});
+		}
+	}, [currentNavType, previousNavType]);
+
+	const renderNav = (navType: NavType, frozenPathname?: string) => {
+		const pathToUse = frozenPathname || pathname;
+
 		switch (navType) {
 			case "home":
 				return <HomeNavigation />;
@@ -223,7 +251,7 @@ export default function AppNavigation() {
 			case "speaking":
 				return <SpeakingNavigation />;
 			case "speaking-single":
-				return <SingleSpeakingWorkNavigation />;
+				return <SingleSpeakingWorkNavigation pathname={pathToUse} />;
 			case "html-sitemap":
 				return <HTMLSitemapNavigation />;
 			case "privacy-policy":
@@ -285,13 +313,35 @@ export default function AppNavigation() {
 					</div>
 				</div>
 				<div className={styles.navWrapper}>
-					<div className={`${styles.subNavWrapper} ${styles.mainNav}`}>
+					<div
+						className={`${styles.subNavWrapper} ${styles.mainNav} ${isLoadingPage ? styles.isLoading : ""}`}
+					>
 						<div className="sub-nav-container">
 							<PageNavigation navType={getNavType(pathname)} />
 						</div>
 					</div>
-					<div className={`${styles.subNavWrapper} ${styles.subNav}`}>
-						{renderNav(getNavType(pathname))}
+					<div className={`${styles.subNavWrapper}`}>
+						{previousNavTypeState && (
+							<div
+								className={`${styles.navTransition} ${styles.prevNav} ${isTransitioning ? styles.isTransitioning : ""}`}
+								onTransitionEnd={() => {
+									setIsTransitioning(false);
+									setPreviousNavTypeState(null);
+								}}
+								onTransitionCancel={() => {
+									setIsTransitioning(false);
+									setPreviousNavTypeState(null);
+								}}
+							>
+								{renderNav(previousNavTypeState, previousPathname)}
+							</div>
+						)}
+
+						<div
+							className={`${styles.navTransition} ${styles.currNav} ${willTransition ? styles.willTransition : ""}`}
+						>
+							{renderNav(currentNavType)}
+						</div>
 					</div>
 				</div>
 			</div>

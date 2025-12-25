@@ -26,6 +26,7 @@ export function getPrevNextSpeakingWorkLinks(
 	currUid: string,
 ): [string, string] {
 	const [prevWork, nextWork] = getPrevNextSpeakingWorks(works, currUid);
+	console.log({ currUid });
 	const prevWorkLink = `/${SPEAKING_URL_SEGMENT_NAME}/${prevWork.uid}`;
 	const nextWorkLink = `/${SPEAKING_URL_SEGMENT_NAME}/${nextWork.uid}`;
 	return [prevWorkLink, nextWorkLink];

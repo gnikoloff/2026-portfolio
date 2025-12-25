@@ -6,11 +6,16 @@ interface UIStore {
 	initNavigationX: number;
 	initNavigationY: number;
 	initedNavigation: boolean;
+
+	isLoadingPage: boolean;
+
 	setNavigationX: (v: number) => void;
 	setNavigationY: (v: number) => void;
 	setInitNavigationX: (v: number) => void;
 	setInitNavigationY: (v: number) => void;
 	setNavigationInited: (v: boolean) => void;
+
+	setIsLoadingPage: (v: boolean) => void;
 }
 
 export const useUIStore = create<UIStore>((set) => ({
@@ -19,6 +24,8 @@ export const useUIStore = create<UIStore>((set) => ({
 	initNavigationX: 0,
 	initNavigationY: 0,
 	initedNavigation: false,
+
+	isLoadingPage: false,
 
 	setNavigationX: (v: number) =>
 		set((state) => ({
@@ -48,5 +55,11 @@ export const useUIStore = create<UIStore>((set) => ({
 		set((state) => ({
 			...state,
 			initedNavigation: v,
+		})),
+
+	setIsLoadingPage: (v: boolean) =>
+		set((state) => ({
+			...state,
+			isLoadingPage: v,
 		})),
 }));
