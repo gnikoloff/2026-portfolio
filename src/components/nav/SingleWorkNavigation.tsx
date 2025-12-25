@@ -5,8 +5,13 @@ import { usePathname } from "next/navigation";
 import PrevNextWorkNav from "./PrevNextWorkNav";
 import styles from "./SingleWorkNavigation.module.css";
 
-export default function SingleWorkNavigation() {
-	const pathname = usePathname();
+export default function SingleWorkNavigation({
+	pathname: pathnameProp,
+}: {
+	pathname?: string;
+}) {
+	const currentPathname = usePathname();
+	const pathname = pathnameProp || currentPathname;
 	const uid = pathname.split("/").pop()!;
 	const { works } = useAppData();
 	const [prevWork, nextWork] = getPrevNextWorks(works, uid);

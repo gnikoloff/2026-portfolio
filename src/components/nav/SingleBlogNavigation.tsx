@@ -4,8 +4,14 @@ import { TableContentsEntry } from "@/types";
 import { usePathname } from "next/navigation";
 import TableContentsSelect from "./TableContentsSelect";
 
-function SingleBlogNavigation() {
-	const pathname = usePathname();
+function SingleBlogNavigation({
+	pathname: pathnameProp,
+}: {
+	pathname?: string;
+}) {
+	const currentPathname = usePathname();
+	const pathname = pathnameProp || currentPathname;
+
 	const uid = pathname.split("/").pop()!;
 	const { articles } = useAppData();
 	const page = articles.find(({ uid: pageUID }) => pageUID === uid);

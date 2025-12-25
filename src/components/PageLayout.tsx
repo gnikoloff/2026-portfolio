@@ -4,6 +4,7 @@ import { useUIStore } from "@/store/uiStore";
 import { useEffect, useRef } from "react";
 import AppFooter from "./AppFooter";
 
+import { useLoadingStore } from "@/store/loadingState";
 import { usePathname } from "next/navigation";
 import styles from "./PageLayout.module.css";
 
@@ -14,13 +15,13 @@ function PageLayout({
 	children: React.ReactNode;
 	hasMainPaddingBottom?: boolean;
 }>) {
+	const { isLoadingPage, setIsLoadingPage } = useLoadingStore();
 	const {
 		initedNavigation,
-		isLoadingPage,
+
 		setInitNavigationX,
 		setInitNavigationY,
 		setNavigationInited,
-		setIsLoadingPage,
 	} = useUIStore();
 
 	const pathname = usePathname();
@@ -65,7 +66,5 @@ function PageLayout({
 		</div>
 	);
 }
-
-PageLayout.displayName = "Page Layout";
 
 export default PageLayout;

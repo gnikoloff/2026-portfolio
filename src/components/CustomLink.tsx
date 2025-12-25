@@ -1,11 +1,11 @@
 "use client";
 
-import { useUIStore } from "@/store/uiStore";
+import { useLoadingStore } from "@/store/loadingState";
 import NextLink from "next/link";
 import { ComponentProps } from "react";
 
 function Link(props: ComponentProps<typeof NextLink>) {
-	const { setIsLoadingPage } = useUIStore();
+	const { setIsLoadingPage } = useLoadingStore();
 	return (
 		<NextLink
 			{...props}

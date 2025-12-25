@@ -7,8 +7,6 @@ interface UIStore {
 	initNavigationY: number;
 	initedNavigation: boolean;
 
-	isLoadingPage: boolean;
-
 	setNavigationX: (v: number) => void;
 	setNavigationY: (v: number) => void;
 	setInitNavigationX: (v: number) => void;

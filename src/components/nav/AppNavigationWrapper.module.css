@@ -1,0 +1,73 @@
+.root {
+	--dot-radius: 7px;
+	--dot-margin: 10px;
+
+	position: fixed;
+	top: 0;
+	left: 0;
+	/* width: 100%; */
+	height: 100%;
+	z-index: 999;
+	pointer-events: none;
+	transition: opacity 0.1s ease-out;
+}
+
+.navContainer {
+	pointer-events: auto;
+	display: flex;
+	opacity: 0;
+	transition: opacity 0.1s ease-in;
+}
+
+.navContainer.inited {
+	opacity: 1;
+}
+.draggable {
+	width: 52px;
+	cursor: grab;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: #222c;
+	backdrop-filter: blur(30px);
+	border-top: 1px solid var(--subtler-border-color);
+	border-left: 1px solid var(--subtler-border-color);
+
+	border-bottom: 1px solid var(--subtler-border-color);
+}
+
+.draggable:hover .dot,
+.root.dragging .dot {
+	background-color: var(--subtle-border-color);
+}
+
+.dotWrapper {
+	display: flex;
+	justify-content: space-between;
+}
+
+.dotColumn {
+	width: var(--dot-radius);
+}
+
+.dotColumnLeft {
+	margin-right: var(--dot-margin);
+}
+
+.dot {
+	width: var(--dot-radius);
+	height: var(--dot-radius);
+	background-color: var(--subtler-border-color);
+	border-radius: 50%;
+	margin-bottom: var(--dot-margin);
+	transition-property: background-color;
+	transition-timing-function: ease-out;
+}
+
+.dot:last-of-type {
+	margin-bottom: 0;
+}
+
+.root.dragging .draggable {
+	pointer-events: none;
+}

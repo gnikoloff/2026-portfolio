@@ -10,10 +10,9 @@ import {
 	WORKS_URL_SEGMENT_NAME,
 	WRITING_URL_SEGMENT_NAME,
 } from "@/constants";
-import { useUIStore } from "@/store/uiStore";
 import { NavType } from "@/types";
 import { usePathname } from "next/navigation";
-import { MouseEvent, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import SocialList from "../SocialList";
 import AboutNavigation from "./AboutNavigation";
 import styles from "./AppNavigation.module.css";
@@ -45,188 +44,52 @@ const getNavType = (pathname: string): NavType => {
 	return "home";
 };
 
-function usePrevious<T>(value: T): T | undefined {
-	const ref = useRef<T>();
-	useEffect(() => {
-		ref.current = value;
-	});
-	return ref.current;
-}
+function usePrevious<T>(value: T): T {
+	const ref = useRef<T>(value);
+	const prevRef = useRef<T>(value);
 
-const HANDLE_DOTS_COL_COUNT = 3;
-const HANDLE_DOTS_TOTAL_COUNT = HANDLE_DOTS_COL_COUNT * 2;
-const HANDLE_ACTIVE_TRANSITION_DURATION = 0.125;
+	if (ref.current !== value) {
+		prevRef.current = ref.current;
+		ref.current = value;
+	}
+
+	return prevRef.current;
+}
 
 export default function AppNavigation() {
 	const pathname = usePathname();
-	const previousPathname = usePrevious(pathname);
 	const currentNavType = getNavType(pathname);
-	const previousNavType = usePrevious(currentNavType);
+
+	const prevNavTypeRef = useRef<NavType>(currentNavType);
+	const prevPathnameRef = useRef(pathname);
 
 	const [previousNavTypeState, setPreviousNavTypeState] =
 		useState<NavType | null>(null);
+	const [previousPathnameState, setPreviousPathnameState] = useState<
+		string | null
+	>(null);
 	const [isTransitioning, setIsTransitioning] = useState(false);
 	const [willTransition, setWillTransition] = useState(false);
-
-	const {
-		navigationX,
-		navigationY,
-		initNavigationX,
-		initNavigationY,
-		initedNavigation,
-		isLoadingPage,
-		setNavigationX,
-		setNavigationY,
-	} = useUIStore();
-
-	const [isDragging, setIsDragging] = useState(false);
-
-	const draggableAreaRef = useRef<HTMLDivElement>(null);
-	const mouseRef = useRef({ x: initNavigationX, y: initNavigationY });
-	const mouseTargetRef = useRef({ x: initNavigationX, y: initNavigationY });
-	const navContainerRef = useRef<HTMLDivElement>(null);
-	const rafIdRef = useRef<number>(-1);
-
-	const [draggableWidth, setDraggableWidth] = useState(0);
-	const [draggableHeight, setDraggableHeight] = useState(0);
-
-	// Function to clamp position within viewport bounds
-	const clampToViewport = (x: number, y: number) => {
-		if (!navContainerRef.current) return { x, y };
-
-		const rect = navContainerRef.current.getBoundingClientRect();
-		const width = rect.width;
-		const height = rect.height;
-
-		const minX = 0;
-		const minY = 0;
-		const maxX = window.innerWidth - width;
-		const maxY = window.innerHeight - height;
-
-		return {
-			x: Math.max(minX, Math.min(maxX, x)),
-			y: Math.max(minY, Math.min(maxY, y)),
-		};
-	};
+	const isNavigatingRef = useRef(false);
 
 	useEffect(() => {
-		if (!navContainerRef.current) {
-			return;
-		}
-		const rect = navContainerRef.current.getBoundingClientRect();
-		mouseRef.current.x = initNavigationX;
-		mouseRef.current.y = initNavigationY;
-		mouseTargetRef.current.x = initNavigationX;
-		mouseTargetRef.current.y = initNavigationY;
-	}, [initNavigationX, initNavigationY]);
+		if (currentNavType !== prevNavTypeRef.current) {
+			isNavigatingRef.current = true; // Mark that we're navigating
 
-	useEffect(() => {
-		let oldTime = performance.now() * 0.001;
-
-		const animate = () => {
-			const ts = performance.now() * 0.001;
-			const dt = Math.min(ts - oldTime, 0.1);
-			oldTime = ts;
-
-			const damping = 10;
-			const threshold = 0.001;
-
-			const dx = mouseTargetRef.current.x - mouseRef.current.x;
-			const dy = mouseTargetRef.current.y - mouseRef.current.y;
-			const distance = Math.sqrt(dx * dx + dy * dy);
-
-			if (distance > threshold) {
-				mouseRef.current.x += dx * damping * dt;
-				mouseRef.current.y += dy * damping * dt;
-
-				setNavigationX(mouseRef.current.x);
-				setNavigationY(mouseRef.current.y);
-			} else {
-				mouseRef.current.x = mouseTargetRef.current.x;
-				mouseRef.current.y = mouseTargetRef.current.y;
-
-				setNavigationX(mouseRef.current.x);
-				setNavigationY(mouseRef.current.y);
-			}
-
-			rafIdRef.current = requestAnimationFrame(animate);
-		};
-
-		rafIdRef.current = requestAnimationFrame(animate);
-
-		return () => {
-			if (rafIdRef.current) {
-				cancelAnimationFrame(rafIdRef.current);
-			}
-		};
-	}, [setNavigationX, setNavigationY]);
-
-	useEffect(() => {
-		if (!isDragging) return;
-
-		const handleMouseMove = (e: globalThis.MouseEvent) => {
-			e.preventDefault();
-			mouseTargetRef.current.x = e.pageX - draggableWidth * 0.5;
-			mouseTargetRef.current.y =
-				e.pageY - draggableHeight * 0.5 - window.pageYOffset;
-		};
-
-		const handleMouseUp = () => {
-			setIsDragging(false);
-			document.body.classList.remove("dragging");
-
-			// Clamp to viewport bounds on mouse up
-			const clamped = clampToViewport(
-				mouseTargetRef.current.x,
-				mouseTargetRef.current.y,
-			);
-			mouseTargetRef.current.x = clamped.x;
-			mouseTargetRef.current.y = clamped.y;
-		};
-
-		document.addEventListener("mousemove", handleMouseMove);
-		document.addEventListener("mouseup", handleMouseUp);
-
-		return () => {
-			document.removeEventListener("mousemove", handleMouseMove);
-			document.removeEventListener("mouseup", handleMouseUp);
-		};
-	}, [isDragging, draggableWidth, draggableHeight]);
-
-	useEffect(() => {
-		const handleResize = () => {
-			const clamped = clampToViewport(navigationX, navigationY);
-			if (clamped.x !== navigationX || clamped.y !== navigationY) {
-				mouseTargetRef.current.x = clamped.x;
-				mouseTargetRef.current.y = clamped.y;
-			}
-		};
-
-		window.addEventListener("resize", handleResize);
-		return () => window.removeEventListener("resize", handleResize);
-	}, [navigationX, navigationY]);
-
-	useEffect(() => {
-		const draggableArea = draggableAreaRef.current;
-		if (draggableArea == null) {
-			return;
-		}
-		const bbox = draggableArea.getBoundingClientRect();
-		setDraggableWidth(bbox.width);
-		setDraggableHeight(bbox.height);
-	}, []);
-
-	useEffect(() => {
-		if (currentNavType !== previousNavType && previousNavType !== undefined) {
-			setPreviousNavTypeState(previousNavType);
+			setPreviousNavTypeState(prevNavTypeRef.current);
+			setPreviousPathnameState(prevPathnameRef.current);
 			setWillTransition(true);
 
 			requestAnimationFrame(() => {
 				setWillTransition(false);
 				setIsTransitioning(true);
+				isNavigatingRef.current = false; // Navigation complete
 			});
+
+			prevNavTypeRef.current = currentNavType;
+			prevPathnameRef.current = pathname;
 		}
-	}, [currentNavType, previousNavType]);
+	}, [pathname, currentNavType]);
 
 	const renderNav = (navType: NavType, frozenPathname?: string) => {
 		const pathToUse = frozenPathname || pathname;
@@ -235,7 +98,7 @@ export default function AppNavigation() {
 			case "home":
 				return <HomeNavigation />;
 			case "work":
-				return <SingleWorkNavigation />;
+				return <SingleWorkNavigation pathname={pathToUse} />;
 			case "contact":
 				return (
 					<div className="sub-nav-container">
@@ -247,7 +110,7 @@ export default function AppNavigation() {
 			case "blog":
 				return <BlogNavigation />;
 			case "blog-single":
-				return <SingleBlogNavigation />;
+				return <SingleBlogNavigation pathname={pathToUse} />;
 			case "speaking":
 				return <SpeakingNavigation />;
 			case "speaking-single":
@@ -262,89 +125,43 @@ export default function AppNavigation() {
 	};
 
 	return (
-		<section
-			id="app-nav"
-			className={`${styles.root} ${isDragging ? styles.dragging : ""}`}
-		>
+		<div className={styles.navWrapper}>
 			<div
-				ref={navContainerRef}
-				className={`${styles.navContainer} ${initedNavigation ? styles.inited : ""}`}
-				style={{
-					transform: `translate3d(${navigationX}px, ${navigationY}px, 0)`,
-				}}
+				className={`${styles.subNavWrapper} ${styles.mainNav} ${true ? styles.isLoading : ""}`}
 			>
-				<div
-					ref={draggableAreaRef}
-					className={styles.draggable}
-					onMouseDown={(e: MouseEvent) => {
-						e.preventDefault();
-						setIsDragging(true);
-						mouseTargetRef.current.x = e.pageX - draggableWidth * 0.5;
-						mouseTargetRef.current.y =
-							e.pageY - draggableHeight * 0.5 - window.pageYOffset;
-						document.body.classList.add("dragging");
-					}}
-				>
-					<div className={styles.dotWrapper}>
-						<div className={`${styles.dotColumn} ${styles.dotColumnLeft}`}>
-							{new Array(HANDLE_DOTS_COL_COUNT).fill(null).map((_, i) => (
-								<div
-									key={i}
-									className={styles.dot}
-									style={{
-										transitionDuration: `${HANDLE_ACTIVE_TRANSITION_DURATION}s`,
-										transitionDelay: `${(i / HANDLE_DOTS_TOTAL_COUNT) * HANDLE_ACTIVE_TRANSITION_DURATION}s`,
-									}}
-								/>
-							))}
-						</div>
-						<div className={styles.dotColumn}>
-							{new Array(HANDLE_DOTS_COL_COUNT).fill(null).map((_, i) => (
-								<div
-									key={i}
-									className={styles.dot}
-									style={{
-										transitionDuration: `${HANDLE_ACTIVE_TRANSITION_DURATION}s`,
-										transitionDelay: `${((i + HANDLE_DOTS_COL_COUNT) / HANDLE_DOTS_TOTAL_COUNT) * HANDLE_ACTIVE_TRANSITION_DURATION}s`,
-									}}
-								/>
-							))}
-						</div>
-					</div>
-				</div>
-				<div className={styles.navWrapper}>
-					<div
-						className={`${styles.subNavWrapper} ${styles.mainNav} ${isLoadingPage ? styles.isLoading : ""}`}
-					>
-						<div className="sub-nav-container">
-							<PageNavigation navType={getNavType(pathname)} />
-						</div>
-					</div>
-					<div className={`${styles.subNavWrapper}`}>
-						{previousNavTypeState && (
-							<div
-								className={`${styles.navTransition} ${styles.prevNav} ${isTransitioning ? styles.isTransitioning : ""}`}
-								onTransitionEnd={() => {
-									setIsTransitioning(false);
-									setPreviousNavTypeState(null);
-								}}
-								onTransitionCancel={() => {
-									setIsTransitioning(false);
-									setPreviousNavTypeState(null);
-								}}
-							>
-								{renderNav(previousNavTypeState, previousPathname)}
-							</div>
-						)}
-
-						<div
-							className={`${styles.navTransition} ${styles.currNav} ${willTransition ? styles.willTransition : ""}`}
-						>
-							{renderNav(currentNavType)}
-						</div>
-					</div>
+				<div className="sub-nav-container">
+					<PageNavigation navType={getNavType(pathname)} />
 				</div>
 			</div>
-		</section>
+			<div className={`${styles.subNavWrapper}`}>
+				{previousNavTypeState && previousPathnameState && (
+					<div
+						className={`${styles.navTransition} ${styles.prevNav} ${isTransitioning ? styles.isTransitioning : ""}`}
+						onTransitionEnd={() => {
+							if (!isNavigatingRef.current) {
+								setIsTransitioning(false);
+								setPreviousNavTypeState(null);
+								setPreviousPathnameState(null);
+							}
+						}}
+						onTransitionCancel={() => {
+							if (!isNavigatingRef.current) {
+								setIsTransitioning(false);
+								setPreviousNavTypeState(null);
+								setPreviousPathnameState(null);
+							}
+						}}
+					>
+						{renderNav(previousNavTypeState, previousPathnameState)}
+					</div>
+				)}
+
+				<div
+					className={`${styles.navTransition} ${styles.currNav} ${willTransition ? styles.willTransition : ""}`}
+				>
+					{renderNav(currentNavType)}
+				</div>
+			</div>
+		</div>
 	);
 }

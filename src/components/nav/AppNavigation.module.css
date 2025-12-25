@@ -20,27 +20,6 @@ body[class*="medium-zoom--opened"] .navContainer {
 	transition: opacity 0.1s ease-out;
 }
 
-.root a:hover {
-	/* text-decoration: underline; */
-}
-
-.navContainer {
-	pointer-events: auto;
-	display: flex;
-	opacity: 0;
-	transition: opacity 0.1s ease-in;
-	/* background-color: #222c;
-	backdrop-filter: blur(30px); */
-	/* border: 1px solid var(--subtler-border-color); */
-}
-
-.navContainer.inited {
-	opacity: 1;
-}
-
-.navWrapper {
-}
-
 .subNavWrapper {
 	position: relative;
 	height: 48px;
@@ -94,55 +73,6 @@ body[class*="medium-zoom--opened"] .navContainer {
 	transform: rotateX(90deg);
 }
 
-.draggable {
-	width: 52px;
-	cursor: grab;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	background-color: #222c;
-	backdrop-filter: blur(30px);
-	border-top: 1px solid var(--subtler-border-color);
-	border-left: 1px solid var(--subtler-border-color);
-
-	border-bottom: 1px solid var(--subtler-border-color);
-}
-
-.draggable:hover .dot,
-.root.dragging .dot {
-	background-color: var(--subtle-border-color);
-}
-
-.dotWrapper {
-	display: flex;
-	justify-content: space-between;
-}
-
-.dotColumn {
-	width: var(--dot-radius);
-}
-
-.dotColumnLeft {
-	margin-right: var(--dot-margin);
-}
-
-.dot {
-	width: var(--dot-radius);
-	height: var(--dot-radius);
-	background-color: var(--subtler-border-color);
-	border-radius: 50%;
-	margin-bottom: var(--dot-margin);
-	transition-property: background-color;
-	transition-timing-function: ease-out;
-}
-
-.dot:last-of-type {
-	margin-bottom: 0;
-}
-
-.root.dragging .draggable {
-	pointer-events: none;
-}
 .mainNav {
 	position: relative;
 	color: var(--nav-main-color);
