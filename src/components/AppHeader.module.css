@@ -1,3 +1,7 @@
+.root {
+	/* border-bottom: 1px solid var(--subtler-border-color); */
+}
+
 .headerWrapper {
 	font-size: 1rem;
 	display: flex;

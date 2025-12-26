@@ -1,3 +1,11 @@
+body[class*="medium-zoom--opened"] .root {
+	opacity: 0;
+}
+
+body[class*="medium-zoom--opened"] .navContainer {
+	pointer-events: none;
+}
+
 .root {
 	--dot-radius: 7px;
 	--dot-margin: 10px;
@@ -22,7 +30,9 @@
 .navContainer.inited {
 	opacity: 1;
 }
+
 .draggable {
+	margin-right: -1px;
 	width: 52px;
 	cursor: grab;
 	display: flex;

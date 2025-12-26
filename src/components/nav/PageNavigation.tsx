@@ -16,7 +16,7 @@ export default function PageNavigation({ navType }: { navType: NavType }) {
 	const isContact = navType === "contact";
 	return (
 		<nav className={styles.root}>
-			<ul className={"navList"}>
+			<ul className={`navList ${styles.navList}`}>
 				<li>
 					<Link className={isWork ? styles.active : ""} href={"/"}>
 						Works

@@ -14,6 +14,8 @@
 
 	--nav-main-color: #fff;
 	--nav-secondary-color: #cdcdcd;
+
+	--nav-section-height: 48px;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -206,7 +208,7 @@ h6 {
 }
 
 .sub-nav-container {
-	height: 48px;
+	height: var(--nav-section-height);
 	display: flex;
 	align-items: center;
 	padding: 0 1rem;

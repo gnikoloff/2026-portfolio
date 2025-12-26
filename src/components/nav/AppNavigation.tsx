@@ -10,6 +10,7 @@ import {
 	WORKS_URL_SEGMENT_NAME,
 	WRITING_URL_SEGMENT_NAME,
 } from "@/constants";
+import { useLoadingStore } from "@/store/loadingState";
 import { NavType } from "@/types";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
@@ -72,6 +73,8 @@ export default function AppNavigation() {
 	const [willTransition, setWillTransition] = useState(false);
 	const isNavigatingRef = useRef(false);
 
+	const { isLoadingPage } = useLoadingStore();
+
 	useEffect(() => {
 		if (currentNavType !== prevNavTypeRef.current) {
 			isNavigatingRef.current = true; // Mark that we're navigating
@@ -127,13 +130,13 @@ export default function AppNavigation() {
 	return (
 		<div className={styles.navWrapper}>
 			<div
-				className={`${styles.subNavWrapper} ${styles.mainNav} ${true ? styles.isLoading : ""}`}
+				className={`${styles.subNavWrapper} ${styles.mainNav} ${isLoadingPage ? styles.isLoading : ""}`}
 			>
 				<div className="sub-nav-container">
 					<PageNavigation navType={getNavType(pathname)} />
 				</div>
 			</div>
-			<div className={`${styles.subNavWrapper}`}>
+			<div className={`${styles.subNavWrapper} ${styles.secondaryNav}`}>
 				{previousNavTypeState && previousPathnameState && (
 					<div
 						className={`${styles.navTransition} ${styles.prevNav} ${isTransitioning ? styles.isTransitioning : ""}`}
@@ -155,7 +158,6 @@ export default function AppNavigation() {
 						{renderNav(previousNavTypeState, previousPathnameState)}
 					</div>
 				)}
-
 				<div
 					className={`${styles.navTransition} ${styles.currNav} ${willTransition ? styles.willTransition : ""}`}
 				>

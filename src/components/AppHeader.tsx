@@ -13,7 +13,11 @@ const LogoViz = dynamic(() => import("@/logo-viz/LogoViz"), {
 
 const AppHeader = forwardRef<HTMLElement>((props, ref) => {
 	return (
-		<header ref={ref} id="app-header" className={`tight-container`}>
+		<header
+			ref={ref}
+			id="app-header"
+			className={`${styles.root} tight-container`}
+		>
 			{/* <Logo /> */}
 			<div className={styles.headerWrapper}>
 				<div

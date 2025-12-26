@@ -1,3 +1,7 @@
 .active {
 	text-decoration: underline;
 }
+
+.navList li:after {
+	top: 3px;
+}
