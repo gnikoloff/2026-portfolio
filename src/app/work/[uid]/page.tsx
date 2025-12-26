@@ -1,3 +1,4 @@
+import AppHeaderBorder from "@/components/AppHeaderBorder";
 import PageLayout from "@/components/PageLayout";
 import WorkClient from "@/components/WorkClient";
 import { PAGE_TITLE, WORKS_CUSTOM_TYPE } from "@/constants";
@@ -39,6 +40,7 @@ export default async function Work({ params }: { params: Promise<Params> }) {
 
 	return (
 		<PageLayout>
+			<AppHeaderBorder />
 			<div className={`${styles.main} tight-container`}>
 				<WorkClient
 					title={page.data.project_title}

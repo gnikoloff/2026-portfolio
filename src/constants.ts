@@ -45,5 +45,5 @@ export const QUERY_PARAM_YEAR = "year";
 export const QUERY_PARAM_TECHNOLOGY = "technology";
 export const QUERY_PARAM_LANGUAGE = "language";
 
-export const LOGO_ANIM_WIDTH = 300 * 0.75;
-export const LOGO_ANIM_HEIGHT = 120 * 0.75;
+export const LOGO_ANIM_WIDTH = 300;
+export const LOGO_ANIM_HEIGHT = 120;

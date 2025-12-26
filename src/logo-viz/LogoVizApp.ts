@@ -73,7 +73,6 @@ interface ConvolutionState {
 	height: number;
 	image: HDRImageElement;
 	step: 0;
-	maxSteps: 5; // hdr gl texture, cubemap, irradiance, prefilter
 }
 
 const scale = vec3.fromValues(1, 1, 1);
@@ -198,7 +197,6 @@ export default class LogoVizApp {
 			height: skyboxCubeImage.height,
 			image: skyboxCubeImage,
 			step: 0,
-			maxSteps: 5,
 		};
 
 		const brdfLUT = gl.createTexture();
@@ -234,7 +232,7 @@ export default class LogoVizApp {
 		// }
 
 		if (this.state != null) {
-			const stepMS = 50;
+			const stepMS = 1;
 			if (this.state.step === 0 * stepMS) {
 				this.pbrTextures = this.pbrTexImages.map((img) => {
 					const tex = gl.createTexture();
@@ -260,8 +258,7 @@ export default class LogoVizApp {
 					return tex;
 				});
 				gl.bindTexture(gl.TEXTURE_2D, null);
-			}
-			if (this.state.step === 1 * stepMS) {
+			} else if (this.state.step === 1 * stepMS) {
 				this.skyboxCubeCrossTexture = makeHDRGLTexture(gl, this.state.image);
 			} else if (this.state.step === 2 * stepMS) {
 				const cubemapConvert = new CubemapGenerator(gl, CUBEMAP_SIZE);
@@ -287,7 +284,6 @@ export default class LogoVizApp {
 				this.state = null;
 				this.geoLoaded = true;
 				this.onAnimStart();
-				console.log("call 4");
 				return;
 			}
 			this.state.step++;
@@ -301,7 +297,7 @@ export default class LogoVizApp {
 			(this.loadingTTargetTarget - this.loadingTTarget) * dt * 6;
 		this.loadingT += (this.loadingTTarget - this.loadingT) * dt * 5;
 
-		this.opacityT += (this.opacityTTarget - this.opacityT) * dt * 3;
+		this.opacityT += (this.opacityTTarget - this.opacityT) * dt * 1.5;
 		this.canvas.style.opacity = this.opacityT.toString();
 
 		if (this.opacityT > 0.7 && this.loadingTTargetTarget === 0) {

@@ -1,0 +1,6 @@
+.introText {
+	text-align: center;
+	margin-bottom: 30px;
+	font-size: 16px;
+	color: var(--foreground);
+}

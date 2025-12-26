@@ -1,3 +1,4 @@
+import AppHeaderBorder from "@/components/AppHeaderBorder";
 import ContactForm from "@/components/ContactForm";
 import PageLayout from "@/components/PageLayout";
 import { PAGE_TITLE } from "@/constants";
@@ -10,6 +11,7 @@ export const metadata = {
 export default function Contact() {
 	return (
 		<PageLayout>
+			<AppHeaderBorder />
 			<div className="tight-container">
 				<ContactForm />
 			</div>

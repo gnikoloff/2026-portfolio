@@ -80,10 +80,14 @@ button {
 	font-size: inherit;
 }
 
+.typeset h1 {
+	margin-top: 0 !important;
+}
+
 #app-header {
 	/* height: 120px; */
 	margin-top: 180px;
-	margin-bottom: 60px;
+	margin-bottom: 50px;
 	display: flex;
 	justify-content: center;
 }

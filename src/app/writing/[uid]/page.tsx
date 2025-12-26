@@ -3,7 +3,9 @@ import { createClient } from "@/prismicio";
 import { htmlSerializer } from "@/utils/htmlSerialiser";
 import { asHTML } from "@prismicio/client";
 
+import AppHeaderBorder from "@/components/AppHeaderBorder";
 import ArticleClient from "@/components/ArticleClient";
+import PageLayout from "@/components/PageLayout";
 import { Metadata } from "next";
 import styles from "./page.module.css";
 
@@ -38,7 +40,8 @@ export default async function WritingWork({
 	const html = asHTML(page.data.body, { serializer: htmlSerializer });
 
 	return (
-		<>
+		<PageLayout>
+			<AppHeaderBorder />
 			<div className="tight-container">
 				{/* <SinglePageHeader
 				title={page.data.title}
@@ -50,6 +53,6 @@ export default async function WritingWork({
 					<ArticleClient title={page.data.title} html={html} />
 				</main>
 			</div>
-		</>
+		</PageLayout>
 	);
 }

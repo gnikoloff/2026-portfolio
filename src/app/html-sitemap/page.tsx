@@ -1,3 +1,4 @@
+import AppHeaderBorder from "@/components/AppHeaderBorder";
 import Link from "@/components/CustomLink";
 import PageLayout from "@/components/PageLayout";
 import {
@@ -26,6 +27,7 @@ async function HTMLSitemap() {
 
 	return (
 		<PageLayout>
+			<AppHeaderBorder />
 			<div className="tight-container typeset">
 				<h1>HTML Sitemap</h1>
 				<h2 id="root-pages">Root Pages</h2>

@@ -1,3 +1,4 @@
+import AppHeaderBorder from "@/components/AppHeaderBorder";
 import Link from "@/components/CustomLink";
 import PageLayout from "@/components/PageLayout";
 import { BASE_URL, CONTACT_URL_SEGMENT_NAME, PAGE_TITLE } from "@/constants";
@@ -10,6 +11,7 @@ export const metadata = {
 function Imprint() {
 	return (
 		<PageLayout>
+			<AppHeaderBorder />
 			<div className="tight-container typeset">
 				<h1>Imprint</h1>
 

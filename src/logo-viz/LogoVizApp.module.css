@@ -9,6 +9,10 @@
 	cursor: unset;
 }
 
+.root.loading {
+	border: 1px solid var(--subtlerer-border-color);
+}
+
 .root.loading:before {
 	opacity: 1;
 }

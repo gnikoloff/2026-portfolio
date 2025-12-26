@@ -10,6 +10,7 @@ import {
 } from "@/utils/filterWorks";
 import { useEffect, useRef } from "react";
 import { SpeakingDocument } from "../../prismicio-types";
+import AppHeaderBorder from "./AppHeaderBorder";
 import NoResults from "./NoResults";
 import PageLayout from "./PageLayout";
 
@@ -36,6 +37,7 @@ export default function SpeakingClient({
 
 	return (
 		<PageLayout hasMainPaddingBottom={true}>
+			<AppHeaderBorder />
 			{filteredWorks.length === 0 ? (
 				<NoResults workType="projects" />
 			) : (

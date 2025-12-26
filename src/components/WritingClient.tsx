@@ -9,6 +9,7 @@ import {
 } from "@/utils/filterWorks";
 import { useEffect, useRef } from "react";
 import { BlogDocument } from "../../prismicio-types";
+import AppHeaderBorder from "./AppHeaderBorder";
 import NoResults from "./NoResults";
 import PageLayout from "./PageLayout";
 import YearWritingContainer from "./YearWritingContainer";
@@ -39,6 +40,7 @@ export default function WritingClient({
 
 	return (
 		<PageLayout hasMainPaddingBottom={true}>
+			<AppHeaderBorder />
 			{filteredWorks.length === 0 ? (
 				<NoResults workType="articles" />
 			) : (

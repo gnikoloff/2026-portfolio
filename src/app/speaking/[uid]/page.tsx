@@ -1,3 +1,4 @@
+import AppHeaderBorder from "@/components/AppHeaderBorder";
 import ArticleFooter from "@/components/ArticleFooter";
 import PageLayout from "@/components/PageLayout";
 import { SinglePageHeader } from "@/components/SinglePageHeader";
@@ -50,6 +51,7 @@ export default async function SpeakingWork({
 	);
 	return (
 		<PageLayout>
+			<AppHeaderBorder />
 			<div className="tight-container">
 				<SinglePageHeader
 					title={page.data.project_title}

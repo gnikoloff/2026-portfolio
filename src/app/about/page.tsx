@@ -9,6 +9,7 @@ import {
 import { createClient } from "@/prismicio";
 import { PrismicRichText } from "@prismicio/react";
 
+import AppHeaderBorder from "@/components/AppHeaderBorder";
 import { Metadata } from "next";
 import styles from "./page.module.css";
 
@@ -17,6 +18,7 @@ async function About() {
 	const page = await client.getSingle(ABOUT_CUSTOM_TYPE);
 	return (
 		<PageLayout>
+			<AppHeaderBorder />
 			<div className={`typeset tight-container ${styles.root}`}>
 				<section
 					id={ABOUT_SECTION_INTRO}

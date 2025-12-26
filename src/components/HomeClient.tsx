@@ -11,6 +11,8 @@ import {
 	groupWorksByYear,
 } from "@/utils/filterWorks";
 import { useEffect, useRef } from "react";
+import AppHeaderBorder from "./AppHeaderBorder";
+import IntroText from "./IntroText";
 import NoResults from "./NoResults";
 import PageLayout from "./PageLayout";
 
@@ -51,6 +53,8 @@ export default function HomeClient({ initialFilters }: HomeClientProps) {
 
 	return (
 		<PageLayout hasMainPaddingBottom={true}>
+			<IntroText />
+			<AppHeaderBorder />
 			{filteredWorks.length === 0 ? (
 				<NoResults />
 			) : (
