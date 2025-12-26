@@ -19,8 +19,6 @@ const CUBE_VIEWS = [
 const CUBE_PROJ_MATRIX = mat4.create();
 mat4.perspective(CUBE_PROJ_MATRIX, Math.PI / 2, 1.0, 0.1, 10.0);
 
-const projViewMatrix = mat4.create();
-
 export default class IBLGenerator extends Drawable {
 	public outTexture: WebGLTexture;
 
@@ -45,7 +43,7 @@ export default class IBLGenerator extends Drawable {
 		const indexBuffer = gl.createBuffer();
 
 		const aPosition = gl.getAttribLocation(this.program, "aPosition");
-		let aUv: number;
+		let aUv = -1;
 		if (hasUV) {
 			aUv = gl.getAttribLocation(this.program, "aUv");
 		}
@@ -65,7 +63,7 @@ export default class IBLGenerator extends Drawable {
 			0 * Float32Array.BYTES_PER_ELEMENT,
 		);
 
-		if (aUv) {
+		if (hasUV) {
 			gl.enableVertexAttribArray(aUv);
 			gl.vertexAttribPointer(
 				aUv,
@@ -89,9 +87,12 @@ export default class IBLGenerator extends Drawable {
 		this.setupDepthBuffer();
 	}
 
-	protected getCamProjViewMatrix(faceIdx: number): mat4 {
-		mat4.mul(projViewMatrix, CUBE_PROJ_MATRIX, CUBE_VIEWS[faceIdx]);
-		return projViewMatrix;
+	protected getCamProjMatrix(): mat4 {
+		return CUBE_PROJ_MATRIX;
+	}
+
+	protected getCamViewMatrix(faceIdx: number): mat4 {
+		return CUBE_VIEWS[faceIdx];
 	}
 
 	protected setupDepthBuffer() {

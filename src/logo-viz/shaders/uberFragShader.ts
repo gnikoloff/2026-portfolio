@@ -1,7 +1,6 @@
 import fresnelSchlickRoughness from "./pbr/fresnelSchlickRoughness";
 import lottes from "./tonemapping/lottes";
 import uchimura from "./tonemapping/uchimura";
-import ubosChunk from "./ubos";
 
 const out = `#version 300 es
   precision highp float;
@@ -11,13 +10,12 @@ const out = `#version 300 es
   ${uchimura}
   ${lottes}
 
-  #ifdef USE_UBOS
-    ${ubosChunk}
-  #endif
 
   #ifdef USE_UV
     in vec2 vUv;
   #endif
+
+  uniform vec3 cameraPosition;
 
   #ifdef IS_SKYBOX
     uniform samplerCube u_environmentMap;
@@ -81,16 +79,17 @@ const out = `#version 300 es
 
     #ifdef IS_SKYBOX
       vec3 envColor = texture(u_environmentMap, vWorldPos).rgb;
+      // finalColor = vec4(envColor, 1.0);
       #ifdef USE_MRT
         fragColor = vec4(envColor, 1.0);
         brightColor = vec4(0.0);
-      #else
-        finalColor = vec4(envColor, 1.0);
       #endif
     #else
       #ifdef IS_TO_CUBEMAP_CONVERT
-        vec3 envColor = texture(u_environmentMap, vUv).rgb;
-        finalColor = vec4(envColor, 1.0);
+        vec4 envColor = texture(u_environmentMap, vUv);
+        // envColor.rgb *= pow(2.0,envColor.a*255.0-128.0);  
+        finalColor = envColor;
+        // finalColor = vec4(vUv, 0.0, 1.0);
       #else
         #ifdef USE_PBR
           vec3 N = normalize(vNormal);

@@ -1,5 +1,4 @@
 import boxTwistChunk from "./boxTwist";
-import ubosChunk from "./ubos";
 
 const out = `#version 300 es
 
@@ -7,11 +6,8 @@ const out = `#version 300 es
 
   ${boxTwistChunk}
 
-  #ifdef USE_UBOS
-    ${ubosChunk}
-  #else
-    uniform mat4 projViewMatrix;
-  #endif
+  uniform mat4 projMatrix;
+  uniform mat4 viewMatrix;
 
   // uniform PostFX {
   //   highp int tonemappingMode;
@@ -53,7 +49,7 @@ const out = `#version 300 es
       vec4 clipPos = projMatrix * rotView * worldPos;
       gl_Position = clipPos.xyww;
     #else
-      #ifdef USE_UBOS
+      #ifdef IS_TEXT_MESH
         float u_deformAngle = 2.0 - loadingT * 2.0;
         float ang = (aPosition.x * 0.5 + 0.5) * sin(u_deformAngle) * u_deformAngle;
         worldPos = doBoxTwist(worldPos, ang);
@@ -62,7 +58,7 @@ const out = `#version 300 es
         #ifdef IS_FULLSCREEN_TRIANGLE
           gl_Position = aPosition;
         #else
-          gl_Position = projViewMatrix * worldPos;
+          gl_Position = projMatrix * viewMatrix * worldPos;
         #endif
       #endif
     #endif

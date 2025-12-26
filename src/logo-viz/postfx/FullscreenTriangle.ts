@@ -44,15 +44,17 @@ export default class FullscreenTriangle extends Drawable {
 
 		gl.bindVertexArray(this.vao);
 
+		const aPosition = gl.getAttribLocation(this.program, "aPosition");
+		const aUv = gl.getAttribLocation(this.program, "aUv");
+
 		// Setup in WebGL:
 		const buffer = gl.createBuffer();
 		gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
 		gl.bufferData(gl.ARRAY_BUFFER, fullscreenTriangle, gl.STATIC_DRAW);
 
-		// Position attribute (location 0)
-		gl.enableVertexAttribArray(0);
+		gl.enableVertexAttribArray(aPosition);
 		gl.vertexAttribPointer(
-			0,
+			aPosition,
 			2,
 			gl.FLOAT,
 			false,
@@ -60,10 +62,9 @@ export default class FullscreenTriangle extends Drawable {
 			0 * Float32Array.BYTES_PER_ELEMENT,
 		);
 
-		// UV attribute (location 1)
-		gl.enableVertexAttribArray(1);
+		gl.enableVertexAttribArray(aUv);
 		gl.vertexAttribPointer(
-			1,
+			aUv,
 			2,
 			gl.FLOAT,
 			false,

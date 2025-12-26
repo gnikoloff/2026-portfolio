@@ -1,10 +1,4 @@
-import {
-	CameraController,
-	createAndBindUBOToBase,
-	createUniformBlockInfo,
-	PerspectiveCamera,
-	UBOInfo,
-} from "@/libs/hwoa-rang-gl2/dist";
+import { CameraController, PerspectiveCamera } from "@/libs/hwoa-rang-gl2/dist";
 import { CharData } from "@/types";
 import { HDRImageElement } from "@/types/hdrpng";
 import { loadHDR, makeHDRGLTexture } from "@/utils/load-hdr";
@@ -70,16 +64,6 @@ const ASSETS: Asset[] = [
 const loadIdx = Math.floor(Math.random() * ASSETS.length);
 const ASSET_TO_LOAD = ASSETS[loadIdx]!;
 
-const CAMERA_UBO_NAME = "Camera";
-const CAMERA_UBO_FIELDS = [
-	"projMatrix",
-	"viewMatrix",
-	"zNear",
-	"zFar",
-	"cameraPosition",
-	"time",
-];
-
 const loadModel = (src: string): Promise<CharData> => {
 	return fetch(src).then((res) => res.json());
 };
@@ -97,9 +81,6 @@ export default class LogoVizApp {
 	private perspCamera: PerspectiveCamera;
 	private cameraCtrl: CameraController;
 	private mesh!: Char3D;
-
-	private cameraUBOInfo!: UBOInfo;
-	private cameraUBO!: WebGLBuffer;
 
 	private skybox!: Skybox;
 	private blitMainSceneFX!: FullscreenCompositeTriangle;
@@ -146,17 +127,16 @@ export default class LogoVizApp {
 			);
 		}
 
-		const bbox = canvas.getBoundingClientRect();
 		this.perspCamera = new PerspectiveCamera(
 			(30 * Math.PI) / 180,
-			bbox.width / bbox.height,
+			canvas.width / canvas.height,
 			0.1,
 			20,
 		);
 		const lookAt = vec3.fromValues(-0.25, 0.1, 0);
 		this.perspCamera.position = [-2.25, -1.2, 3];
 		this.perspCamera.lookAt = lookAt;
-		this.perspCamera.updateProjectionMatrix();
+		this.perspCamera.updateViewMatrix().updateProjectionMatrix();
 
 		this.cameraCtrl = new CameraController(
 			this.perspCamera,
@@ -173,8 +153,8 @@ export default class LogoVizApp {
 		// Create MSAA framebuffers
 		this.mainSceneBuffers = createMainSceneMSAAFramebuffer(
 			gl,
-			canvas.width,
-			canvas.height,
+			gl.drawingBufferWidth,
+			gl.drawingBufferHeight,
 		);
 
 		this.blitMainSceneFX = new FullscreenCompositeTriangle(
@@ -183,8 +163,8 @@ export default class LogoVizApp {
 		);
 		this.blurThresholdFX = new FullscreenBlurTriangle(
 			gl,
-			canvas.width,
-			canvas.height,
+			gl.drawingBufferWidth,
+			gl.drawingBufferHeight,
 		);
 
 		Promise.all([
@@ -209,6 +189,10 @@ export default class LogoVizApp {
 
 		const gl = this.gl;
 
+		allModels.forEach((model, i) => {
+			this.mesh = new Char3D(gl, model);
+		});
+
 		this.state = {
 			width: skyboxCubeImage.width,
 			height: skyboxCubeImage.height,
@@ -230,25 +214,6 @@ export default class LogoVizApp {
 		this.brdfLutTexture = brdfLUT;
 
 		this.skybox = new Skybox(gl);
-
-		allModels.forEach((model, i) => {
-			this.mesh = new Char3D(gl, model);
-
-			if (i === 0) {
-				this.cameraUBOInfo = createUniformBlockInfo(
-					gl,
-					this.mesh.program,
-					CAMERA_UBO_NAME,
-					CAMERA_UBO_FIELDS,
-				);
-
-				this.cameraUBO = createAndBindUBOToBase(
-					gl,
-					this.cameraUBOInfo.blockSize,
-					0,
-				)!;
-			}
-		});
 	};
 
 	drawFrame(ts: number) {
@@ -342,14 +307,12 @@ export default class LogoVizApp {
 		if (this.opacityT > 0.7 && this.loadingTTargetTarget === 0) {
 			this.loadingTTargetTarget = 1;
 		}
+		this.perspCamera.updateViewMatrix();
 
 		// 1. Render to MSAA framebuffer
 		gl.bindFramebuffer(gl.FRAMEBUFFER, this.mainSceneBuffers.msaaFramebuffer);
 		gl.viewport(0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight);
 		gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-
-		this.perspCamera.updateViewMatrix();
-		this.updateCameraUBO(ts);
 
 		let texOffset = 0;
 		for (const pbrTex of this.pbrTextures) {
@@ -370,10 +333,30 @@ export default class LogoVizApp {
 		gl.bindTexture(gl.TEXTURE_2D, this.brdfLutTexture);
 
 		// gl.disable(gl.BLEND);
+		this.skybox.updateUniform(
+			"projMatrix",
+			this.perspCamera.projectionMatrix as Float32Array,
+		);
+		this.skybox.updateUniform(
+			"viewMatrix",
+			this.perspCamera.viewMatrix as Float32Array,
+		);
 		this.skybox.render();
 
 		// gl.enable(gl.BLEND);
 		// gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+		this.mesh.updateUniform(
+			"projMatrix",
+			this.perspCamera.projectionMatrix as Float32Array,
+		);
+		this.mesh.updateUniform(
+			"viewMatrix",
+			this.perspCamera.viewMatrix as Float32Array,
+		);
+		this.mesh.updateUniform(
+			"cameraPosition",
+			this.perspCamera.position as Float32Array,
+		);
 		this.mesh.updateWorldMatrix().render();
 
 		vec3.set(scale, this.loadingT, this.loadingT, this.loadingT);
@@ -452,49 +435,5 @@ export default class LogoVizApp {
 		gl.deleteTexture(this.mainSceneBuffers.thresholdTargetTexture);
 		gl.deleteFramebuffer(this.mainSceneBuffers.msaaFramebuffer);
 		gl.deleteFramebuffer(this.mainSceneBuffers.resolveFramebuffer);
-
-		gl.deleteBuffer(this.cameraUBO);
-	}
-
-	private updateCameraUBO(ts: number) {
-		const gl = this.gl;
-		gl.bindBuffer(gl.UNIFORM_BUFFER, this.cameraUBO);
-
-		gl.bufferSubData(
-			gl.UNIFORM_BUFFER,
-			this.cameraUBOInfo.uniforms.projMatrix.offset as number,
-			this.perspCamera.projectionMatrix as Float32Array,
-			0,
-		);
-		gl.bufferSubData(
-			gl.UNIFORM_BUFFER,
-			this.cameraUBOInfo.uniforms.viewMatrix.offset as number,
-			this.perspCamera.viewMatrix as Float32Array,
-			0,
-		);
-		gl.bufferSubData(
-			gl.UNIFORM_BUFFER,
-			this.cameraUBOInfo.uniforms.zNear.offset as number,
-			new Float32Array([this.perspCamera.near]),
-			0,
-		);
-		gl.bufferSubData(
-			gl.UNIFORM_BUFFER,
-			this.cameraUBOInfo.uniforms.zFar.offset as number,
-			new Float32Array([this.perspCamera.far]),
-			0,
-		);
-		gl.bufferSubData(
-			gl.UNIFORM_BUFFER,
-			this.cameraUBOInfo.uniforms.cameraPosition.offset as number,
-			this.perspCamera.getTypedPosition(),
-			0,
-		);
-		gl.bufferSubData(
-			gl.UNIFORM_BUFFER,
-			this.cameraUBOInfo.uniforms.time.offset as number,
-			new Float32Array([ts]),
-			0,
-		);
 	}
 }

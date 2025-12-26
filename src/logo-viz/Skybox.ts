@@ -1,18 +1,16 @@
 import { createBox, Drawable } from "@/libs/hwoa-rang-gl2/dist";
 
+import { mat4 } from "gl-matrix";
 import fragShaderSrc from "./shaders/uberFragShader";
 import vertShaderSrc from "./shaders/uberVertexShader";
 
 const geometry = createBox({ useCubemapCrossLayout: true });
 
 export default class Skybox extends Drawable {
-	private cameraUBOIndex: number;
-
 	public envTexture?: WebGLTexture;
 
 	constructor(gl: WebGL2RenderingContext) {
 		super(gl, vertShaderSrc, fragShaderSrc, {
-			USE_UBOS: true,
 			IS_SKYBOX: true,
 			USE_WORLD_POS: true,
 			USE_MRT: true,
@@ -53,8 +51,14 @@ export default class Skybox extends Drawable {
 			type: gl.INT,
 			value: 0,
 		});
-
-		this.cameraUBOIndex = gl.getUniformBlockIndex(this.program, "Camera");
+		this.setUniform("projMatrix", {
+			type: gl.FLOAT_MAT4,
+			value: mat4.create() as Float32Array,
+		});
+		this.setUniform("viewMatrix", {
+			type: gl.FLOAT_MAT4,
+			value: mat4.create() as Float32Array,
+		});
 	}
 
 	render(): void {
@@ -67,7 +71,6 @@ export default class Skybox extends Drawable {
 			gl.bindTexture(gl.TEXTURE_CUBE_MAP, this.envTexture);
 		}
 
-		gl.uniformBlockBinding(this.program, this.cameraUBOIndex, 0);
 		gl.useProgram(this.program);
 		gl.bindVertexArray(this.vao);
 		gl.drawElements(gl.TRIANGLES, this.vertexCount, gl.UNSIGNED_SHORT, 0);

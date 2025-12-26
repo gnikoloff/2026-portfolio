@@ -1,18 +1,15 @@
 import { Drawable } from "@/libs/hwoa-rang-gl2";
 
 import { CharData } from "@/types";
-import { vec3 } from "gl-matrix";
+import { mat4, vec3 } from "gl-matrix";
 import fragShaderSrc from "./shaders/uberFragShader";
 import vertShaderSrc from "./shaders/uberVertexShader";
 
 export default class Char3D extends Drawable {
-	private cameraUBOIndex: number;
-
 	public loadingT = 0;
 
 	constructor(gl: WebGL2RenderingContext, charData: CharData) {
 		super(gl, vertShaderSrc, fragShaderSrc, {
-			USE_UBOS: true,
 			USE_UV: true,
 			USE_NORMAL: true,
 			USE_TANGENT: true,
@@ -21,6 +18,7 @@ export default class Char3D extends Drawable {
 			USE_MRT: true,
 			HAS_LOADING_ANIM: true,
 			MAX_REFLECTION_LOD: 4,
+			IS_TEXT_MESH: true,
 		});
 		this.vertexCount = charData.positions.length / 3;
 
@@ -57,8 +55,6 @@ export default class Char3D extends Drawable {
 		const aNormal = gl.getAttribLocation(this.program, "aNormal");
 		const aTangent = gl.getAttribLocation(this.program, "aTangent");
 		const aUv = gl.getAttribLocation(this.program, "aUv");
-
-		this.cameraUBOIndex = gl.getUniformBlockIndex(this.program, "Camera");
 
 		const interleavedBuffer = gl.createBuffer();
 		const indexBuffer = gl.createBuffer();
@@ -153,6 +149,17 @@ export default class Char3D extends Drawable {
 			type: gl.FLOAT,
 			value: 7,
 		});
+		this.setUniform("projMatrix", {
+			type: gl.FLOAT_MAT4,
+			value: mat4.create() as Float32Array,
+		});
+		this.setUniform("viewMatrix", {
+			type: gl.FLOAT_MAT4,
+			value: mat4.create() as Float32Array,
+		});
+		this.setUniform("cameraPosition", {
+			type: gl.FLOAT_VEC3,
+		});
 
 		this.updateUniform("loadingT", 0);
 
@@ -161,14 +168,9 @@ export default class Char3D extends Drawable {
 
 	render(): void {
 		const gl = this.gl;
-		gl.uniformBlockBinding(this.program, this.cameraUBOIndex, 0);
+
 		this.updateUniform("loadingT", this.loadingT);
-		this.gl.bindVertexArray(this.vao);
-		this.gl.drawElements(
-			this.gl.TRIANGLES,
-			this.vertexCount,
-			this.gl.UNSIGNED_SHORT,
-			0,
-		);
+		gl.bindVertexArray(this.vao);
+		gl.drawElements(gl.TRIANGLES, this.vertexCount, gl.UNSIGNED_SHORT, 0);
 	}
 }

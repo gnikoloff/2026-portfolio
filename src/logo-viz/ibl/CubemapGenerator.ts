@@ -97,10 +97,15 @@ export default class CubemapGenerator extends IBLGenerator {
 
 			gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-			const projViewMatrix = this.getCamProjViewMatrix(i);
-			this.setUniform("projViewMatrix", {
+			const projMatrix = this.getCamProjMatrix();
+			const viewMatrix = this.getCamViewMatrix(i);
+			this.setUniform("projMatrix", {
 				type: gl.FLOAT_MAT4,
-				value: projViewMatrix as Float32Array,
+				value: projMatrix as Float32Array,
+			});
+			this.setUniform("viewMatrix", {
+				type: gl.FLOAT_MAT4,
+				value: viewMatrix as Float32Array,
 			});
 
 			gl.bindVertexArray(this.vao);

@@ -61,10 +61,15 @@ export default class DiffuseIBLGenerator extends BaseUtilObject {
 				0,
 			);
 			gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-			const projViewMatrix = this.getCamProjViewMatrix(i);
-			this.setUniform("projViewMatrix", {
+			const projMatrix = this.getCamProjMatrix();
+			const viewMatrix = this.getCamViewMatrix(i);
+			this.setUniform("projMatrix", {
 				type: gl.FLOAT_MAT4,
-				value: projViewMatrix as Float32Array,
+				value: projMatrix as Float32Array,
+			});
+			this.setUniform("viewMatrix", {
+				type: gl.FLOAT_MAT4,
+				value: viewMatrix as Float32Array,
 			});
 			gl.drawElements(gl.TRIANGLES, this.vertexCount, gl.UNSIGNED_SHORT, 0);
 		}
