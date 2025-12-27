@@ -1,9 +1,27 @@
 .root {
-	/* padding: 2rem 0; */
 }
 
 .worksWrapper {
 	display: grid;
-	grid-template-columns: repeat(4, 1fr);
-	gap: 2rem 2.2rem;
+	grid-template-columns: repeat(1, 1fr);
+	gap: 2rem 1rem;
+}
+
+@media screen and (min-width: 500px) {
+	.worksWrapper {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+
+@media screen and (min-width: 880px) {
+	.worksWrapper {
+		grid-template-columns: repeat(3, 1fr);
+	}
+}
+
+@media screen and (min-width: 1140px) {
+	.worksWrapper {
+		gap: 2rem 2rem;
+		grid-template-columns: repeat(4, 1fr);
+	}
 }

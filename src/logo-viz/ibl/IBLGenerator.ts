@@ -15,7 +15,6 @@ const CUBE_VIEWS = [
 	mat4.lookAt(mat4.create(), [0, 0, 0], [0, 0, -1], [0, -1, 0]), // -Z
 ];
 
-// 90 degree FOV perspective for cubemap faces
 const CUBE_PROJ_MATRIX = mat4.create();
 mat4.perspective(CUBE_PROJ_MATRIX, Math.PI / 2, 1.0, 0.1, 10.0);
 

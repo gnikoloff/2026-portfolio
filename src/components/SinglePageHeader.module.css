@@ -1,11 +1,11 @@
 .titleWrapper {
-	display: flex;
+	/* display: flex; */
 	justify-content: space-between;
 	align-items: baseline;
 }
 
 .secondaryWrapper {
-	display: flex;
+	/* display: flex; */
 	justify-content: space-between;
 	align-items: center;
 	margin: 2rem 0;
@@ -14,6 +14,30 @@
 	padding: 1rem 0;
 }
 
+.type {
+	margin-bottom: 1rem;
+	color: var(--foreground-secondary);
+}
+
 .pageTitle {
 	font-size: 2.4rem;
+	margin-bottom: 1rem;
+}
+
+@media screen and (min-width: 680px) {
+	.pageTitle {
+		margin-bottom: unset;
+	}
+
+	.titleWrapper {
+		display: flex;
+	}
+
+	.secondaryWrapper {
+		display: flex;
+	}
+
+	.type {
+		margin-bottom: unset;
+	}
 }

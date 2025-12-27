@@ -11,20 +11,31 @@ body[class*="medium-zoom--opened"] .navContainer {
 	--dot-margin: 10px;
 
 	position: fixed;
-	top: 0;
+	top: 8px;
 	left: 0;
-	/* width: 100%; */
-	height: 100%;
+
+	width: 100%;
+	/* height: 100%; */
 	z-index: 999;
 	pointer-events: none;
 	transition: opacity 0.1s ease-out;
+
+	display: flex;
+	justify-content: center;
 }
 
 .navContainer {
+	width: calc(100% - 2rem);
 	pointer-events: auto;
-	display: flex;
+
 	opacity: 0;
 	transition: opacity 0.1s ease-in;
+}
+
+@media screen and (min-width: 800px) {
+	.navContainer {
+		display: flex;
+	}
 }
 
 .navContainer.inited {
@@ -35,7 +46,7 @@ body[class*="medium-zoom--opened"] .navContainer {
 	margin-right: -1px;
 	width: 52px;
 	cursor: grab;
-	display: flex;
+	display: none;
 	justify-content: center;
 	align-items: center;
 	background-color: #222c;
@@ -44,6 +55,12 @@ body[class*="medium-zoom--opened"] .navContainer {
 	border-left: 1px solid var(--subtler-border-color);
 
 	border-bottom: 1px solid var(--subtler-border-color);
+}
+
+@media screen and (min-width: 800px) {
+	.draggable {
+		display: flex;
+	}
 }
 
 .draggable:hover .dot,

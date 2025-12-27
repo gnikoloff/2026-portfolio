@@ -21,7 +21,7 @@ export function SinglePageHeader({
 				<h6>{year}</h6>
 			</div>
 			<div className={styles.secondaryWrapper}>
-				<h3>{type}</h3>
+				<h3 className={styles.type}>{type}</h3>
 				{technologies.length ? (
 					<WorkTagsList
 						tags={technologies.map(

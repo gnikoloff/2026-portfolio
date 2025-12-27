@@ -17,12 +17,17 @@
 	height: var(--nav-section-height);
 	line-height: 1;
 	font-size: 16px;
-	min-width: 666px;
 	color: var(--nav-secondary-color);
 
 	perspective: 500px;
 	perspective-origin: 50%;
 	transform-style: preserve-3d;
+}
+
+@media screen and (min-width: 800px) {
+	.subNavWrapper {
+		min-width: 666px;
+	}
 }
 
 .secondaryNav {
@@ -67,7 +72,18 @@
 	transform: rotateX(90deg);
 }
 
+.mainNavScroll {
+	width: 100%;
+	overflow: auto;
+	white-space: nowrap;
+}
+
+.mainNavWrapper {
+	padding: 0;
+}
+
 .mainNav {
+	max-width: 100vw;
 	position: relative;
 	color: var(--nav-main-color);
 	background-color: #222c;

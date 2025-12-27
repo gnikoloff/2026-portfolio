@@ -61,33 +61,32 @@ export default function HomeNavigation() {
 
 	return (
 		<div className={`${styles.wrapper} sub-nav-container`}>
-			<div className={styles.filterGroup}>
-				<YearFilterSelector
-					years={years}
-					filters={filters}
-					handleYearChange={handleYearChange}
-				/>
+			<div className={styles.filterGroupsWrapper}>
+				<div className={`${styles.filterGroup} ${styles.yearFilterGroup}`}>
+					<YearFilterSelector
+						years={years}
+						filters={filters}
+						handleYearChange={handleYearChange}
+					/>
+				</div>
+
+				<div className={`${styles.filterGroup} ${styles.langFilterGroup}`}>
+					<LanguageFilterSelector
+						languages={languages}
+						filters={filters}
+						onChange={handleLanguageChange}
+					/>
+				</div>
+
+				<div className={`${styles.filterGroup} ${styles.techFilterGroup}`}>
+					<TechnologyGroupFilterSelector
+						technologiesGrouped={technologiesGrouped}
+						filters={filters}
+						onChange={handleTechnologyChange}
+					/>
+				</div>
 			</div>
 
-			<div className={styles.filterGroup}>
-				<LanguageFilterSelector
-					languages={languages}
-					filters={filters}
-					onChange={handleLanguageChange}
-				/>
-			</div>
-
-			<div className={styles.filterGroup}>
-				<TechnologyGroupFilterSelector
-					technologiesGrouped={technologiesGrouped}
-					filters={filters}
-					onChange={handleTechnologyChange}
-				/>
-			</div>
-
-			{/* {hasActiveFilters && (
-				
-			)} */}
 			<button
 				onClick={handleClearFilters}
 				className={`${styles.clearButton} ${hasActiveFilters ? styles.clearActive : ""}`}

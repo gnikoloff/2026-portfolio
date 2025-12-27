@@ -4,3 +4,20 @@
 	font-size: 16px;
 	color: var(--foreground);
 }
+
+.lineBreak {
+	display: none;
+}
+
+.extraSpace {
+	display: inline-block;
+}
+
+@media screen and (min-width: 670px) {
+	.extraSpace {
+		display: none;
+	}
+	.lineBreak {
+		display: block;
+	}
+}

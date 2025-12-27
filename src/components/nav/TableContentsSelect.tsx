@@ -23,7 +23,7 @@ function TableContentsSelect({
 			setSelectedId(hash);
 			const element = document.getElementById(hash);
 			if (element) {
-				const offset = 150;
+				const offset = innerWidth > 500 ? 100 : 200;
 				const elementPosition = element.getBoundingClientRect().top;
 				const offsetPosition = elementPosition + window.scrollY - offset;
 

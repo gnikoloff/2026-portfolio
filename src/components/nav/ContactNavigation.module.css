@@ -1,0 +1,12 @@
+.root {
+	white-space: nowrap;
+	overflow: auto;
+}
+
+.navWrapper {
+	padding: 0;
+}
+
+.nav {
+	padding: 0 1rem;
+}

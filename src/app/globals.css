@@ -16,6 +16,8 @@
 	--nav-secondary-color: #cdcdcd;
 
 	--nav-section-height: 48px;
+
+	--navigation-mobile-breakpoint: 800px;
 }
 
 @media (prefers-color-scheme: dark) {

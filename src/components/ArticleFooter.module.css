@@ -1,5 +1,4 @@
 .root {
-	display: flex;
 	align-items: baseline;
 	justify-content: space-between;
 	padding: 1rem 0;
@@ -7,12 +6,29 @@
 	/* border-bottom: 1px solid var(--subtler-border-color); */
 }
 
+@media screen and (min-width: 700px) {
+	.root {
+		display: flex;
+	}
+}
+
 .workLink {
 	display: flex;
+	justify-content: center;
 	align-items: center;
 	background: var(--subtler-border-color);
 	padding: 0.6rem 1rem;
 	border-radius: 24px;
+}
+
+.prevLink {
+	margin-bottom: 1rem;
+}
+
+@media screen and (min-width: 800px) {
+	.prevLink {
+		margin-bottom: 0;
+	}
 }
 
 .prevLink i {

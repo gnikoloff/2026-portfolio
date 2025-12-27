@@ -2,6 +2,10 @@
 	text-decoration: underline;
 }
 
+.navList {
+	padding: 0 1rem;
+}
+
 .navList li:after {
 	top: 3px;
 }

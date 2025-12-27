@@ -6,7 +6,6 @@ import hljs from "highlight.js";
 // @ts-ignore
 import ImageCompare from "image-compare-viewer";
 import { useEffect, useRef } from "react";
-import PageLayout from "./PageLayout";
 
 export default function ArticleClient({
 	title,
@@ -78,13 +77,11 @@ export default function ArticleClient({
 	}, [title]);
 
 	return (
-		<PageLayout>
-			<div className="typeset">
-				<header>
-					<h1 style={{ marginTop: 0 }}>{title}</h1>
-				</header>
-				<div ref={contentRef} dangerouslySetInnerHTML={{ __html: html }}></div>
-			</div>
-		</PageLayout>
+		<div className="typeset">
+			<header>
+				<h1 style={{ marginTop: 0 }}>{title}</h1>
+			</header>
+			<div ref={contentRef} dangerouslySetInnerHTML={{ __html: html }}></div>
+		</div>
 	);
 }

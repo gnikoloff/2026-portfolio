@@ -1,6 +1,13 @@
 .root {
-	padding: 8rem 0;
+	padding: 8rem 1rem;
 	border-top: 1px solid var(--subtler-border-color);
+}
+
+@media screen and (min-width: 800px) {
+	.root {
+		padding-left: 0;
+		padding-right: 0;
+	}
 }
 
 .root a {
@@ -8,8 +15,15 @@
 }
 
 .header {
-	display: flex;
-	justify-content: space-between;
+	/* display: flex;
+	justify-content: space-between; */
+}
+
+@media screen and (min-width: 700px) {
+	.header {
+		display: flex;
+		justify-content: space-between;
+	}
 }
 
 .footer {
@@ -18,4 +32,11 @@
 
 .copyright {
 	color: var(--foreground-secondary);
+	margin-bottom: 1rem;
+}
+
+@media screen and (min-width: 700px) {
+	.copyright {
+		margin-bottom: 0;
+	}
 }

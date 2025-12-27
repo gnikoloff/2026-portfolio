@@ -19,12 +19,12 @@ function PrevNextWorkNav({
 			<Link className={`${styles.link} btn-simple`} href={prevLink}>
 				<div className={"sub-nav-container"}>
 					<i className={`${styles.arrow} ${styles.prevArrow}`}>←</i>
-					{prevTitle}
+					<div className={styles.linkLabel}>{prevTitle}</div>
 				</div>
 			</Link>
 			<Link className={`${styles.link} btn-simple`} href={nextLink}>
 				<div className={"sub-nav-container"}>
-					{nextTitle}
+					<div className={styles.linkLabel}>{nextTitle}</div>
 					<i className={`${styles.arrow} ${styles.nextArrow}`}>→</i>
 				</div>
 			</Link>

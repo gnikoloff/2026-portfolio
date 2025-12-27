@@ -3,7 +3,13 @@
 }
 
 .section {
-	padding-top: 10rem;
+	padding-top: 7.5rem;
+}
+
+@media screen and (min-width: 800px) {
+	.section {
+		padding-top: 10rem;
+	}
 }
 
 .section h2 {

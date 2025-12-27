@@ -76,26 +76,28 @@ function SpeakingNavigation() {
 
 	return (
 		<div className={`${styles.wrapper} sub-nav-container`}>
-			<div className={styles.filterGroup}>
-				<YearFilterSelector
-					years={years.map(Number)}
-					filters={filters}
-					handleYearChange={handleYearChange}
-				/>
-			</div>
-			<div className={styles.filterGroup}>
-				<LanguageFilterSelector
-					languages={languages}
-					filters={filters}
-					onChange={handleLanguageChange}
-				/>
-			</div>
-			<div className={styles.filterGroup}>
-				<TechnologyFilterSelector
-					technologies={technologies}
-					filters={filters}
-					onChange={handleTechnologyChange}
-				/>
+			<div className={styles.filterGroupsWrapper}>
+				<div className={`${styles.filterGroup} ${styles.yearFilterGroup}`}>
+					<YearFilterSelector
+						years={years.map(Number)}
+						filters={filters}
+						handleYearChange={handleYearChange}
+					/>
+				</div>
+				<div className={`${styles.filterGroup} ${styles.langFilterGroup}`}>
+					<LanguageFilterSelector
+						languages={languages}
+						filters={filters}
+						onChange={handleLanguageChange}
+					/>
+				</div>
+				<div className={`${styles.filterGroup} ${styles.techFilterGroup}`}>
+					<TechnologyFilterSelector
+						technologies={technologies}
+						filters={filters}
+						onChange={handleTechnologyChange}
+					/>
+				</div>
 			</div>
 			<button
 				onClick={handleClearFilters}

@@ -90,10 +90,10 @@ function AppNavigationWrapper() {
 				setNavigationY(mouseRef.current.y);
 			}
 
-			rafIdRef.current = requestAnimationFrame(animate);
+			// rafIdRef.current = requestAnimationFrame(animate);
 		};
 
-		rafIdRef.current = requestAnimationFrame(animate);
+		// rafIdRef.current = requestAnimationFrame(animate);
 
 		return () => {
 			if (rafIdRef.current) {

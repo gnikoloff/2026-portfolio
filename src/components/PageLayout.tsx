@@ -57,7 +57,7 @@ function PageLayout({
 		<div className={`${styles.root} ${isLoadingPage ? styles.hidden : ""}`}>
 			<main
 				id="app-main"
-				className={`container ${hasMainPaddingBottom ? styles.paddingBottom : ""}`}
+				className={`${styles.container} container ${hasMainPaddingBottom ? styles.paddingBottom : ""}`}
 				ref={bodyRef}
 			>
 				{children}

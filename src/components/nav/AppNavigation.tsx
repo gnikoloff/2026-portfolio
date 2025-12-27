@@ -14,10 +14,10 @@ import { useLoadingStore } from "@/store/loadingState";
 import { NavType } from "@/types";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import SocialList from "../SocialList";
 import AboutNavigation from "./AboutNavigation";
 import styles from "./AppNavigation.module.css";
 import BlogNavigation from "./BlogNavigation";
+import ContactNavigation from "./ContactNavigation";
 import HomeNavigation from "./HomeNavigation";
 import HTMLSitemapNavigation from "./HTMLSitemapNavigation";
 import ImprintNavigation from "./ImprintNavigation";
@@ -103,11 +103,7 @@ export default function AppNavigation() {
 			case "work":
 				return <SingleWorkNavigation pathname={pathToUse} />;
 			case "contact":
-				return (
-					<div className="sub-nav-container">
-						<SocialList smallerPadding={true} />
-					</div>
-				);
+				return <ContactNavigation />;
 			case "about":
 				return <AboutNavigation />;
 			case "blog":
@@ -132,8 +128,10 @@ export default function AppNavigation() {
 			<div
 				className={`${styles.subNavWrapper} ${styles.mainNav} ${isLoadingPage ? styles.isLoading : ""}`}
 			>
-				<div className="sub-nav-container">
-					<PageNavigation navType={getNavType(pathname)} />
+				<div className={styles.mainNavScroll}>
+					<div className={`sub-nav-container ${styles.mainNavWrapper}`}>
+						<PageNavigation navType={getNavType(pathname)} />
+					</div>
 				</div>
 			</div>
 			<div className={`${styles.subNavWrapper} ${styles.secondaryNav}`}>

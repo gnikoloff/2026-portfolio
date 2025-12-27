@@ -10,3 +10,13 @@
 .paddingBottom {
 	padding-bottom: 8rem;
 }
+
+.container {
+	padding: 0 1rem;
+}
+
+/* @media screen and (min-width: 800px) {
+	.container {
+		padding: 0;
+	}
+} */

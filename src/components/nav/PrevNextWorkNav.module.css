@@ -7,6 +7,39 @@
 	display: flex;
 }
 
+.linkLabel {
+	white-space: nowrap;
+	max-width: 70px;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+
+@media screen and (min-width: 410px) {
+	.linkLabel {
+		max-width: 90px;
+	}
+}
+
+@media screen and (min-width: 500px) {
+	.linkLabel {
+		max-width: 110px;
+	}
+}
+
+@media screen and (min-width: 600px) {
+	.linkLabel {
+		max-width: 170px;
+	}
+}
+
+@media screen and (min-width: 800px) {
+	.linkLabel {
+		max-width: unset;
+		text-overflow: unset;
+		overflow: unset;
+	}
+}
+
 .link:first-of-type {
 	border-right: 1px solid var(--subtler-border-color);
 }

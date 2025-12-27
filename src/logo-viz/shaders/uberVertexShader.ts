@@ -50,9 +50,14 @@ const out = `#version 300 es
       gl_Position = clipPos.xyww;
     #else
       #ifdef IS_TEXT_MESH
-        float u_deformAngle = 2.0 - loadingT * 2.0;
-        float ang = (aPosition.x * 0.5 + 0.5) * sin(u_deformAngle) * u_deformAngle;
-        worldPos = doBoxTwist(worldPos, ang);
+        float deformScale = 2.0;
+        float deformAngle = deformScale - loadingT * deformScale;
+        float ang = (aPosition.x * 0.5 + 0.5) * sin(deformAngle) * deformAngle;
+        worldPos = doBoxTwistX(worldPos, ang);
+        deformScale = 2.0;
+        deformAngle = deformScale - loadingT * deformScale;
+        ang = (aPosition.y * 0.5 + 0.5) * sin(deformAngle) * deformAngle;
+        worldPos = doBoxTwistY(worldPos, ang);
         gl_Position = projMatrix * viewMatrix * worldPos;
       #else
         #ifdef IS_FULLSCREEN_TRIANGLE

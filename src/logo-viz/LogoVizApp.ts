@@ -15,7 +15,7 @@ import createMainSceneMSAAFramebuffer, {
 	MainSceneMSAAFramebufferResult,
 } from "./utils/create-main-scene-framebuffer";
 
-const MODELS = ["/assets/georgi_2.json"];
+const MODELS = ["/api/geometry-data"];
 
 const BDRFlut = "/assets/brdfLUT.png";
 
