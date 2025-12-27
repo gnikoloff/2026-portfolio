@@ -47,7 +47,7 @@ const ASSETS: Asset[] = [
 			"/assets/PaintedMetal007_1K-PNG_NormalGL-512.webp",
 		],
 		skyboxURL: "/api/hdr-data?filename=StandardCubeMap_2.hdr",
-		bloomMixFactor: 0.2,
+		bloomMixFactor: 0.6,
 	},
 	{
 		pbrTextureURLs: [
@@ -62,7 +62,7 @@ const ASSETS: Asset[] = [
 ];
 
 const loadIdx = Math.floor(Math.random() * ASSETS.length);
-// const ASSET_TO_LOAD = ASSETS[loadIdx]!;
+// const ASSET_TO_LOAD = ASSETS[1]!;
 const ASSET_TO_LOAD = ASSETS[2]!;
 
 const loadModel = (src: string): Promise<CharData> => {
