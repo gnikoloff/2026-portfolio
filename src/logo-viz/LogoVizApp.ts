@@ -36,7 +36,7 @@ const ASSETS: Asset[] = [
 			"/assets/Metal007_1K-PNG_Roughness-512.webp",
 			"/assets/Metal007_1K-PNG_NormalGL-512.webp",
 		],
-		skyboxURL: "/assets/StandardCubeMap_0.hdr",
+		skyboxURL: "/api/hdr-data?filename=StandardCubeMap_0.hdr",
 		bloomMixFactor: 0.05,
 	},
 	{
@@ -46,23 +46,24 @@ const ASSETS: Asset[] = [
 			"/assets/PaintedMetal007_1K-PNG_Roughness-512.webp",
 			"/assets/PaintedMetal007_1K-PNG_NormalGL-512.webp",
 		],
-		skyboxURL: "/assets/StandardCubeMap_2.hdr",
+		skyboxURL: "/api/hdr-data?filename=StandardCubeMap_2.hdr",
 		bloomMixFactor: 0.2,
 	},
 	{
 		pbrTextureURLs: [
-			"/assets/PaintedMetal009_1K-PNG_Color-512.webp",
-			"/assets/PaintedMetal009_1K-PNG_Metalness-512.webp",
-			"/assets/PaintedMetal009_1K-PNG_Roughness-512.webp",
-			"/assets/PaintedMetal009_1K-PNG_NormalGL-512.webp",
+			"/assets/Metal046B_1K-PNG_Color-512.webp",
+			"/assets/Metal046B_1K-PNG_Metalness-512.webp",
+			"/assets/Metal046B_1K-PNG_Roughness-512.webp",
+			"/assets/Metal046B_1K-PNG_NormalGL-512.webp",
 		],
-		skyboxURL: "/assets/StandardCubeMap_12.hdr",
-		bloomMixFactor: 0.2,
+		skyboxURL: "/api/hdr-data?filename=StandardCubeMap_12.hdr",
+		bloomMixFactor: 0.8,
 	},
 ];
 
 const loadIdx = Math.floor(Math.random() * ASSETS.length);
-const ASSET_TO_LOAD = ASSETS[loadIdx]!;
+// const ASSET_TO_LOAD = ASSETS[loadIdx]!;
+const ASSET_TO_LOAD = ASSETS[2]!;
 
 const loadModel = (src: string): Promise<CharData> => {
 	return fetch(src).then((res) => res.json());
