@@ -3,11 +3,13 @@ import Link from "@/components/CustomLink";
 import PageLayout from "@/components/PageLayout";
 import { CONTACT_URL_SEGMENT_NAME, PAGE_TITLE } from "@/constants";
 
+import styles from "./page.module.css";
+
 function PrivacyPolicy() {
 	return (
 		<PageLayout>
 			<AppHeaderBorder />
-			<div className="tight-container typeset">
+			<div className={`tight-container typeset ${styles.root}`}>
 				<h1>Privacy Policy</h1>
 
 				<p>

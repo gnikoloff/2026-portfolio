@@ -1,4 +1,5 @@
 .root {
+	margin-top: 50px;
 	padding: 8rem 1rem;
 	border-top: 1px solid var(--subtler-border-color);
 }
@@ -23,7 +24,12 @@
 	.header {
 		display: flex;
 		justify-content: space-between;
+		align-items: baseline;
 	}
+}
+
+.navList {
+	font-size: 1rem;
 }
 
 .footer {
@@ -31,6 +37,7 @@
 }
 
 .copyright {
+	font-size: 1rem;
 	color: var(--foreground-secondary);
 	margin-bottom: 1rem;
 }

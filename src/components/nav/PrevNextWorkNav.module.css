@@ -12,6 +12,7 @@
 	max-width: 70px;
 	text-overflow: ellipsis;
 	overflow: hidden;
+	color: var(--foreground);
 }
 
 @media screen and (min-width: 410px) {
@@ -49,6 +50,7 @@
 }
 
 .arrow {
+	color: var(--foreground);
 	transition: transform 0.1s ease-out;
 }
 

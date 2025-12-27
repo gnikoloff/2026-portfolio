@@ -1,5 +1,45 @@
 .root {
+	position: relative;
 	height: 100%;
+}
+
+.root::after {
+	content: "";
+	position: absolute;
+	top: 22px;
+	right: 12px;
+	width: 0;
+	height: 0;
+	border-left: 5px solid transparent;
+	border-right: 5px solid transparent;
+	border-top: 5px solid var(--foreground);
+}
+
+.root.noArrow {
+	cursor: unset;
+	background-image: none !important;
+}
+
+.root.inputFocus .input {
+	color: var(--background);
+	background-color: var(--foreground);
+	border-right: 1px solid var(--subtle-border-color-dark);
+}
+
+.root.inputFocus::after {
+	border-top-color: var(--foreground);
+}
+
+.root.nonInteractable .input {
+	cursor: not-allowed;
+}
+
+.root:not(.inputFocus):not(.noArrow):not(.nonInteractable):hover .input {
+	color: var(--foreground);
+}
+
+.root:not(.inputFocus):not(.noArrow):not(.nonInteractable):hover::after {
+	border-top-color: var(--foreground);
 }
 
 .wrapper {
@@ -48,7 +88,7 @@
 	padding: 0 1rem;
 	border: none;
 	background-color: transparent;
-	color: var(--nav-secondary-color);
+	color: var(--navigation-secondary-background);
 	cursor: not-allowed;
 	z-index: 1;
 
@@ -79,32 +119,11 @@
 	border: none;
 	background-color: transparent;
 	padding: 12px 40px 12px 16px;
-	background-repeat: no-repeat;
+	/* background-repeat: no-repeat;
 	background-position: right 12px center;
-	background-size: 12px;
-	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23aaa' d='M6 9L1 4h10z'/%3E%3C/svg%3E") !important;
+	background-size: 12px; */
+	/* background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23aaa' d='M6 9L1 4h10z'/%3E%3C/svg%3E") !important; */
 	color: inherit;
 	border-right: 1px solid var(--subtler-border-color);
 	cursor: pointer;
-}
-
-.input.noArrow {
-	cursor: unset;
-	background-image: none !important;
-}
-
-.input.nonInteractable {
-	cursor: not-allowed;
-}
-
-.input:not(.inputFocus):not(.noArrow):not(.nonInteractable):hover {
-	color: white;
-	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23fff' d='M6 9L1 4h10z'/%3E%3C/svg%3E") !important;
-}
-
-.inputFocus {
-	background-color: var(--foreground);
-	color: var(--background);
-	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M6 9L1 4h10z'/%3E%3C/svg%3E") !important;
-	border-right: 1px solid var(--subtle-border-color-dark);
 }

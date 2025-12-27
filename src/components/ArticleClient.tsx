@@ -7,12 +7,17 @@ import hljs from "highlight.js";
 import ImageCompare from "image-compare-viewer";
 import { useEffect, useRef } from "react";
 
+import { getFormattedDate } from "@/utils/date";
+import styles from "./ArticleClient.module.css";
+
 export default function ArticleClient({
 	title,
+	date,
 	html,
 }: {
 	title: KeyTextField;
 	html: string;
+	date: Date;
 }) {
 	const contentRef = useRef<HTMLDivElement>(null);
 	const splideInited = useRef(false);
@@ -77,11 +82,16 @@ export default function ArticleClient({
 	}, [title]);
 
 	return (
-		<div className="typeset">
+		<div>
 			<header>
 				<h1 style={{ marginTop: 0 }}>{title}</h1>
+				<div className={styles.date}>{getFormattedDate(date)}</div>
 			</header>
-			<div ref={contentRef} dangerouslySetInnerHTML={{ __html: html }}></div>
+			<div
+				className={`typeset ${styles.root}`}
+				ref={contentRef}
+				dangerouslySetInnerHTML={{ __html: html }}
+			></div>
 		</div>
 	);
 }

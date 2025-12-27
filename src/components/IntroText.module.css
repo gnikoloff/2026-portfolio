@@ -1,7 +1,8 @@
 .introText {
 	text-align: center;
 	margin-bottom: 30px;
-	font-size: 16px;
+	font-size: 18px;
+	line-height: 1.6;
 	color: var(--foreground);
 }
 

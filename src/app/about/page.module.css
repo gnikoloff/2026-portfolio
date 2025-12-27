@@ -2,6 +2,10 @@
 	margin-top: -3.5rem;
 }
 
+.root > .section:last-of-type > *:last-of-type {
+	margin-bottom: 0;
+}
+
 .section {
 	padding-top: 7.5rem;
 }

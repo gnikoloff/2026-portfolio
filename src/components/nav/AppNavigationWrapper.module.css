@@ -24,6 +24,13 @@ body[class*="medium-zoom--opened"] .navContainer {
 	justify-content: center;
 }
 
+@media screen and (min-width: 800px) {
+	.root {
+		width: unset;
+		top: 0;
+	}
+}
+
 .navContainer {
 	width: calc(100% - 2rem);
 	pointer-events: auto;
@@ -34,6 +41,7 @@ body[class*="medium-zoom--opened"] .navContainer {
 
 @media screen and (min-width: 800px) {
 	.navContainer {
+		width: unset;
 		display: flex;
 	}
 }
@@ -49,7 +57,7 @@ body[class*="medium-zoom--opened"] .navContainer {
 	display: none;
 	justify-content: center;
 	align-items: center;
-	background-color: #222c;
+	background-color: var(--navigation-secondary-background);
 	backdrop-filter: blur(30px);
 	border-top: 1px solid var(--subtler-border-color);
 	border-left: 1px solid var(--subtler-border-color);

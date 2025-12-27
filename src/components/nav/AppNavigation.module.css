@@ -17,7 +17,7 @@
 	height: var(--nav-section-height);
 	line-height: 1;
 	font-size: 16px;
-	color: var(--nav-secondary-color);
+	color: var(--navigation-secondary-foreground);
 
 	perspective: 500px;
 	perspective-origin: 50%;
@@ -46,7 +46,7 @@
 	transform-origin: 50% 50%;
 	backface-visibility: hidden;
 	border: 1px solid var(--subtler-border-color);
-	background-color: #222;
+	background-color: var(--navigation-background);
 }
 
 .currNav {
@@ -85,8 +85,8 @@
 .mainNav {
 	max-width: 100vw;
 	position: relative;
-	color: var(--nav-main-color);
-	background-color: #222c;
+	color: var(--navigation-foreground);
+	background-color: var(--navigation-secondary-background);
 	backdrop-filter: blur(30px);
 	border-top: 1px solid var(--subtler-border-color);
 	border-left: 1px solid var(--subtler-border-color);

@@ -14,10 +14,10 @@ function AppFooter() {
 				<p className={styles.copyright}>
 					©{new Date().getFullYear()} Georgi Nikolov{" "}
 				</p>
-				<SocialList />
+				<SocialList navClassName={styles.navList} />
 			</div>
 			<div className={styles.footer}>
-				<ul className="navList">
+				<ul className={`navList ${styles.navList}`}>
 					<li>
 						<Link href={`/${PRIVACY_POLICY_URL_SEGMENT_NAME}`}>
 							Privacy Policy

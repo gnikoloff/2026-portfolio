@@ -294,13 +294,13 @@ export default class LogoVizApp {
 		}
 
 		this.loadingTTarget +=
-			(this.loadingTTargetTarget - this.loadingTTarget) * dt * 6;
+			(this.loadingTTargetTarget - this.loadingTTarget) * dt * 4;
 		this.loadingT += (this.loadingTTarget - this.loadingT) * dt * 5;
 
 		this.opacityT += (this.opacityTTarget - this.opacityT) * dt * 1.5;
 		this.canvas.style.opacity = this.opacityT.toString();
 
-		if (this.opacityT > 0.7 && this.loadingTTargetTarget === 0) {
+		if (this.opacityT > 0.3 && this.loadingTTargetTarget === 0) {
 			this.loadingTTargetTarget = 1;
 		}
 		this.perspCamera.updateViewMatrix();

@@ -5,7 +5,7 @@
 .listItem {
 	display: inline-block;
 	border: 1px solid var(--subtler-border-color);
-	padding: 2px 8px 0px 8px;
+	padding: 5px 8px;
 	border-radius: var(--border-radius);
 	background-color: var(--subtler-border-color);
 	margin: 0.16rem;

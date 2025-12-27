@@ -10,6 +10,7 @@
 .backWrapper {
 	margin: 0;
 	border-right: 1px solid var(--subtler-border-color);
+	color: var(--foreground);
 }
 
 .backWrapper a {

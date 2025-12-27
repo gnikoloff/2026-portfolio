@@ -8,6 +8,7 @@ import styles from "./AppNavigationWrapper.module.css";
 const HANDLE_DOTS_COL_COUNT = 3;
 const HANDLE_DOTS_TOTAL_COUNT = HANDLE_DOTS_COL_COUNT * 2;
 const HANDLE_ACTIVE_TRANSITION_DURATION = 0.125;
+const MOBILE_BREAKPOINT = 800;
 
 function AppNavigationWrapper() {
 	const {
@@ -30,6 +31,7 @@ function AppNavigationWrapper() {
 	const [draggableHeight, setDraggableHeight] = useState(0);
 
 	const [isDragging, setIsDragging] = useState(false);
+	const [isMobile, setIsMobile] = useState(false);
 
 	// Function to clamp position within viewport bounds
 	const clampToViewport = (x: number, y: number) => {
@@ -62,6 +64,14 @@ function AppNavigationWrapper() {
 	}, [initNavigationX, initNavigationY]);
 
 	useEffect(() => {
+		if (isMobile) {
+			if (rafIdRef.current) {
+				cancelAnimationFrame(rafIdRef.current);
+				rafIdRef.current = -1;
+			}
+			return;
+		}
+
 		let oldTime = performance.now() * 0.001;
 
 		const animate = () => {
@@ -90,17 +100,17 @@ function AppNavigationWrapper() {
 				setNavigationY(mouseRef.current.y);
 			}
 
-			// rafIdRef.current = requestAnimationFrame(animate);
+			rafIdRef.current = requestAnimationFrame(animate);
 		};
 
-		// rafIdRef.current = requestAnimationFrame(animate);
+		rafIdRef.current = requestAnimationFrame(animate);
 
 		return () => {
 			if (rafIdRef.current) {
 				cancelAnimationFrame(rafIdRef.current);
 			}
 		};
-	}, [setNavigationX, setNavigationY]);
+	}, [setNavigationX, setNavigationY, isMobile]);
 
 	useEffect(() => {
 		if (!isDragging) return;
@@ -136,6 +146,9 @@ function AppNavigationWrapper() {
 
 	useEffect(() => {
 		const handleResize = () => {
+			const mobile = window.innerWidth < MOBILE_BREAKPOINT;
+			setIsMobile(mobile);
+
 			const clamped = clampToViewport(navigationX, navigationY);
 			if (clamped.x !== navigationX || clamped.y !== navigationY) {
 				mouseTargetRef.current.x = clamped.x;
@@ -153,6 +166,7 @@ function AppNavigationWrapper() {
 			return;
 		}
 		const bbox = draggableArea.getBoundingClientRect();
+
 		setDraggableWidth(bbox.width);
 		setDraggableHeight(bbox.height);
 	}, []);
@@ -166,7 +180,9 @@ function AppNavigationWrapper() {
 				ref={navContainerRef}
 				className={`${styles.navContainer} ${initedNavigation ? styles.inited : ""}`}
 				style={{
-					transform: `translate3d(${navigationX}px, ${navigationY}px, 0)`,
+					transform: isMobile
+						? undefined
+						: `translate3d(${navigationX}px, ${navigationY}px, 0)`,
 				}}
 			>
 				<div

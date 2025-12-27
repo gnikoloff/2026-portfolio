@@ -50,7 +50,11 @@ export default async function WritingWork({
 			/> */}
 
 				<main className={styles.main}>
-					<ArticleClient title={page.data.title} html={html} />
+					<ArticleClient
+						title={page.data.title}
+						html={html}
+						date={new Date(page.last_publication_date)}
+					/>
 				</main>
 			</div>
 		</PageLayout>

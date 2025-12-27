@@ -3,6 +3,8 @@ import Link from "@/components/CustomLink";
 import PageLayout from "@/components/PageLayout";
 import { BASE_URL, CONTACT_URL_SEGMENT_NAME, PAGE_TITLE } from "@/constants";
 
+import styles from "./page.module.css";
+
 export const metadata = {
 	title: `Imprint - ${PAGE_TITLE}`,
 	description: "Get in touch with Georgi Nikolov",
@@ -12,7 +14,7 @@ function Imprint() {
 	return (
 		<PageLayout>
 			<AppHeaderBorder />
-			<div className="tight-container typeset">
+			<div className={`tight-container typeset ${styles.root}`}>
 				<h1>Imprint</h1>
 
 				<p>

@@ -14,6 +14,8 @@ import {
 } from "@/constants";
 import { createClient } from "@/prismicio";
 
+import styles from "./page.module.css";
+
 export const metadata = {
 	title: `HTML Sitemap - ${PAGE_TITLE}`,
 	description: "Get in touch with Georgi Nikolov",
@@ -28,7 +30,7 @@ async function HTMLSitemap() {
 	return (
 		<PageLayout>
 			<AppHeaderBorder />
-			<div className="tight-container typeset">
+			<div className={`tight-container typeset ${styles.root}`}>
 				<h1>HTML Sitemap</h1>
 				<h2 id="root-pages">Root Pages</h2>
 				<ul>

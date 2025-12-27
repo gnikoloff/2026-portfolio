@@ -3,6 +3,7 @@
 }
 
 .navList {
+	color: var(--foreground);
 	padding: 0 1rem;
 }
 
