@@ -37,11 +37,14 @@ export default async function RootLayout({
 }>) {
 	// Fetch data from Prismic
 	const client = createClient();
-	const home = await client.getSingle(HOME_CUSTOM_TYPE);
-	const about = await client.getSingle(ABOUT_CUSTOM_TYPE);
-	const works = await client.getAllByType(WORKS_CUSTOM_TYPE);
-	const speakingWorks = await client.getAllByType(SPEAKING_CUSTOM_TYPE);
-	const articles = await client.getAllByType(WRITING_CUSTOM_TYPE);
+
+	const [home, about, works, speakingWorks, articles] = await Promise.all([
+		client.getSingle(HOME_CUSTOM_TYPE),
+		client.getSingle(ABOUT_CUSTOM_TYPE),
+		client.getAllByType(WORKS_CUSTOM_TYPE),
+		client.getAllByType(SPEAKING_CUSTOM_TYPE),
+		client.getAllByType(WRITING_CUSTOM_TYPE),
+	]);
 
 	return (
 		<html lang="en">
