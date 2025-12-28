@@ -1,14 +1,28 @@
 import AppHeaderBorder from "@/components/AppHeaderBorder";
 import Link from "@/components/CustomLink";
 import PageLayout from "@/components/PageLayout";
-import { BASE_URL, CONTACT_URL_SEGMENT_NAME, PAGE_TITLE } from "@/constants";
+import {
+	BASE_URL,
+	CONTACT_URL_SEGMENT_NAME,
+	HOME_CUSTOM_TYPE,
+	PAGE_DESCRIPTION,
+	PAGE_TITLE,
+} from "@/constants";
 
+import { createClient } from "@/prismicio";
+import { getFormattedPageMeta } from "@/utils/get-formatted-page-meta";
+import { Metadata } from "next";
 import styles from "./page.module.css";
 
-export const metadata = {
-	title: `Imprint - ${PAGE_TITLE}`,
-	description: "Get in touch with Georgi Nikolov",
-};
+export async function generateMetadata(): Promise<Metadata> {
+	const client = createClient();
+	const home = await client.getSingle(HOME_CUSTOM_TYPE);
+	return getFormattedPageMeta({
+		title: `Imprint - ${PAGE_TITLE}`,
+		description: PAGE_DESCRIPTION,
+		img: home.data.preview,
+	});
+}
 
 function Imprint() {
 	return (

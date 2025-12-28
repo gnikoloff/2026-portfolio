@@ -427,15 +427,37 @@ export type CvDocument<Lang extends string = string> =
  */
 interface HomeDocumentData {
   /**
-   * Intro Text field in *home*
+   * Title field in *home*
    *
-   * - **Field Type**: Rich Text
+   * - **Field Type**: Text
    * - **Placeholder**: *None*
-   * - **API ID Path**: home.intro_text
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   * - **API ID Path**: home.title
+   * - **Tab**: Social
+   * - **Documentation**: https://prismic.io/docs/fields/text
    */
-  intro_text: prismic.RichTextField;
+  title: prismic.KeyTextField;
+
+  /**
+   * Description field in *home*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: home.description
+   * - **Tab**: Social
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  description: prismic.KeyTextField;
+
+  /**
+   * Preview field in *home*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: home.preview
+   * - **Tab**: Social
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  preview: prismic.ImageField<never>;
 }
 
 /**

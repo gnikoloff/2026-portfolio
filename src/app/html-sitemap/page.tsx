@@ -4,6 +4,8 @@ import PageLayout from "@/components/PageLayout";
 import {
 	ABOUT_URL_SEGMENT_NAME,
 	CONTACT_URL_SEGMENT_NAME,
+	HOME_CUSTOM_TYPE,
+	PAGE_DESCRIPTION,
 	PAGE_TITLE,
 	SPEAKING_CUSTOM_TYPE,
 	SPEAKING_URL_SEGMENT_NAME,
@@ -14,12 +16,19 @@ import {
 } from "@/constants";
 import { createClient } from "@/prismicio";
 
+import { getFormattedPageMeta } from "@/utils/get-formatted-page-meta";
+import { Metadata } from "next";
 import styles from "./page.module.css";
 
-export const metadata = {
-	title: `HTML Sitemap - ${PAGE_TITLE}`,
-	description: "Get in touch with Georgi Nikolov",
-};
+export async function generateMetadata(): Promise<Metadata> {
+	const client = createClient();
+	const home = await client.getSingle(HOME_CUSTOM_TYPE);
+	return getFormattedPageMeta({
+		title: `HTML Sitemap - ${PAGE_TITLE}`,
+		description: PAGE_DESCRIPTION,
+		img: home.data.preview,
+	});
+}
 
 async function HTMLSitemap() {
 	const client = createClient();

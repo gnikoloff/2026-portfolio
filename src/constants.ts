@@ -1,4 +1,7 @@
 export const PAGE_TITLE = "Georgi Nikolov";
+export const PAGE_DESCRIPTION =
+	"Georgi Nikolov is a programmer building advanced web and mobile applications. Specializing in real-time rendering, GPU programming, and interactive 3D.";
+export const PAGE_CREATOR = "Georgi Nikolov";
 
 export const BASE_URL = "https://georgi-nikolov.com";
 

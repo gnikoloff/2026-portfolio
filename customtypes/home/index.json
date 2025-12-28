@@ -1,20 +1,37 @@
 {
   "id": "home",
-  "json": {
-    "Main": {
-      "intro_text": {
-        "type": "StructuredText",
-        "config": {
-          "label": "Intro Text",
-          "placeholder": "",
-          "allowTargetBlank": true,
-          "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl"
-        }
-      }
-    }
-  },
   "label": "home",
   "repeatable": false,
   "status": true,
-  "format": "custom"
+  "format": "custom",
+  "json": {
+    "Main": {},
+    "Social": {
+      "title": {
+        "type": "Text",
+        "config": {
+          "label": "Title",
+          "placeholder": ""
+        }
+      },
+      "description": {
+        "type": "Text",
+        "config": {
+          "label": "Description",
+          "placeholder": ""
+        }
+      },
+      "preview": {
+        "type": "Image",
+        "config": {
+          "label": "Preview",
+          "constraint": {
+            "width": 1200,
+            "height": 628
+          },
+          "thumbnails": []
+        }
+      }
+    }
+  }
 }

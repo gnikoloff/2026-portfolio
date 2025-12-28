@@ -1,6 +1,8 @@
 // src/app/page.tsx
-import { PAGE_TITLE } from "@/constants";
+import { HOME_CUSTOM_TYPE, PAGE_DESCRIPTION, PAGE_TITLE } from "@/constants";
+import { createClient } from "@/prismicio";
 import { FilterState, Tag } from "@/types/filters";
+import { getFormattedPageMeta } from "@/utils/get-formatted-page-meta";
 import { type Metadata } from "next";
 import HomeClient from "../components/HomeClient";
 
@@ -24,11 +26,11 @@ export default async function Home({
 }
 
 export async function generateMetadata(): Promise<Metadata> {
-	return {
+	const client = createClient();
+	const home = await client.getSingle(HOME_CUSTOM_TYPE);
+	return getFormattedPageMeta({
 		title: PAGE_TITLE,
-		// description: page.data.meta_description,
-		// openGraph: {
-		// 	images: [{ url: asImageSrc(page.data.meta_image) ?? "" }],
-		// },
-	};
+		description: PAGE_DESCRIPTION,
+		img: home.data.preview,
+	});
 }

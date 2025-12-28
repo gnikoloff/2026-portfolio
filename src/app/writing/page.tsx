@@ -1,12 +1,24 @@
 import WritingClient from "@/components/WritingClient";
-import { PAGE_TITLE, WRITING_CUSTOM_TYPE } from "@/constants";
+import {
+	HOME_CUSTOM_TYPE,
+	PAGE_DESCRIPTION,
+	PAGE_TITLE,
+	WRITING_CUSTOM_TYPE,
+} from "@/constants";
 import { createClient } from "@/prismicio";
 import { FilterState, WorkTag } from "@/types";
+import { getFormattedPageMeta } from "@/utils/get-formatted-page-meta";
+import { Metadata } from "next";
 
-export const metadata = {
-	title: `Writing - ${PAGE_TITLE}`,
-	description: "Get in touch with Georgi Nikolov",
-};
+export async function generateMetadata(): Promise<Metadata> {
+	const client = createClient();
+	const home = await client.getSingle(HOME_CUSTOM_TYPE);
+	return getFormattedPageMeta({
+		title: `Writing - ${PAGE_TITLE}`,
+		description: PAGE_DESCRIPTION,
+		img: home.data.preview,
+	});
+}
 
 export default async function Writing({
 	searchParams,
