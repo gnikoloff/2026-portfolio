@@ -22,11 +22,13 @@ export default function ArticlePreview({
 	date: Date;
 	tags: BlogDocumentDataArticleTechnologiesItem[];
 }) {
+	const store = useBlogFilterStore();
 	const hasExternalURL = !!externalURL;
 	const linkURL = hasExternalURL
 		? externalURL
 		: `/${WRITING_URL_SEGMENT_NAME}/${uid}`;
 	const linkTarget = hasExternalURL ? `_blank` : "_self";
+
 	return (
 		<Link className={styles.root} href={linkURL} target={linkTarget}>
 			<main className={`${styles.title} fw500`}>{title}</main>
@@ -52,7 +54,7 @@ export default function ArticlePreview({
 				<div className={styles.tagsRoot}>
 					<WorkTagsList
 						tags={tags.map(({ article_tech }) => article_tech as string)}
-						filters={useBlogFilterStore().filters}
+						filters={store.filters}
 					/>
 				</div>
 			</footer>

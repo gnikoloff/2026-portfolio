@@ -45,12 +45,13 @@ export default function WritingClient({
 				<NoResults workType="articles" />
 			) : (
 				<div className="tight-container">
-					{sortedYears.map((year, i) => (
+					{sortedYears.map((year, i, self) => (
 						<YearWritingContainer
 							key={year}
 							year={Number(year)}
 							works={worksPerYears[year]}
 							hasMarginTop={i > 0}
+							isLast={i === self.length - 1}
 						/>
 					))}
 				</div>

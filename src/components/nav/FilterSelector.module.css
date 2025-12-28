@@ -12,7 +12,7 @@
 	height: 0;
 	border-left: 5px solid transparent;
 	border-right: 5px solid transparent;
-	border-top: 5px solid var(--foreground);
+	border-top: 5px solid var(--foreground-secondary);
 }
 
 .root.noArrow {
@@ -27,7 +27,7 @@
 }
 
 .root.inputFocus::after {
-	border-top-color: var(--foreground);
+	border-top-color: var(--background);
 }
 
 .root.nonInteractable .input {
@@ -88,7 +88,7 @@
 	padding: 0 1rem;
 	border: none;
 	background-color: transparent;
-	color: var(--navigation-secondary-background);
+	color: var(--foreground-secondary);
 	cursor: not-allowed;
 	z-index: 1;
 
@@ -123,7 +123,7 @@
 	background-position: right 12px center;
 	background-size: 12px; */
 	/* background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23aaa' d='M6 9L1 4h10z'/%3E%3C/svg%3E") !important; */
-	color: inherit;
+	color: var(--foreground-secondary);
 	border-right: 1px solid var(--subtler-border-color);
 	cursor: pointer;
 }

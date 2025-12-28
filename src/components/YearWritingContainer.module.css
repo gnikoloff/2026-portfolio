@@ -2,6 +2,9 @@
 	/* margin-bottom: 1.25rem; */
 	padding: 1.2rem 0;
 	list-style: none;
+}
+
+.listItem.hasBorderBottom {
 	border-bottom: 1px solid var(--subtlerer-border-color);
 }
 

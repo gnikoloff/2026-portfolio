@@ -16,10 +16,12 @@ function YearFilterSelector({
 	const isActive = val !== "";
 
 	return (
-		<div className={`${styles.root} btn-simple`}>
+		<div
+			className={`${styles.root} btn-simple ${isActive ? styles.inputFocus : ""} ${isActive ? "active" : ""}`}
+		>
 			<select
 				id="year-select"
-				className={`${styles.input} ${isActive ? styles.inputFocus : ""} ${isActive ? "active" : ""}`}
+				className={`${styles.input}`}
 				value={val}
 				onChange={handleYearChange}
 			>

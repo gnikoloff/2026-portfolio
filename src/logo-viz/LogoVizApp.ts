@@ -145,7 +145,12 @@ export default class LogoVizApp {
 		this.perspCamera.lookAt = ASSET_TO_LOAD.camLookAt;
 		this.perspCamera.updateViewMatrix().updateProjectionMatrix();
 
-		this.cameraCtrl = new CameraController(this.perspCamera, canvas, true, 0.1);
+		this.cameraCtrl = new CameraController(
+			this.perspCamera,
+			canvas,
+			false,
+			0.1,
+		);
 		this.cameraCtrl.minDistance = 1;
 		this.cameraCtrl.maxDistance = 8;
 		this.cameraCtrl.lookAt(ASSET_TO_LOAD.camLookAt as [number, number, number]);

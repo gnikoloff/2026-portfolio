@@ -8,10 +8,12 @@ export default function YearWritingContainer({
 	year,
 	works,
 	hasMarginTop,
+	isLast,
 }: {
 	year: number;
 	works: BlogDocument[];
 	hasMarginTop: boolean;
+	isLast: boolean;
 }) {
 	return (
 		<section className={styles.root}>
@@ -29,12 +31,15 @@ export default function YearWritingContainer({
 								);
 							},
 						)
-						.map((work) => {
+						.map((work, i, arr) => {
 							// @ts-ignore
 							const url = work.data.external_link.url;
 
 							return (
-								<li key={work.uid} className={styles.listItem}>
+								<li
+									key={work.uid}
+									className={`${styles.listItem} ${i < arr.length - 1 ? styles.hasBorderBottom : ""}`}
+								>
 									<ArticlePreview
 										externalURL={url}
 										externalResourceName={work.data.external_resource_name}

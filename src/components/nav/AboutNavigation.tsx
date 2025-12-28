@@ -27,7 +27,7 @@ function AboutNavigation() {
 	const isExperience = section === ABOUT_SECTION_EXPERIENCE;
 
 	return (
-		<nav className="sub-nav-container">
+		<nav className={`sub-nav-container ${styles.subNav}`}>
 			<ul className={"navList smaller"}>
 				<li>
 					<a
