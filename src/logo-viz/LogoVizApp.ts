@@ -22,10 +22,13 @@ const BDRFlut = "/assets/brdfLUT.png";
 const CUBEMAP_SIZE = 256;
 const IBL_DIFFUSE_SIZE = 32;
 const IBL_SPECULAR_SIZE = 128;
+
 interface Asset {
 	pbrTextureURLs: string[];
 	skyboxURL: string;
 	bloomMixFactor: number;
+	camPosition: vec3;
+	camLookAt: vec3;
 }
 
 const ASSETS: Asset[] = [
@@ -38,6 +41,8 @@ const ASSETS: Asset[] = [
 		],
 		skyboxURL: "/api/hdr-data?filename=StandardCubeMap_0.hdr",
 		bloomMixFactor: 0.05,
+		camPosition: vec3.fromValues(-2.25, -1.2, 3),
+		camLookAt: vec3.fromValues(-0.25, 0.1, 0),
 	},
 	{
 		pbrTextureURLs: [
@@ -47,23 +52,26 @@ const ASSETS: Asset[] = [
 			"/assets/PaintedMetal007_1K-PNG_NormalGL-512.webp",
 		],
 		skyboxURL: "/api/hdr-data?filename=StandardCubeMap_2.hdr",
-		bloomMixFactor: 0.6,
+		bloomMixFactor: 0.3,
+		camPosition: vec3.fromValues(-2.56357, -1.3369, 2.8435),
+		camLookAt: vec3.fromValues(-0.25, 0.1, 0),
 	},
 	{
 		pbrTextureURLs: [
-			"/assets/Metal046B_1K-PNG_Color-512.webp",
-			"/assets/Metal046B_1K-PNG_Metalness-512.webp",
-			"/assets/Metal046B_1K-PNG_Roughness-512.webp",
-			"/assets/Metal046B_1K-PNG_NormalGL-512.webp",
+			"/assets/Metal007_1K-PNG_Color-512.webp",
+			"/assets/Metal007_1K-PNG_Metalness-512.webp",
+			"/assets/Metal007_1K-PNG_Roughness-512.webp",
+			"/assets/Metal007_1K-PNG_NormalGL-512.webp",
 		],
-		skyboxURL: "/api/hdr-data?filename=StandardCubeMap_12.hdr",
+		skyboxURL: "/api/hdr-data?filename=StandardCubeMap_9.hdr",
 		bloomMixFactor: 0.8,
+		camPosition: vec3.fromValues(1.15649, -1.37456, 3.0555),
+		camLookAt: vec3.fromValues(0.07, 0.09, -0.13),
 	},
 ];
 
 const loadIdx = Math.floor(Math.random() * ASSETS.length);
-// const ASSET_TO_LOAD = ASSETS[1]!;
-const ASSET_TO_LOAD = ASSETS[2]!;
+const ASSET_TO_LOAD = ASSETS[loadIdx]!;
 
 const loadModel = (src: string): Promise<CharData> => {
 	return fetch(src).then((res) => res.json());
@@ -133,20 +141,14 @@ export default class LogoVizApp {
 			0.1,
 			20,
 		);
-		const lookAt = vec3.fromValues(-0.25, 0.1, 0);
-		this.perspCamera.position = [-2.25, -1.2, 3];
-		this.perspCamera.lookAt = lookAt;
+		this.perspCamera.position = ASSET_TO_LOAD.camPosition;
+		this.perspCamera.lookAt = ASSET_TO_LOAD.camLookAt;
 		this.perspCamera.updateViewMatrix().updateProjectionMatrix();
 
-		this.cameraCtrl = new CameraController(
-			this.perspCamera,
-			canvas,
-			false,
-			0.1,
-		);
+		this.cameraCtrl = new CameraController(this.perspCamera, canvas, true, 0.1);
 		this.cameraCtrl.minDistance = 1;
 		this.cameraCtrl.maxDistance = 8;
-		this.cameraCtrl.lookAt(lookAt as [number, number, number]);
+		this.cameraCtrl.lookAt(ASSET_TO_LOAD.camLookAt as [number, number, number]);
 
 		gl.enable(gl.DEPTH_TEST);
 
