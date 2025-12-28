@@ -18,7 +18,7 @@ export default function SingleWorkNavigation({
 	const [prevWorkLink, nextWorkLink] = getPrevNextWorkLinks(works, uid);
 	return (
 		<div className={styles.root}>
-			<Link href="/" className="btn-simple">
+			<Link href="/" className={`btn-simple ${styles.backBtn}`}>
 				<div className={`${styles.backWrapper} sub-nav-container`}>Back</div>
 			</Link>
 			<div className={styles.subNavWrapper}>

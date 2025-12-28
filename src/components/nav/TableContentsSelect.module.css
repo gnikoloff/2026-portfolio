@@ -4,7 +4,24 @@
 }
 
 .selectContainer {
+	position: relative;
 	height: 100%;
+}
+
+.selectContainer::after {
+	content: "";
+	position: absolute;
+	top: 22px;
+	right: 12px;
+	width: 0;
+	height: 0;
+	border-left: 5px solid transparent;
+	border-right: 5px solid transparent;
+	border-top: 5px solid var(--foreground-secondary);
+}
+
+.selectContainer:hover::after {
+	border-top: 5px solid var(--foreground);
 }
 
 .selectWrapper {
@@ -13,17 +30,33 @@
 	cursor: not-allowed;
 }
 
+.selectWrapper * {
+	pointer-events: none;
+}
+
 .selectWrapper.hoverable {
 	cursor: unset;
+}
+
+.selectWrapper.hoverable * {
+	pointer-events: unset;
 }
 
 .selectWrapper.hoverable:hover .icon {
 	stroke: var(--foreground);
 }
 
+.selectWrapper.hoverable:hover .input {
+	color: var(--foreground);
+}
+
 .backWrapper {
 	margin: 0;
 	border-right: 1px solid var(--subtler-border-color);
+}
+
+.backBtn {
+	color: var(--foreground-secondary);
 }
 
 .icon {
@@ -34,7 +67,7 @@
 	height: 18px;
 	stroke: var(--foreground-secondary);
 	pointer-events: none;
-	transition: stroke 0.15s ease-in-out;
+	/* transition: stroke 0.15s ease-in-out; */
 }
 
 .input {

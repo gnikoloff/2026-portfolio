@@ -5,6 +5,11 @@
 .link {
 	width: 50%;
 	display: flex;
+	color: var(--foreground-secondary);
+}
+
+.link:hover {
+	color: var(--foreground);
 }
 
 .linkLabel {
@@ -12,7 +17,7 @@
 	max-width: 70px;
 	text-overflow: ellipsis;
 	overflow: hidden;
-	color: var(--foreground);
+	/* color: var(--foreground); */
 }
 
 @media screen and (min-width: 410px) {
@@ -50,7 +55,6 @@
 }
 
 .arrow {
-	color: var(--foreground);
 	transition: transform 0.1s ease-out;
 }
 
@@ -62,9 +66,9 @@
 	margin-left: 1rem;
 }
 
-.link:hover .prevArrow {
+/* .link:hover .prevArrow {
 	transform: translateX(-1px);
 }
 .link:hover .nextArrow {
 	transform: translateX(1px);
-}
+} */

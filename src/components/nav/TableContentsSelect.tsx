@@ -88,7 +88,7 @@ function TableContentsSelect({
 	return (
 		<div className={`${styles.root}`}>
 			{backURL ? (
-				<Link href={backURL} className="btn-simple">
+				<Link href={backURL} className={`btn-simple ${styles.backBtn}`}>
 					<div className={`${styles.backWrapper} sub-nav-container`}>Back</div>
 				</Link>
 			) : null}
