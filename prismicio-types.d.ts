@@ -202,17 +202,6 @@ interface BlogDocumentData {
   >;
 
   /**
-   * SEO Description field in *Blog*
-   *
-   * - **Field Type**: Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: blog.seo_description
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/fields/text
-   */
-  seo_description: prismic.KeyTextField;
-
-  /**
    * title field in *Blog*
    *
    * - **Field Type**: Text
@@ -243,7 +232,27 @@ interface BlogDocumentData {
    * - **Tab**: Main
    * - **Documentation**: https://prismic.io/docs/fields/rich-text
    */
-  body: prismic.RichTextField;
+  body: prismic.RichTextField; /**
+   * Metadata Description field in *Blog*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: blog.metadata_description
+   * - **Tab**: Metadata
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  metadata_description: prismic.KeyTextField;
+
+  /**
+   * Metadata Image field in *Blog*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: blog.metadata_image
+   * - **Tab**: Metadata
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  metadata_image: prismic.ImageField<never>;
 }
 
 /**
@@ -526,17 +535,6 @@ export interface SpeakingDocumentDataProjectTechnologiesItem {
  */
 interface SpeakingDocumentData {
   /**
-   * SEO description field in *speaking*
-   *
-   * - **Field Type**: Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: speaking.seo_description
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/fields/text
-   */
-  seo_description: prismic.KeyTextField;
-
-  /**
    * Project Title field in *speaking*
    *
    * - **Field Type**: Text
@@ -630,7 +628,27 @@ interface SpeakingDocumentData {
    * - **Tab**: Main
    * - **Documentation**: https://prismic.io/docs/fields/rich-text
    */
-  project_body: prismic.RichTextField;
+  project_body: prismic.RichTextField; /**
+   * Meta Description field in *speaking*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: speaking.meta_description
+   * - **Tab**: Metadata
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  meta_description: prismic.KeyTextField;
+
+  /**
+   * meta_image field in *speaking*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: speaking.meta_image
+   * - **Tab**: Metadata
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  meta_image: prismic.ImageField<never>;
 }
 
 /**

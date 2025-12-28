@@ -86,6 +86,22 @@
 	opacity: 1;
 }
 
+.subjectWrapper {
+	position: relative;
+}
+
+.subjectWrapper::after {
+	content: "";
+	position: absolute;
+	top: 20px;
+	right: 12px;
+	width: 0;
+	height: 0;
+	border-left: 5px solid transparent;
+	border-right: 5px solid transparent;
+	border-top: 5px solid var(--foreground-secondary);
+}
+
 .iconWrapper {
 	text-align: center;
 	/* padding-bottom: 5rem; */

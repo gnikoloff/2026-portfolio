@@ -6,12 +6,6 @@
   "format": "custom",
   "json": {
     "Main": {
-      "seo_description": {
-        "type": "Text",
-        "config": {
-          "label": "SEO description"
-        }
-      },
       "project_title": {
         "type": "Text",
         "config": {
@@ -92,6 +86,26 @@
         "type": "UID",
         "config": {
           "label": "uid"
+        }
+      }
+    },
+    "Metadata": {
+      "meta_description": {
+        "type": "Text",
+        "config": {
+          "label": "Meta Description",
+          "placeholder": ""
+        }
+      },
+      "meta_image": {
+        "type": "Image",
+        "config": {
+          "label": "meta_image",
+          "constraint": {
+            "width": 1200,
+            "height": 628
+          },
+          "thumbnails": []
         }
       }
     }

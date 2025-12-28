@@ -1,8 +1,9 @@
 import AppHeaderBorder from "@/components/AppHeaderBorder";
 import PageLayout from "@/components/PageLayout";
 import WorkClient from "@/components/WorkClient";
-import { PAGE_TITLE, WORKS_CUSTOM_TYPE } from "@/constants";
+import { WORKS_CUSTOM_TYPE } from "@/constants";
 import { createClient } from "@/prismicio";
+import { getFormattedPageMeta } from "@/utils/get-formatted-page-meta";
 import { htmlSerializer } from "@/utils/htmlSerialiser";
 import { getPrevNextWorkLinks, getPrevNextWorks } from "@/utils/works";
 import { asHTML } from "@prismicio/client";
@@ -19,14 +20,11 @@ export async function generateMetadata({
 	const { uid } = await params;
 	const client = createClient();
 	const page = await client.getByUID(WORKS_CUSTOM_TYPE, uid);
-
-	return {
-		title: `${page.data.project_title} - ${PAGE_TITLE}`,
-		description: page.data.meta_description,
-		// openGraph: {
-		// 	images: [{ url: asImageSrc(page.data.meta_image) ?? "" }],
-		// },
-	};
+	return getFormattedPageMeta({
+		title: page.data.project_title as string,
+		description: page.data.meta_description as string,
+		img: page.data.meta_image,
+	});
 }
 
 export default async function Work({ params }: { params: Promise<Params> }) {

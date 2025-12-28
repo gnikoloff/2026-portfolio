@@ -96,22 +96,24 @@ function ContactForm() {
 					<label className={styles.label} htmlFor="subject">
 						Regarding:
 					</label>
-					<select
-						name="subject"
-						className={`${styles.fullWidth} ${styles.select}`}
-						value={formData.contactReason}
-						onChange={(e) => {
-							const t = e.target;
+					<div className={styles.subjectWrapper}>
+						<select
+							name="subject"
+							className={`${styles.fullWidth} ${styles.select}`}
+							value={formData.contactReason}
+							onChange={(e) => {
+								const t = e.target;
 
-							setFormData({ ...formData, contactReason: t.value });
+								setFormData({ ...formData, contactReason: t.value });
 
-							setShowBudget(t.value == CONTACT_INQUIRY_PROJECT);
-						}}
-					>
-						<option>{CONTACT_INQUIRY_PROJECT}</option>
-						<option>{CONTACT_INQUIRY_COLLABORATION}</option>
-						<option>{CONTACT_INQUIRY_GENERAL_INQUIRY}</option>
-					</select>
+								setShowBudget(t.value == CONTACT_INQUIRY_PROJECT);
+							}}
+						>
+							<option>{CONTACT_INQUIRY_PROJECT}</option>
+							<option>{CONTACT_INQUIRY_COLLABORATION}</option>
+							<option>{CONTACT_INQUIRY_GENERAL_INQUIRY}</option>
+						</select>
+					</div>
 				</section>
 				{showBudget ? (
 					<section className={styles.section}>

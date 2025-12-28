@@ -2,14 +2,14 @@ import AppHeaderBorder from "@/components/AppHeaderBorder";
 import ArticleFooter from "@/components/ArticleFooter";
 import PageLayout from "@/components/PageLayout";
 import { SinglePageHeader } from "@/components/SinglePageHeader";
-import { PAGE_TITLE, SPEAKING_CUSTOM_TYPE } from "@/constants";
+import { SPEAKING_CUSTOM_TYPE } from "@/constants";
 import { createClient } from "@/prismicio";
 import { htmlSerializer } from "@/utils/htmlSerialiser";
 import {
 	getPrevNextSpeakingWorkLinks,
 	getPrevNextSpeakingWorks,
 } from "@/utils/speakingWorks";
-import { asHTML } from "@prismicio/client";
+import { asHTML, asImageSrc } from "@prismicio/client";
 import { Metadata } from "next";
 import styles from "./page.module.css";
 
@@ -25,11 +25,11 @@ export async function generateMetadata({
 	const page = await client.getByUID(SPEAKING_CUSTOM_TYPE, uid);
 
 	return {
-		title: `${page.data.project_title} - ${PAGE_TITLE}`,
-		description: page.data.seo_description,
-		// openGraph: {
-		// 	images: [{ url: asImageSrc(page.data.meta_image) ?? "" }],
-		// },
+		title: page.data.project_title as string,
+		description: page.data.meta_description,
+		openGraph: {
+			images: [{ url: asImageSrc(page.data.meta_image) ?? "" }],
+		},
 	};
 }
 

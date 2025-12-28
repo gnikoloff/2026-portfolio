@@ -64,12 +64,6 @@
           "select": null
         }
       },
-      "seo_description": {
-        "type": "Text",
-        "config": {
-          "label": "SEO Description"
-        }
-      },
       "title": {
         "type": "Text",
         "config": {
@@ -89,6 +83,26 @@
         "config": {
           "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl",
           "label": "body"
+        }
+      }
+    },
+    "Metadata": {
+      "metadata_description": {
+        "type": "Text",
+        "config": {
+          "label": "Metadata Description",
+          "placeholder": ""
+        }
+      },
+      "metadata_image": {
+        "type": "Image",
+        "config": {
+          "label": "Metadata Image",
+          "constraint": {
+            "width": 1200,
+            "height": 628
+          },
+          "thumbnails": []
         }
       }
     }
