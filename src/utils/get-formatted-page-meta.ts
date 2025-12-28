@@ -1,15 +1,14 @@
 import { PAGE_CREATOR } from "@/constants";
-import { asImageSrc, ImageField } from "@prismicio/client";
 import { Metadata } from "next";
 
 export const getFormattedPageMeta = ({
 	title,
 	description,
-	img,
+	imgUrl,
 }: {
 	title: string;
 	description: string;
-	img: ImageField;
+	imgUrl: string;
 }): Metadata => ({
 	title,
 	description,
@@ -20,7 +19,7 @@ export const getFormattedPageMeta = ({
 		description: description,
 		images: [
 			{
-				url: asImageSrc(img) ?? "",
+				url: imgUrl,
 			},
 		],
 	},
@@ -30,7 +29,7 @@ export const getFormattedPageMeta = ({
 		type: "website",
 		images: [
 			{
-				url: asImageSrc(img) ?? "",
+				url: imgUrl,
 			},
 		],
 	},

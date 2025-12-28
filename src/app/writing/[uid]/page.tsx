@@ -1,4 +1,4 @@
-import { WRITING_CUSTOM_TYPE } from "@/constants";
+import { HOME_CUSTOM_TYPE, WRITING_CUSTOM_TYPE } from "@/constants";
 import { createClient } from "@/prismicio";
 import { htmlSerializer } from "@/utils/htmlSerialiser";
 import { asHTML, asImageSrc } from "@prismicio/client";
@@ -6,6 +6,7 @@ import { asHTML, asImageSrc } from "@prismicio/client";
 import AppHeaderBorder from "@/components/AppHeaderBorder";
 import ArticleClient from "@/components/ArticleClient";
 import PageLayout from "@/components/PageLayout";
+import { getFormattedPageMeta } from "@/utils/get-formatted-page-meta";
 import { Metadata } from "next";
 import styles from "./page.module.css";
 
@@ -18,15 +19,20 @@ export async function generateMetadata({
 }): Promise<Metadata> {
 	const { uid } = await params;
 	const client = createClient();
-	const page = await client.getByUID(WRITING_CUSTOM_TYPE, uid);
 
-	return {
+	const [home, page] = await Promise.all([
+		client.getSingle(HOME_CUSTOM_TYPE),
+		client.getByUID(WRITING_CUSTOM_TYPE, uid),
+	]);
+
+	return getFormattedPageMeta({
 		title: page.data.title as string,
-		description: page.data.metadata_description,
-		openGraph: {
-			images: [{ url: asImageSrc(page.data.metadata_image) ?? "" }],
-		},
-	};
+		description: page.data.metadata_description as string,
+		imgUrl:
+			asImageSrc(page.data.metadata_image) ??
+			asImageSrc(home.data.preview) ??
+			"",
+	});
 }
 export default async function WritingWork({
 	params,

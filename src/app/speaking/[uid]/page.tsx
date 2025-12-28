@@ -2,8 +2,9 @@ import AppHeaderBorder from "@/components/AppHeaderBorder";
 import ArticleFooter from "@/components/ArticleFooter";
 import PageLayout from "@/components/PageLayout";
 import { SinglePageHeader } from "@/components/SinglePageHeader";
-import { SPEAKING_CUSTOM_TYPE } from "@/constants";
+import { HOME_CUSTOM_TYPE, SPEAKING_CUSTOM_TYPE } from "@/constants";
 import { createClient } from "@/prismicio";
+import { getFormattedPageMeta } from "@/utils/get-formatted-page-meta";
 import { htmlSerializer } from "@/utils/htmlSerialiser";
 import {
 	getPrevNextSpeakingWorkLinks,
@@ -22,15 +23,16 @@ export async function generateMetadata({
 }): Promise<Metadata> {
 	const { uid } = await params;
 	const client = createClient();
-	const page = await client.getByUID(SPEAKING_CUSTOM_TYPE, uid);
-
-	return {
+	const [home, page] = await Promise.all([
+		client.getSingle(HOME_CUSTOM_TYPE),
+		client.getByUID(SPEAKING_CUSTOM_TYPE, uid),
+	]);
+	return getFormattedPageMeta({
 		title: page.data.project_title as string,
-		description: page.data.meta_description,
-		openGraph: {
-			images: [{ url: asImageSrc(page.data.meta_image) ?? "" }],
-		},
-	};
+		description: page.data.meta_description as string,
+		imgUrl:
+			asImageSrc(page.data.meta_image) ?? asImageSrc(home.data.preview) ?? "",
+	});
 }
 
 export default async function SpeakingWork({

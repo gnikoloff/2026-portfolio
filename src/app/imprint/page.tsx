@@ -11,6 +11,7 @@ import {
 
 import { createClient } from "@/prismicio";
 import { getFormattedPageMeta } from "@/utils/get-formatted-page-meta";
+import { asImageSrc } from "@prismicio/client";
 import { Metadata } from "next";
 import styles from "./page.module.css";
 
@@ -20,7 +21,7 @@ export async function generateMetadata(): Promise<Metadata> {
 	return getFormattedPageMeta({
 		title: `Imprint - ${PAGE_TITLE}`,
 		description: PAGE_DESCRIPTION,
-		img: home.data.preview,
+		imgUrl: asImageSrc(home.data.preview) ?? "",
 	});
 }
 

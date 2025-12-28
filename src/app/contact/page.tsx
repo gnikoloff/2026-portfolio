@@ -4,6 +4,7 @@ import PageLayout from "@/components/PageLayout";
 import { HOME_CUSTOM_TYPE, PAGE_DESCRIPTION, PAGE_TITLE } from "@/constants";
 import { createClient } from "@/prismicio";
 import { getFormattedPageMeta } from "@/utils/get-formatted-page-meta";
+import { asImageSrc } from "@prismicio/client";
 
 import { Metadata } from "next";
 
@@ -13,7 +14,7 @@ export async function generateMetadata(): Promise<Metadata> {
 	return getFormattedPageMeta({
 		title: `Contact - ${PAGE_TITLE}`,
 		description: PAGE_DESCRIPTION,
-		img: home.data.preview,
+		imgUrl: asImageSrc(home.data.preview) ?? "",
 	});
 }
 

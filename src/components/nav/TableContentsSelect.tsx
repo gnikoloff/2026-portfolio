@@ -53,7 +53,7 @@ function TableContentsSelect({
 
 							window.scrollTo({
 								top: offsetPosition,
-								behavior: "smooth",
+								behavior: "instant", // "smooth",
 							});
 
 							history.pushState(null, "", `#${id}`);

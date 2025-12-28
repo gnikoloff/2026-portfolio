@@ -3,6 +3,7 @@ import { HOME_CUSTOM_TYPE, PAGE_DESCRIPTION, PAGE_TITLE } from "@/constants";
 import { createClient } from "@/prismicio";
 import { FilterState, WorkTag } from "@/types";
 import { getFormattedPageMeta } from "@/utils/get-formatted-page-meta";
+import { asImageSrc } from "@prismicio/client";
 import { type Metadata } from "next";
 import HomeClient from "../components/HomeClient";
 
@@ -12,7 +13,7 @@ export async function generateMetadata(): Promise<Metadata> {
 	return getFormattedPageMeta({
 		title: PAGE_TITLE,
 		description: PAGE_DESCRIPTION,
-		img: home.data.preview,
+		imgUrl: asImageSrc(home.data.preview) ?? "",
 	});
 }
 
