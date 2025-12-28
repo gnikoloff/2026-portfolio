@@ -43,17 +43,14 @@ export default async function WritingWork({
 		<PageLayout>
 			<AppHeaderBorder />
 			<div className="tight-container">
-				{/* <SinglePageHeader
-				title={page.data.title}
-				// type={page.data.}
-				year={page.data.year}
-			/> */}
-
 				<main className={styles.main}>
 					<ArticleClient
 						title={page.data.title}
 						html={html}
 						date={new Date(page.last_publication_date)}
+						technologies={page.data.article_technologies.map(
+							({ article_tech }) => article_tech as string,
+						)}
 					/>
 				</main>
 			</div>

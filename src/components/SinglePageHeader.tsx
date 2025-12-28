@@ -1,5 +1,4 @@
 import { KeyTextField, NumberField } from "@prismicio/client";
-import { WorkDocumentDataProjectTechnologiesListItem } from "../../prismicio-types";
 import styles from "./SinglePageHeader.module.css";
 import WorkTagsList from "./WorkTagsList";
 
@@ -12,7 +11,7 @@ export function SinglePageHeader({
 	title: KeyTextField;
 	type: KeyTextField;
 	year: NumberField;
-	technologies?: WorkDocumentDataProjectTechnologiesListItem[];
+	technologies?: string[];
 }) {
 	return (
 		<header className={styles.root}>
@@ -22,13 +21,7 @@ export function SinglePageHeader({
 			</div>
 			<div className={styles.secondaryWrapper}>
 				<h3 className={styles.type}>{type}</h3>
-				{technologies.length ? (
-					<WorkTagsList
-						tags={technologies.map(
-							({ project_tech }) => project_tech as string,
-						)}
-					/>
-				) : null}
+				{technologies.length ? <WorkTagsList tags={technologies} /> : null}
 			</div>
 		</header>
 	);

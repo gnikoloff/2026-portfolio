@@ -7,16 +7,18 @@ import hljs from "highlight.js";
 import ImageCompare from "image-compare-viewer";
 import { useEffect, useRef } from "react";
 
-import { getFormattedDate } from "@/utils/date";
 import styles from "./ArticleClient.module.css";
+import { SinglePageHeader } from "./SinglePageHeader";
 
 export default function ArticleClient({
 	title,
 	date,
+	technologies,
 	html,
 }: {
 	title: KeyTextField;
 	html: string;
+	technologies: string[];
 	date: Date;
 }) {
 	const contentRef = useRef<HTMLDivElement>(null);
@@ -83,10 +85,12 @@ export default function ArticleClient({
 
 	return (
 		<div>
-			<header>
-				<h1 style={{ marginTop: 0 }}>{title}</h1>
-				<div className={styles.date}>{getFormattedDate(date)}</div>
-			</header>
+			<SinglePageHeader
+				title={title}
+				type={"Article"}
+				year={new Date(date).getFullYear()}
+				technologies={technologies}
+			/>
 			<div
 				className={`typeset ${styles.root}`}
 				ref={contentRef}

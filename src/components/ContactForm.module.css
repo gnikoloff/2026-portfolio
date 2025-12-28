@@ -111,7 +111,7 @@
 	display: block;
 	margin: 0 auto 2rem auto;
 	position: relative;
-	color: #fff;
+	color: var(--foreground);
 	box-sizing: border-box;
 	animation: rotation 2s linear infinite;
 }
@@ -124,7 +124,7 @@
 	width: 24px;
 	height: 24px;
 	top: 0;
-	background-color: #fff;
+	background-color: var(--foreground);
 	border-radius: 50%;
 	animation: scale50 2s infinite ease-in-out;
 }
@@ -132,7 +132,7 @@
 .loader::before {
 	top: auto;
 	bottom: 0;
-	background-color: #fff;
+	background-color: var(--foreground);
 	animation-delay: 1s;
 }
 

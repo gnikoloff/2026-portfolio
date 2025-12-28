@@ -37,8 +37,9 @@ function ContactForm() {
 		});
 		const result = await response.json();
 
+		console.log("result", result);
 		setIsSending(false);
-		setIsSendError(result.success);
+		setIsSendError(!result.success);
 		setFormData({
 			name: "",
 			email: "",
@@ -162,7 +163,10 @@ function ContactForm() {
 		<div
 			className={`${styles.loaderWrapper} ${isSending ? styles.visible : ""}`}
 		>
-			{/* ... loader JSX ... */}
+			<div className={styles.loaderContainer}>
+				<div className={styles.loader} />
+				<h3>Sending...</h3>
+			</div>
 		</div>
 	);
 

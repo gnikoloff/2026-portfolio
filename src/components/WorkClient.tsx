@@ -66,7 +66,9 @@ function WorkClient({
 				title={title}
 				type={type}
 				year={year}
-				technologies={technologies}
+				technologies={technologies.map(
+					({ project_tech }) => project_tech as string,
+				)}
 			/>
 			<main className="typeset">
 				<div dangerouslySetInnerHTML={{ __html: html }}></div>
