@@ -1,4 +1,4 @@
-import { Drawable, ShaderDefineValue } from "@/libs/hwoa-rang-gl2/dist";
+import { Drawable, ShaderDefineValue } from "@/libs/hwoa-rang-gl2";
 
 import fragShaderSrc from "../shaders/uberFragShader";
 import vertShaderSrc from "../shaders/uberVertexShader";

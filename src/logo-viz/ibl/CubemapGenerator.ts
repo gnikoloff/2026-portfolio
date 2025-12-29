@@ -1,4 +1,4 @@
-import { createBox } from "@/libs/hwoa-rang-gl2/dist";
+import { createBox } from "@/libs/hwoa-rang-gl2";
 import fragShaderSrc from "../shaders/uberFragShader";
 import IBLGenerator from "./IBLGenerator";
 

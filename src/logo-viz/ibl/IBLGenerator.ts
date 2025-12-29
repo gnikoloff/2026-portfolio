@@ -1,8 +1,4 @@
-import {
-	Drawable,
-	Geometry,
-	ShaderDefineValue,
-} from "@/libs/hwoa-rang-gl2/dist";
+import { Drawable, Geometry, ShaderDefineValue } from "@/libs/hwoa-rang-gl2";
 import { mat4 } from "gl-matrix";
 import vertShaderSrc from "../shaders/uberVertexShader";
 

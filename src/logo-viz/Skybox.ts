@@ -1,4 +1,4 @@
-import { createBox, Drawable } from "@/libs/hwoa-rang-gl2/dist";
+import { createBox, Drawable } from "@/libs/hwoa-rang-gl2";
 
 import { mat4 } from "gl-matrix";
 import fragShaderSrc from "./shaders/uberFragShader";

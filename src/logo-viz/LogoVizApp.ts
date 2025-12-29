@@ -1,4 +1,4 @@
-import { CameraController, PerspectiveCamera } from "@/libs/hwoa-rang-gl2/dist";
+import { CameraController, PerspectiveCamera } from "@/libs/hwoa-rang-gl2";
 import { CharData } from "@/types";
 import { HDRImageElement } from "@/types/hdrpng";
 import { loadHDR, makeHDRGLTexture } from "@/utils/load-hdr";
