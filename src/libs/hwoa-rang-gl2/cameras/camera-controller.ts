@@ -340,19 +340,14 @@ export default class CameraController {
 			};
 		}
 
-		this.domElement.addEventListener(
-			"mousemove",
-			this._mouseMoveHandler,
-			false,
-		);
+		// Changed: Attach to window instead of domElement
+		window.addEventListener("mousemove", this._mouseMoveHandler, false);
 		window.addEventListener("mouseup", this._mouseUpHandler, false);
 	}
+
 	_mouseUpHandler(): void {
-		this.domElement.removeEventListener(
-			"mousemove",
-			this._mouseMoveHandler,
-			false,
-		);
+		// Changed: Remove from window instead of domElement
+		window.removeEventListener("mousemove", this._mouseMoveHandler, false);
 		window.removeEventListener("mouseup", this._mouseUpHandler, false);
 	}
 	_mouseMoveHandler(event: MouseEvent): void {
