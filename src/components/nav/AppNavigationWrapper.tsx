@@ -1,7 +1,7 @@
 "use client";
 
 import { useUIStore } from "@/store/uiStore";
-import { MouseEvent, useEffect, useRef, useState } from "react";
+import { MouseEvent, TouchEvent, useEffect, useRef, useState } from "react";
 import AppNavigation from "./AppNavigation";
 import styles from "./AppNavigationWrapper.module.css";
 
@@ -64,6 +64,7 @@ function AppNavigationWrapper() {
 	}, [initNavigationX, initNavigationY]);
 
 	useEffect(() => {
+		const isMobile = window.innerWidth < MOBILE_BREAKPOINT;
 		if (isMobile) {
 			if (rafIdRef.current) {
 				cancelAnimationFrame(rafIdRef.current);
@@ -122,11 +123,19 @@ function AppNavigationWrapper() {
 				e.pageY - draggableHeight * 0.5 - window.pageYOffset;
 		};
 
-		const handleMouseUp = () => {
+		const handleTouchMove = (e: globalThis.TouchEvent) => {
+			e.preventDefault();
+			const touch = e.touches[0];
+			mouseTargetRef.current.x = touch.pageX - draggableWidth * 0.5;
+			mouseTargetRef.current.y =
+				touch.pageY - draggableHeight * 0.5 - window.pageYOffset;
+		};
+
+		const handleEnd = () => {
 			setIsDragging(false);
 			document.body.classList.remove("dragging");
 
-			// Clamp to viewport bounds on mouse up
+			// Clamp to viewport bounds on release
 			const clamped = clampToViewport(
 				mouseTargetRef.current.x,
 				mouseTargetRef.current.y,
@@ -136,11 +145,17 @@ function AppNavigationWrapper() {
 		};
 
 		document.addEventListener("mousemove", handleMouseMove);
-		document.addEventListener("mouseup", handleMouseUp);
+		document.addEventListener("mouseup", handleEnd);
+		document.addEventListener("touchmove", handleTouchMove, { passive: false });
+		document.addEventListener("touchend", handleEnd);
+		document.addEventListener("touchcancel", handleEnd);
 
 		return () => {
 			document.removeEventListener("mousemove", handleMouseMove);
-			document.removeEventListener("mouseup", handleMouseUp);
+			document.removeEventListener("mouseup", handleEnd);
+			document.removeEventListener("touchmove", handleTouchMove);
+			document.removeEventListener("touchend", handleEnd);
+			document.removeEventListener("touchcancel", handleEnd);
 		};
 	}, [isDragging, draggableWidth, draggableHeight]);
 
@@ -171,6 +186,14 @@ function AppNavigationWrapper() {
 		setDraggableHeight(bbox.height);
 	}, []);
 
+	const handleDragStart = (pageX: number, pageY: number) => {
+		setIsDragging(true);
+		mouseTargetRef.current.x = pageX - draggableWidth * 0.5;
+		mouseTargetRef.current.y =
+			pageY - draggableHeight * 0.5 - window.pageYOffset;
+		document.body.classList.add("dragging");
+	};
+
 	return (
 		<section
 			id="app-nav"
@@ -190,11 +213,12 @@ function AppNavigationWrapper() {
 					className={styles.draggable}
 					onMouseDown={(e: MouseEvent) => {
 						e.preventDefault();
-						setIsDragging(true);
-						mouseTargetRef.current.x = e.pageX - draggableWidth * 0.5;
-						mouseTargetRef.current.y =
-							e.pageY - draggableHeight * 0.5 - window.pageYOffset;
-						document.body.classList.add("dragging");
+						handleDragStart(e.pageX, e.pageY);
+					}}
+					onTouchStart={(e: TouchEvent) => {
+						e.preventDefault();
+						const touch = e.touches[0];
+						handleDragStart(touch.pageX, touch.pageY);
 					}}
 				>
 					<div className={styles.dotWrapper}>

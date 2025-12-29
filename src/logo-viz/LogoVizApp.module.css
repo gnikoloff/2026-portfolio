@@ -5,6 +5,13 @@
 	cursor: grab;
 }
 
+.titleHidden {
+	position: fixed;
+	top: -10000px;
+	left: -10000px;
+	opacity: 0;
+}
+
 .root.noGL {
 	cursor: unset;
 }

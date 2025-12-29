@@ -44,6 +44,7 @@
 
 .wrapper {
 	display: flex;
+	justify-content: space-between;
 	padding: 0;
 	font-size: 16px;
 }
@@ -92,9 +93,21 @@
 	cursor: not-allowed;
 	z-index: 1;
 
-	box-shadow: 0px 0px 8px 2px #111a;
+	box-shadow: 0px 0px 8px 2px #aaaa;
 	white-space: nowrap;
 	border-left: 1px solid var(--subtler-border-color);
+}
+
+@media (prefers-color-scheme: dark) {
+	.clearButton {
+		box-shadow: 0px 0px 8px 2px #111a;
+	}
+}
+
+@media screen and (min-width: 660px) {
+	.clearButton {
+		box-shadow: none;
+	}
 }
 
 @media screen and (min-width: 800px) {

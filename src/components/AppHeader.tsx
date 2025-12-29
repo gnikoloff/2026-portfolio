@@ -29,11 +29,6 @@ const AppHeader = forwardRef<HTMLElement>((props, ref) => {
 				>
 					<LogoViz />
 				</div>
-				{/* <p className={styles.description}>
-					Georgi Nikolov is a programmer building advanced web and mobile
-					applications. Specializing in real-time rendering, GPU programming,
-					and interactive 3D.
-				</p> */}
 			</div>
 		</header>
 	);

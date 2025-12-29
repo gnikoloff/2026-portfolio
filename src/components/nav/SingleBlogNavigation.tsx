@@ -28,6 +28,7 @@ function SingleBlogNavigation({
 	}
 
 	const entries: TableContentsEntry[] = JSON.parse(
+		// @ts-ignore
 		page.data.table_of_contents[0].text,
 	);
 

@@ -11,6 +11,7 @@ function LogoViz() {
 
 	const [loadingAnim, setLoadingAnim] = useState(false);
 	const [noGL2Supported, setNoGL2Supported] = useState(false);
+	const isVisibleRef = useRef(true);
 
 	useEffect(() => {
 		const c = canvasRef.current;
@@ -37,11 +38,14 @@ function LogoViz() {
 
 			function drawFrame(ts: number) {
 				try {
-					viz!.drawFrame(ts); // Wrap in try-catch
+					if (isVisibleRef.current) {
+						viz!.drawFrame(ts);
+					}
 					raf = requestAnimationFrame(drawFrame);
 				} catch (error) {
 					console.error("Error in draw loop:", error);
 					setNoGL2Supported(true);
+					setLoadingAnim(false);
 					cancelAnimationFrame(raf);
 				}
 			}
@@ -49,10 +53,21 @@ function LogoViz() {
 			raf = requestAnimationFrame(drawFrame);
 		} catch (error) {
 			setNoGL2Supported(true);
+			setLoadingAnim(false);
 			console.error("Error initializing:", error);
 		}
 
+		const observer = new IntersectionObserver(
+			(entries) => {
+				isVisibleRef.current = entries[0].isIntersecting; // Update ref directly
+			},
+			{ threshold: 0 },
+		);
+
+		observer.observe(c);
+
 		return () => {
+			observer.disconnect();
 			if (raf) {
 				cancelAnimationFrame(raf);
 			}
@@ -77,7 +92,9 @@ function LogoViz() {
 					height: `${LOGO_ANIM_HEIGHT}px`,
 				}}
 			/>
-			{noGL2Supported ? <h1>Georgi Nikolov</h1> : null}
+			<h1 className={`${noGL2Supported ? "" : styles.titleHidden}`}>
+				Georgi Nikolov
+			</h1>
 		</div>
 	);
 }
