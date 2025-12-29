@@ -9,7 +9,7 @@
 	},
 	"scripts": {
 		"dev": "next dev",
-		"build": "next build --debug-prerender",
+		"build": "next build",
 		"start": "next start",
 		"lint": "eslint",
 		"slicemachine": "start-slicemachine"

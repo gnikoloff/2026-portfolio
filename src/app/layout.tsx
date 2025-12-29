@@ -23,6 +23,7 @@ import swift from "highlight.js/lib/languages/swift";
 import typescript from "highlight.js/lib/languages/typescript";
 import xml from "highlight.js/lib/languages/xml";
 import "highlight.js/styles/codepen-embed.css";
+import { Suspense } from "react";
 
 hljs.registerLanguage("xml", xml);
 hljs.registerLanguage("javascript", javascript);
@@ -60,7 +61,9 @@ export default async function RootLayout({
 					}}
 				>
 					<NuqsAdapter>
-						<AppNavigationWrapper />
+						<Suspense fallback={null}>
+							<AppNavigationWrapper />
+						</Suspense>
 						<AppHeader />
 						{children}
 					</NuqsAdapter>
