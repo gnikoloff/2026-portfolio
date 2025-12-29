@@ -163,7 +163,7 @@ export function filterWorks(
 		// Filter by language
 		if (filters.languages.length > 0) {
 			const hasMatchingLanguage = filters.languages.some((lang) =>
-				workTechs.includes(lang),
+				workTechs.some((tech) => tech === lang),
 			);
 			if (!hasMatchingLanguage) return false;
 		}
@@ -171,7 +171,7 @@ export function filterWorks(
 		// Filter by technology
 		if (filters.technologies.length > 0) {
 			const hasMatchingTech = filters.technologies.some((tech) =>
-				workTechs.includes(tech),
+				workTechs.some((t) => t === tech),
 			);
 			if (!hasMatchingTech) return false;
 		}

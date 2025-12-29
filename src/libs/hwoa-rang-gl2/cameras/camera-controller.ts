@@ -3,7 +3,7 @@ import { clamp } from "../../hwoa-rang-math";
 import PerspectiveCamera from "./perspective-camera";
 
 class DampedAction {
-	private value = 0.0;
+	public value = 0.0;
 	private damping: number;
 	constructor() {
 		this.damping = 0.5;
@@ -180,7 +180,7 @@ export default class CameraController {
 		}
 	}
 
-	lookAt([x, y, z]) {
+	lookAt([x, y, z]: vec3) {
 		vec3.set(this.target, x, y, z);
 		return this;
 	}
