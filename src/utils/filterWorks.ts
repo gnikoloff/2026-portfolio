@@ -330,16 +330,13 @@ export function groupWritingWorksByYear(
 export function getSortedYears<T>(
 	groupedWorks: Record<string, T[]>,
 	order: "asc" | "desc" = "desc",
-): string[] {
-	const years = Object.keys(groupedWorks);
-
-	return years.sort((a, b) => {
-		if (a === "Unknown") return 1;
-		if (b === "Unknown") return -1;
-
-		const yearA = Number(a);
-		const yearB = Number(b);
-
-		return order === "desc" ? yearB - yearA : yearA - yearB;
-	});
+): number[] {
+	return Object.keys(groupedWorks)
+		.filter((a) => a !== "Unknown")
+		.map(Number)
+		.sort((a, b) => {
+			const yearA = Number(a);
+			const yearB = Number(b);
+			return order === "desc" ? yearB - yearA : yearA - yearB;
+		});
 }

@@ -1,22 +1,22 @@
 import { useHomeFilterStore } from "@/store/homeFilterStore";
 import { WorkDocument } from "../../prismicio-types";
 import WorkPreview from "./WorkPreview";
-import { YearSectionTitle } from "./YearSectionTitle";
+import { WorkSectionTitle } from "./WorkSectionTitle";
 import styles from "./YearWorkContainer.module.css";
 
 export default function YearWorkContainer({
-	year,
+	title,
 	works,
 	hasMarginTop,
 }: {
-	year: number;
+	title: string;
 	works: WorkDocument[];
 	hasMarginTop: boolean;
 }) {
 	const { filters } = useHomeFilterStore();
 	return (
 		<section className={styles.root}>
-			<YearSectionTitle year={year} hasMarginTop={hasMarginTop} />
+			<WorkSectionTitle title={title} hasMarginTop={hasMarginTop} />
 			<div className={styles.worksWrapper}>
 				{works.map((work) => (
 					<WorkPreview

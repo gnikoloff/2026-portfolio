@@ -1,7 +1,7 @@
 import { useSpeakingFilterStore } from "@/store/speakingFilterStore";
 import { SpeakingDocument } from "../../prismicio-types";
 import WorkPreview from "./WorkPreview";
-import { YearSectionTitle } from "./YearSectionTitle";
+import { WorkSectionTitle } from "./WorkSectionTitle";
 import styles from "./YearWorkContainer.module.css";
 
 export default function YearSpeakingContainer({
@@ -16,7 +16,7 @@ export default function YearSpeakingContainer({
 	const { filters } = useSpeakingFilterStore();
 	return (
 		<section className={styles.root}>
-			<YearSectionTitle year={year} hasMarginTop={hasMarginTop} />
+			<WorkSectionTitle title={year.toString()} hasMarginTop={hasMarginTop} />
 			<div className={styles.worksWrapper}>
 				{works.map((work) => (
 					<WorkPreview

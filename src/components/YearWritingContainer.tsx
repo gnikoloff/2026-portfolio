@@ -1,5 +1,5 @@
 import { BlogDocument } from "../../prismicio-types";
-import { YearSectionTitle } from "./YearSectionTitle";
+import { WorkSectionTitle } from "./WorkSectionTitle";
 
 import ArticlePreview from "./ArticlePreview";
 import styles from "./YearWritingContainer.module.css";
@@ -17,7 +17,7 @@ export default function YearWritingContainer({
 }) {
 	return (
 		<section className={styles.root}>
-			<YearSectionTitle year={year} hasMarginTop={hasMarginTop} />
+			<WorkSectionTitle title={year.toString()} hasMarginTop={hasMarginTop} />
 			<div className={styles.worksWrapper}>
 				<ul>
 					{[...works]

@@ -59,14 +59,23 @@ export default function HomeClient({ initialFilters }: HomeClientProps) {
 				<NoResults />
 			) : (
 				<>
-					{sortedYears.map((year, i) => (
-						<YearWorkContainer
-							key={year}
-							year={Number(year)}
-							works={worksPerYears[year]}
-							hasMarginTop={i > 0}
-						/>
-					))}
+					{sortedYears
+						.filter((year) => year >= 2019)
+						.map((year, i) => (
+							<YearWorkContainer
+								key={year}
+								title={year.toString()}
+								works={worksPerYears[year]}
+								hasMarginTop={i > 0}
+							/>
+						))}
+					<YearWorkContainer
+						title={"Archive"}
+						works={filteredWorks.filter(
+							(work) => Number(work.data.project_year) < 2019,
+						)}
+						hasMarginTop={true}
+					/>
 				</>
 			)}
 		</PageLayout>

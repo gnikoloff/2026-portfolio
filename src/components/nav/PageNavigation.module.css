@@ -4,7 +4,13 @@
 
 .navList {
 	color: var(--foreground);
-	padding: 0 1rem;
+	padding: 0 1rem 0 0;
+}
+
+@media screen and (min-width: 800px) {
+	.navList {
+		padding: 0;
+	}
 }
 
 .navList li:after {
