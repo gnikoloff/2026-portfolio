@@ -11,13 +11,19 @@
 .selectContainer::after {
 	content: "";
 	position: absolute;
-	top: 22px;
+	top: 26px;
 	right: 12px;
 	width: 0;
 	height: 0;
 	border-left: 5px solid transparent;
 	border-right: 5px solid transparent;
 	border-top: 5px solid var(--foreground-secondary);
+}
+
+@media screen and (min-width: 800px) {
+	.selectContainer::after {
+		top: 22px;
+	}
 }
 
 .selectContainer:hover::after {
@@ -61,13 +67,19 @@
 
 .icon {
 	position: absolute;
-	top: 15px;
+	top: 19px;
 	left: 12px;
 	width: 18px;
 	height: 18px;
 	stroke: var(--foreground-secondary);
 	pointer-events: none;
 	/* transition: stroke 0.15s ease-in-out; */
+}
+
+@media screen and (min-width: 800px) {
+	.icon {
+		top: 15px;
+	}
 }
 
 .input {
