@@ -84,6 +84,10 @@ export default class FullscreenBlurTriangle extends FullscreenTriangle {
 			type: gl.FLOAT_VEC2,
 			value: new Float32Array([width, height]),
 		});
+		this.setUniform("u_direction", {
+			type: gl.FLOAT_VEC2,
+			value: new Float32Array([0, 0]),
+		});
 	}
 
 	/**
@@ -124,16 +128,10 @@ export default class FullscreenBlurTriangle extends FullscreenTriangle {
 			// Alternate between horizontal and vertical blur
 			if (i % 2 === 0) {
 				// Horizontal
-				this.setUniform("u_direction", {
-					type: gl.FLOAT_VEC2,
-					value: new Float32Array([passRadius, 0]),
-				});
+				this.updateUniform("u_direction", new Float32Array([passRadius, 0]));
 			} else {
 				// Vertical
-				this.setUniform("u_direction", {
-					type: gl.FLOAT_VEC2,
-					value: new Float32Array([0, passRadius]),
-				});
+				this.updateUniform("u_direction", new Float32Array([0, passRadius]));
 			}
 
 			// Clear and draw
