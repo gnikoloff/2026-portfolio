@@ -19,6 +19,7 @@ const out = `#version 300 es
 
   #ifdef IS_SKYBOX
     uniform samplerCube u_environmentMap;
+    uniform float blurFactor;
   #endif
 
   #ifdef IS_TO_CUBEMAP_CONVERT
@@ -61,6 +62,7 @@ const out = `#version 300 es
     uniform sampler2D inTexture;
     uniform sampler2D bloomTexture;
     uniform float bloomMixFactor;
+    uniform float renderModeMixFactor;
   #endif
 
   #ifdef IS_GAUSSIAN_BLUR
@@ -78,7 +80,7 @@ const out = `#version 300 es
   void main() {
 
     #ifdef IS_SKYBOX
-      vec3 envColor = texture(u_environmentMap, vWorldPos).rgb;
+      vec3 envColor = texture(u_environmentMap, vWorldPos, blurFactor * 6.0).rgb;
       // finalColor = vec4(envColor, 1.0);
       #ifdef USE_MRT
         fragColor = vec4(envColor, 1.0);
@@ -98,10 +100,10 @@ const out = `#version 300 es
           // Gram-Schmidt orthogonalization
           T = normalize(T - dot(T, N) * N);
         
-        // Reconstruct bitangent
-        vec3 B = cross(N, T);
-        
-        mat3 TBN = mat3(T, B, N);
+          // Reconstruct bitangent
+          vec3 B = cross(N, T);
+          
+          mat3 TBN = mat3(T, B, N);
           vec2 uv = vUv * 1.0;
           vec3 normalMap = texture(u_normalMap, uv).xyz * 2.0 - 1.0;
           N = normalize(TBN * normalMap);
@@ -139,7 +141,7 @@ const out = `#version 300 es
             fragColor.a = loadingT;
           #endif
 
-          // fragColor = vec4(N, 1.0);
+          // fragColor = vec4(vec3(metallic), 1.0);
           
 
           float brightness = dot(color, vec3(0.2126, 0.7152, 0.0722)); // Luminance
@@ -177,6 +179,8 @@ const out = `#version 300 es
               finalColor.rgb = lottes(color);
               finalColor.rgb = pow(color, vec3(1.0 / 2.2));
               finalColor.a = 1.0;
+
+              finalColor = mix(vec4(bloomColor * bloomMixFactor, 1.0), finalColor, renderModeMixFactor);
 
               // finalColor = vec4(vUv, 0.0, 1.0);
 

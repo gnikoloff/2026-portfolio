@@ -1,32 +1,27 @@
 .root {
+	position: relative;
 	display: inline-block;
+	overflow: hidden;
+}
+
+.wrapper {
 	position: relative;
 	overflow: hidden;
-	cursor: grab;
 }
 
-.titleHidden {
-	position: fixed;
-	top: -10000px;
-	left: -10000px;
-	opacity: 0;
-}
-
-.root.noGL {
-	cursor: unset;
-}
-
-.root.loading {
+.wrapper.loading {
 	border: 1px solid var(--subtlerer-border-color);
 }
 
-.root.loading:before {
+.wrapper.loading:before {
 	opacity: 1;
 }
 
-.root::before {
+.wrapper::before {
 	z-index: 1;
 	content: "";
+	pointer-events: none;
+	/* background-color: red; */
 	background: linear-gradient(
 		90deg,
 		rgba(255, 255, 255, 0),
@@ -51,4 +46,136 @@
 	100% {
 		transform: skewX(-12deg) translateX(calc(100% + 300px));
 	}
+}
+
+.fadable {
+	transition: opacity 0.1s ease-out;
+}
+
+.fadable.faded {
+	opacity: 0;
+}
+
+.logo {
+	position: relative;
+	z-index: 2;
+	cursor: grab;
+}
+
+.renderModeSelect {
+	appearance: auto;
+	width: 100%;
+	display: block;
+	font-size: 15px;
+	padding: 1px 3px;
+}
+
+.titleHidden {
+	position: fixed;
+	top: -10000px;
+	left: -10000px;
+	opacity: 0;
+}
+
+.root.noGL {
+	cursor: unset;
+}
+
+.logoConfig {
+	width: 100%;
+	padding: 0.3rem;
+	display: none;
+}
+
+.logoConfig.focused::before {
+	opacity: 0;
+}
+
+.logoConfig.visible {
+	display: block;
+}
+
+.sectionWrapper {
+	display: none;
+}
+.sectionWrapper.visible {
+	display: flex;
+}
+
+.section {
+	position: relative;
+	z-index: 2;
+	display: inline-block;
+	width: 150px;
+	padding: 2px;
+}
+
+.toggleBtnWrapper {
+	display: flex;
+	justify-content: flex-end;
+}
+
+.toggleBtn {
+	position: relative;
+	border: none;
+	font-size: 15px;
+	width: 100%;
+	height: 24px;
+	cursor: pointer;
+
+	background: var(--subtlerer-border-color);
+	transition: opacity 0.1s ease-out;
+}
+
+.toggleBtn:after {
+	content: "";
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin: -4px 0 0 -4px;
+
+	width: 0;
+	height: 0;
+
+	border-left: 8px solid transparent;
+	border-right: 8px solid transparent;
+	border-top: 8px solid var(--subtle-border-color);
+}
+
+.toggleBtn.expanded {
+	transform: rotate(180deg);
+}
+
+.toggleBtn.faded {
+	opacity: 0;
+}
+
+.toggleBtn.visible {
+	display: flex;
+}
+
+.border {
+	display: block;
+	width: 100%;
+	height: 1px;
+	position: relative;
+	z-index: 1;
+	background-color: rgba(255, 255, 255, 0.12);
+}
+
+.section:last-of-type {
+	border-bottom: none;
+}
+
+.label {
+	font-size: 12px;
+	/* text-transform: uppercase; */
+	font-weight: 500;
+	margin-bottom: 0.2rem;
+	display: block;
+	color: var(--foreground-secondary);
+}
+
+.input {
+	pointer-events: auto;
 }

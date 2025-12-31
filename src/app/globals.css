@@ -102,6 +102,10 @@ button {
 	margin-top: 0 !important;
 }
 
+#logo-viz-wrapper {
+	min-height: 120px;
+}
+
 #app-header {
 	/* height: 120px; */
 	margin-top: 180px;

@@ -1,5 +1,5 @@
 import { CameraController, PerspectiveCamera } from "@/libs/hwoa-rang-gl2";
-import { CharData } from "@/types";
+import { CharData, LogoAsset, LogoRenderMode } from "@/types";
 import { HDRImageElement } from "@/types/hdrpng";
 import { loadHDR, makeHDRGLTexture } from "@/utils/load-hdr";
 import { loadImg } from "@/utils/load-img";
@@ -22,56 +22,6 @@ const BDRFlut = "/assets/brdfLUT.png";
 const CUBEMAP_SIZE = 256;
 const IBL_DIFFUSE_SIZE = 32;
 const IBL_SPECULAR_SIZE = 128;
-
-interface Asset {
-	pbrTextureURLs: string[];
-	skyboxURL: string;
-	bloomMixFactor: number;
-	camPosition: vec3;
-	camLookAt: vec3;
-}
-
-const ASSETS: Asset[] = [
-	{
-		pbrTextureURLs: [
-			"/assets/Metal007_1K-PNG_Color-512.webp",
-			"/assets/Metal007_1K-PNG_Metalness-512.webp",
-			"/assets/Metal007_1K-PNG_Roughness-512.webp",
-			"/assets/Metal007_1K-PNG_NormalGL-512.webp",
-		],
-		skyboxURL: "/api/hdr-data?filename=StandardCubeMap_0.hdr",
-		bloomMixFactor: 0.05,
-		camPosition: vec3.fromValues(-2.25, -1.2, 3),
-		camLookAt: vec3.fromValues(-0.25, 0.1, 0),
-	},
-	{
-		pbrTextureURLs: [
-			"/assets/PaintedMetal007_1K-PNG_Color-512.webp",
-			"/assets/PaintedMetal007_1K-PNG_Metalness-512.webp",
-			"/assets/PaintedMetal007_1K-PNG_Roughness-512.webp",
-			"/assets/PaintedMetal007_1K-PNG_NormalGL-512.webp",
-		],
-		skyboxURL: "/api/hdr-data?filename=StandardCubeMap_2.hdr",
-		bloomMixFactor: 0.3,
-		camPosition: vec3.fromValues(-2.56357, -1.3369, 2.8435),
-		camLookAt: vec3.fromValues(-0.25, 0.1, 0),
-	},
-	{
-		pbrTextureURLs: [
-			"/assets/Metal007_1K-PNG_Color-512.webp",
-			"/assets/Metal007_1K-PNG_Metalness-512.webp",
-			"/assets/Metal007_1K-PNG_Roughness-512.webp",
-			"/assets/Metal007_1K-PNG_NormalGL-512.webp",
-		],
-		skyboxURL: "/api/hdr-data?filename=StandardCubeMap_9.hdr",
-		bloomMixFactor: 0.8,
-		camPosition: vec3.fromValues(1.15649, -1.37456, 3.0555),
-		camLookAt: vec3.fromValues(0.07, 0.09, -0.13),
-	},
-];
-
-const loadIdx = Math.floor(Math.random() * ASSETS.length);
-const ASSET_TO_LOAD = ASSETS[loadIdx]!;
 
 const loadModel = (src: string): Promise<CharData> => {
 	return fetch(src).then((res) => res.json());
@@ -117,7 +67,12 @@ export default class LogoVizApp {
 	private opacityT = 0;
 	private opacityTTarget = 0;
 
+	private onFadeInTriggered = false;
+
+	public onFadeIn?: () => void;
+
 	constructor(
+		asset: LogoAsset,
 		private canvas: HTMLCanvasElement,
 		private gl: WebGL2RenderingContext,
 		private onAnimStart: () => void,
@@ -141,8 +96,8 @@ export default class LogoVizApp {
 			0.1,
 			20,
 		);
-		this.perspCamera.position = ASSET_TO_LOAD.camPosition;
-		this.perspCamera.lookAt = ASSET_TO_LOAD.camLookAt;
+		this.perspCamera.position = asset.camPosition;
+		this.perspCamera.lookAt = asset.camLookAt;
 		this.perspCamera.updateViewMatrix().updateProjectionMatrix();
 
 		this.cameraCtrl = new CameraController(
@@ -153,7 +108,7 @@ export default class LogoVizApp {
 		);
 		this.cameraCtrl.minDistance = 1;
 		this.cameraCtrl.maxDistance = 8;
-		this.cameraCtrl.lookAt(ASSET_TO_LOAD.camLookAt as [number, number, number]);
+		this.cameraCtrl.lookAt(asset.camLookAt as [number, number, number]);
 
 		gl.enable(gl.DEPTH_TEST);
 
@@ -166,7 +121,7 @@ export default class LogoVizApp {
 
 		this.blitMainSceneFX = new FullscreenCompositeTriangle(
 			gl,
-			ASSET_TO_LOAD.bloomMixFactor,
+			asset.bloomMixFactor,
 		);
 		this.blurThresholdFX = new FullscreenBlurTriangle(
 			gl,
@@ -176,9 +131,9 @@ export default class LogoVizApp {
 
 		Promise.all([
 			Promise.all(MODELS.map(loadModel)),
-			loadHDR(ASSET_TO_LOAD.skyboxURL),
+			loadHDR(asset.skyboxURL),
 			loadImg(BDRFlut),
-			Promise.all(ASSET_TO_LOAD.pbrTextureURLs.map(loadImg)),
+			Promise.all(asset.pbrTextureURLs.map(loadImg)),
 		])
 			.then(this.onResourcesLoaded)
 			.catch((err) => {
@@ -221,6 +176,18 @@ export default class LogoVizApp {
 
 		this.skybox = new Skybox(gl);
 	};
+
+	updateBlurIntensity(v: number) {
+		this.blitMainSceneFX.updateIntensity(v);
+	}
+
+	updateAmbientDetail(v: number) {
+		this.skybox.updateDetailFactor(v);
+	}
+
+	updateRenderMode(v: LogoRenderMode) {
+		this.blitMainSceneFX.updateRenderMode(v);
+	}
 
 	drawFrame(ts: number) {
 		ts *= 0.001;
@@ -310,6 +277,12 @@ export default class LogoVizApp {
 
 		if (this.opacityT > 0.3 && this.loadingTTargetTarget === 0) {
 			this.loadingTTargetTarget = 1;
+		}
+		if (this.loadingT > 0.99 && !this.onFadeInTriggered) {
+			if (this.onFadeIn) {
+				this.onFadeIn();
+			}
+			this.onFadeInTriggered = true;
 		}
 		this.perspCamera.updateViewMatrix();
 

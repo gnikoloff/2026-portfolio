@@ -172,6 +172,7 @@ export default class CameraController {
       font-size: 14px;
       user-select: none;
       background: rgba(255, 255, 255, 0.7);
+      color: #111;
       border-radius: 4px;
       padding: 3px 6px;
     `,
@@ -264,10 +265,23 @@ export default class CameraController {
 			this.updateCamera();
 
 			if (this._isDebug) {
-				const cameraX = Math.round(this.camera.position[0] * 100) / 100;
-				const cameraY = Math.round(this.camera.position[1] * 100) / 100;
-				const cameraZ = Math.round(this.camera.position[2] * 100) / 100;
-				this._outputEl.textContent = `x: ${cameraX} y: ${cameraY} z: ${cameraZ}`;
+				const cameraX =
+					Math.round(this.camera.position[0] * 100_000_000) / 100_000_000;
+				const cameraY =
+					Math.round(this.camera.position[1] * 100_000_000) / 100_000_000;
+				const cameraZ =
+					Math.round(this.camera.position[2] * 100_000_000) / 100_000_000;
+				const lookAtX =
+					Math.round(this.camera.lookAt[0] * 100_000_000) / 100_000_000;
+				const lookAtY =
+					Math.round(this.camera.lookAt[1] * 100_000_000) / 100_000_000;
+				const lookAtZ =
+					Math.round(this.camera.lookAt[2] * 100_000_000) / 100_000_000;
+				this._outputEl.innerHTML = `
+        x: ${cameraX} y: ${cameraY} z: ${cameraZ}
+        <br/>
+        x: ${lookAtX} y: ${lookAtY} z: ${lookAtZ}
+        `;
 			}
 		}
 		this.loopId = requestAnimationFrame(this.tick);

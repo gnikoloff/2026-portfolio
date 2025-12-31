@@ -1,11 +1,19 @@
 // src/types/filters.ts
 
 import { NumberField } from "@prismicio/client";
+import { vec3 } from "gl-matrix";
 import {
 	BlogDocument,
 	SpeakingDocument,
 	WorkDocument,
 } from "../prismicio-types";
+
+export type LogoRenderMode =
+	| "default"
+	| "bloom"
+	| "normal"
+	| "metallic"
+	| "roughness";
 
 export interface TableContentsEntry {
 	id: string;
@@ -69,6 +77,14 @@ export interface WorkTechTag {
 	name: WorkTag;
 	category: TechCategory;
 	compatibleLanguages?: WorkTag[];
+}
+
+export interface LogoAsset {
+	pbrTextureURLs: string[];
+	skyboxURL: string;
+	bloomMixFactor: number;
+	camPosition: vec3;
+	camLookAt: vec3;
 }
 
 export interface FilterState {

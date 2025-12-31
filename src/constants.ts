@@ -36,6 +36,17 @@ export const CONTACT_INQUIRY_PROJECT = "Project";
 export const CONTACT_INQUIRY_COLLABORATION = "Collaboration";
 export const CONTACT_INQUIRY_GENERAL_INQUIRY = "General Inquiry";
 
+// logo
+
+export const LOGO_ANIM_WIDTH = 300;
+export const LOGO_ANIM_HEIGHT = 120;
+
+export const LOGO_RENDER_MODE_DEFAULT = "Default";
+export const LOGO_RENDER_MODE_BLOOM = "Bloom";
+export const LOGO_RENDER_MODE_NORMAL = "Normal";
+export const LOGO_RENDER_MODE_METALLIC = "Metallic";
+export const LOGO_RENDER_MODE_ROUGHNESS = "Roughness";
+
 // Misc
 
 export const HTML_SITEMAP_URL_SEGMENT_NAME = "html-sitemap";
@@ -47,6 +58,3 @@ export const SENT_MAIL_SUCCESS_TIMEOUT_MSG_MS = 4000;
 export const QUERY_PARAM_YEAR = "year";
 export const QUERY_PARAM_TECHNOLOGY = "technology";
 export const QUERY_PARAM_LANGUAGE = "language";
-
-export const LOGO_ANIM_WIDTH = 300;
-export const LOGO_ANIM_HEIGHT = 120;

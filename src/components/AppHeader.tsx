@@ -4,7 +4,7 @@
 import dynamic from "next/dynamic";
 import { forwardRef } from "react";
 
-import { LOGO_ANIM_HEIGHT, LOGO_ANIM_WIDTH } from "@/constants";
+import { LOGO_ANIM_WIDTH } from "@/constants";
 import styles from "./AppHeader.module.css";
 
 const LogoViz = dynamic(() => import("@/logo-viz/LogoViz"), {
@@ -24,7 +24,7 @@ const AppHeader = forwardRef<HTMLElement>((props, ref) => {
 					className={styles.logoWrapper}
 					style={{
 						width: `${LOGO_ANIM_WIDTH}px`,
-						height: `${LOGO_ANIM_HEIGHT}px`,
+						minHeight: `144px`,
 					}}
 				>
 					<LogoViz />

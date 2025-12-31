@@ -9,11 +9,16 @@ const geometry = createBox({ useCubemapCrossLayout: true });
 export default class Skybox extends Drawable {
 	public envTexture?: WebGLTexture;
 
+	public updateDetailFactor(v: number) {
+		this.updateUniform("blurFactor", v);
+	}
+
 	constructor(gl: WebGL2RenderingContext) {
 		super(gl, vertShaderSrc, fragShaderSrc, {
 			IS_SKYBOX: true,
 			USE_WORLD_POS: true,
 			USE_MRT: true,
+			MAX_REFLECTION_LOD: 4,
 		});
 
 		const { vertexCount, vertexStride, interleavedArray, indicesArray } =
@@ -49,6 +54,10 @@ export default class Skybox extends Drawable {
 		this.updateUniform("u_worldMatrix", this.worldMatrix as Float32Array);
 		this.setUniform("u_environmentMap", {
 			type: gl.INT,
+			value: 0,
+		});
+		this.setUniform("blurFactor", {
+			type: gl.FLOAT,
 			value: 0,
 		});
 		this.setUniform("projMatrix", {
