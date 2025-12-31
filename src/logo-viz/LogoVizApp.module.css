@@ -168,6 +168,7 @@
 }
 
 .label {
+	user-select: none;
 	font-size: 12px;
 	/* text-transform: uppercase; */
 	font-weight: 500;
