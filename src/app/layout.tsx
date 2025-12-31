@@ -4,6 +4,10 @@ import "image-compare-viewer/dist/image-compare-viewer.min.css";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import { Suspense } from "react";
 
+import "highlight.js/styles/codepen-embed.css";
+import "./globals.css";
+import "./typeset.min.css";
+
 import AppHeader from "@/components/AppHeader";
 import AppNavigationWrapper from "@/components/nav/AppNavigationWrapper";
 import ScrollToTop from "@/components/ScrollToTop";
@@ -22,10 +26,6 @@ import javascript from "highlight.js/lib/languages/javascript";
 import swift from "highlight.js/lib/languages/swift";
 import typescript from "highlight.js/lib/languages/typescript";
 import xml from "highlight.js/lib/languages/xml";
-
-import "highlight.js/styles/codepen-embed.css";
-import "./globals.css";
-import "./typeset.min.css";
 
 hljs.registerLanguage("xml", xml);
 hljs.registerLanguage("javascript", javascript);
