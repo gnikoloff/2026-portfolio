@@ -12,6 +12,14 @@
           "label": "slug"
         }
       },
+      "visibility": {
+        "type": "Select",
+        "config": {
+          "label": "Visibility",
+          "placeholder": "",
+          "options": ["public", "draft"]
+        }
+      },
       "article_technologies": {
         "type": "Group",
         "config": {

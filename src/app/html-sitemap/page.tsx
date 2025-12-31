@@ -11,11 +11,11 @@ import {
 	SPEAKING_URL_SEGMENT_NAME,
 	WORKS_CUSTOM_TYPE,
 	WORKS_URL_SEGMENT_NAME,
-	WRITING_CUSTOM_TYPE,
 	WRITING_URL_SEGMENT_NAME,
 } from "@/constants";
 import { createClient } from "@/prismicio";
 
+import getBlogPosts from "@/utils/get-blog-posts";
 import { getFormattedPageMeta } from "@/utils/get-formatted-page-meta";
 import { asImageSrc } from "@prismicio/client";
 import { Metadata } from "next";
@@ -35,7 +35,7 @@ async function HTMLSitemap() {
 	const client = createClient();
 	const works = await client.getAllByType(WORKS_CUSTOM_TYPE);
 	const speakingWorks = await client.getAllByType(SPEAKING_CUSTOM_TYPE);
-	const articles = await client.getAllByType(WRITING_CUSTOM_TYPE);
+	const articles = await getBlogPosts();
 
 	return (
 		<PageLayout>

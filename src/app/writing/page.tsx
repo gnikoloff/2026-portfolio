@@ -1,12 +1,8 @@
 import WritingClient from "@/components/WritingClient";
-import {
-	HOME_CUSTOM_TYPE,
-	PAGE_DESCRIPTION,
-	PAGE_TITLE,
-	WRITING_CUSTOM_TYPE,
-} from "@/constants";
+import { HOME_CUSTOM_TYPE, PAGE_DESCRIPTION, PAGE_TITLE } from "@/constants";
 import { createClient } from "@/prismicio";
 import { FilterState, WorkTag } from "@/types";
+import getBlogPosts from "@/utils/get-blog-posts";
 import { getFormattedPageMeta } from "@/utils/get-formatted-page-meta";
 import { asImageSrc } from "@prismicio/client";
 import { Metadata } from "next";
@@ -27,8 +23,7 @@ export default async function Writing({
 	searchParams: { year?: string; language?: string; technology?: string };
 }) {
 	const params = await searchParams;
-	const client = createClient();
-	const writingWorks = await client.getAllByType(WRITING_CUSTOM_TYPE);
+	const writingWorks = await getBlogPosts();
 
 	const initialFilters: FilterState = {
 		yearRange: params.year

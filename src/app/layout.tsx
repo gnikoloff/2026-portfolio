@@ -16,10 +16,10 @@ import {
 	HOME_CUSTOM_TYPE,
 	SPEAKING_CUSTOM_TYPE,
 	WORKS_CUSTOM_TYPE,
-	WRITING_CUSTOM_TYPE,
 } from "@/constants";
 import { DataProvider } from "@/contexts/DataContext";
 import { createClient } from "@/prismicio";
+import getBlogPosts from "@/utils/get-blog-posts";
 import hljs from "highlight.js/lib/core";
 import glsl from "highlight.js/lib/languages/glsl";
 import javascript from "highlight.js/lib/languages/javascript";
@@ -46,7 +46,7 @@ export default async function RootLayout({
 		client.getSingle(ABOUT_CUSTOM_TYPE),
 		client.getAllByType(WORKS_CUSTOM_TYPE),
 		client.getAllByType(SPEAKING_CUSTOM_TYPE),
-		client.getAllByType(WRITING_CUSTOM_TYPE),
+		getBlogPosts(),
 	]);
 
 	return (

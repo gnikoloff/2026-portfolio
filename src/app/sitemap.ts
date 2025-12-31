@@ -6,10 +6,10 @@ import {
 	SPEAKING_URL_SEGMENT_NAME,
 	WORKS_CUSTOM_TYPE,
 	WORKS_URL_SEGMENT_NAME,
-	WRITING_CUSTOM_TYPE,
 	WRITING_URL_SEGMENT_NAME,
 } from "@/constants";
 import { createClient } from "@/prismicio";
+import getBlogPosts from "@/utils/get-blog-posts";
 import { MetadataRoute } from "next";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -30,7 +30,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 	const client = createClient();
 	const works = await client.getAllByType(WORKS_CUSTOM_TYPE);
 	const speakingWorks = await client.getAllByType(SPEAKING_CUSTOM_TYPE);
-	const articles = await client.getAllByType(WRITING_CUSTOM_TYPE);
+	const articles = await getBlogPosts();
 
 	const workRoutes = works.map((work) => ({
 		url: `${BASE_URL}/${WORKS_URL_SEGMENT_NAME}/${work.uid}`,

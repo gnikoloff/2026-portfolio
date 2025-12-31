@@ -150,6 +150,17 @@ export interface BlogDocumentDataArticleTechnologiesItem {
  */
 interface BlogDocumentData {
   /**
+   * Visibility field in *Blog*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **API ID Path**: blog.visibility
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  visibility: prismic.SelectField<"public" | "draft">;
+
+  /**
    * Article Technologies field in *Blog*
    *
    * - **Field Type**: Group
