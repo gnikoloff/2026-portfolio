@@ -395,6 +395,8 @@ export default class LogoVizApp {
 	}
 
 	dispose() {
+		this.cameraCtrl.removeEventHandler();
+
 		this.blitMainSceneFX.dispose();
 		this.blurThresholdFX.dispose();
 		if (this.mesh) {
