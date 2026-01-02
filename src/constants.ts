@@ -1,3 +1,5 @@
+import { ContactReason } from "./types";
+
 export const PAGE_TITLE = "Georgi Nikolov";
 export const PAGE_DESCRIPTION =
 	"Georgi Nikolov is a programmer building advanced web and mobile applications. Real-time rendering, GPU programming, and interactive 3D.";
@@ -32,9 +34,9 @@ export const ABOUT_SECTION_EXPERIENCE = "about-experience";
 export const CONTACT_TO_MAIL = "connect@georgi-nikolov.com";
 export const CONTACT_FORM_ENDPOINT = "/api/submit-form";
 
-export const CONTACT_INQUIRY_PROJECT = "Project";
-export const CONTACT_INQUIRY_COLLABORATION = "Collaboration";
-export const CONTACT_INQUIRY_GENERAL_INQUIRY = "General Inquiry";
+export const CONTACT_INQUIRY_PROJECT: ContactReason = "Project";
+export const CONTACT_INQUIRY_COLLABORATION: ContactReason = "Collaboration";
+export const CONTACT_INQUIRY_GENERAL_INQUIRY: ContactReason = "General Inquiry";
 
 // logo
 

@@ -8,6 +8,8 @@ import {
 	WorkDocument,
 } from "../prismicio-types";
 
+export type ContactReason = "Project" | "Collaboration" | "General Inquiry";
+
 export type LogoRenderMode =
 	| "default"
 	| "bloom"

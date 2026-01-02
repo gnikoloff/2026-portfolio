@@ -7,8 +7,11 @@ import {
 	CONTACT_INQUIRY_PROJECT,
 	SENT_MAIL_SUCCESS_TIMEOUT_MSG_MS,
 } from "@/constants";
+import { ContactReason } from "@/types";
 import { FormEvent, useState } from "react";
 import styles from "./ContactForm.module.css";
+
+const initContactReason = CONTACT_INQUIRY_GENERAL_INQUIRY;
 
 function ContactForm() {
 	const [formData, setFormData] = useState({
@@ -16,9 +19,11 @@ function ContactForm() {
 		email: "",
 		message: "",
 		budget: "",
-		contactReason: CONTACT_INQUIRY_PROJECT,
+		contactReason: initContactReason,
 	});
-	const [showBudget, setShowBudget] = useState(true);
+	const [showBudget, setShowBudget] = useState(
+		initContactReason === CONTACT_INQUIRY_PROJECT,
+	);
 	const [isSending, setIsSending] = useState(false);
 	const [isSendError, setIsSendError] = useState(false);
 	const [showSendStatusMsg, setShowSendStatusMsg] = useState(false);
@@ -104,7 +109,10 @@ function ContactForm() {
 							onChange={(e) => {
 								const t = e.target;
 
-								setFormData({ ...formData, contactReason: t.value });
+								setFormData({
+									...formData,
+									contactReason: t.value as ContactReason,
+								});
 
 								setShowBudget(t.value == CONTACT_INQUIRY_PROJECT);
 							}}

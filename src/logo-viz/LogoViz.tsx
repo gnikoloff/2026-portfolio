@@ -47,7 +47,7 @@ const ASSETS: LogoAsset[] = [
 	},
 ];
 
-const loadIdx = 1; //Math.floor(Math.random() * ASSETS.length);
+const loadIdx = Math.floor(Math.random() * ASSETS.length);
 const ASSET_TO_LOAD = ASSETS[loadIdx]!;
 
 type InputDragStatis = "bloom-intensity" | "ambient-factor" | "inactive";
