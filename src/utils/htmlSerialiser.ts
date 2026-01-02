@@ -30,4 +30,16 @@ export const htmlSerializer: HTMLRichTextSerializer = {
 			renderedChildren,
 		)}</code></pre>`;
 	},
+	image: ({ node }) => {
+		const imgixUrl = new URL(node.url);
+
+		// Remove auto compression, set max quality
+		imgixUrl.searchParams.delete("auto");
+		imgixUrl.searchParams.set("q", "80");
+
+		const linkUrl = node.linkTo ? node.linkTo.url : null;
+		const img = `<img src="${imgixUrl.toString()}" alt="${node.alt || ""}" />`;
+
+		return `<p class="block-img">${linkUrl ? `<a href="${linkUrl}">${img}</a>` : img}</p>`;
+	},
 };

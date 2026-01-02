@@ -133,15 +133,23 @@ type FlattenedChild = {
 function flattenChildren(
 	items: TableContentsEntry[],
 	level = 0,
+	prefix = "",
 ): FlattenedChild[] {
-	return items.flatMap((item) => {
-		const indent = "\u00A0\u00A0".repeat(level * 2);
+	return items.flatMap((item, index) => {
+		const isLastItem = index === items.length - 1;
+		const connector = isLastItem ? "└─ " : "├─ ";
+		const indent = level === 0 ? "" : prefix + connector;
+
 		if (!item.children) {
 			return [{ ...item, indent }];
 		}
+
+		const childPrefix =
+			level === 0 ? "" : prefix + (isLastItem ? "   " : "│  ");
+
 		return [
 			{ id: item.id, label: item.label, indent },
-			...flattenChildren(item.children, level + 1),
+			...flattenChildren(item.children, level + 1, childPrefix),
 		];
 	});
 }

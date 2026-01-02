@@ -144,30 +144,26 @@ const out = `#version 300 es
           // fragColor = vec4(vec3(metallic), 1.0);
           
 
-          float brightness = dot(color, vec3(0.2126, 0.7152, 0.0722)); // Luminance
-          vec3 bloomColor = vec3(0.0);
-          if (brightness > 1.0) { // Threshold - only bright areas
-            bloomColor = color;
-          }
-          brightColor = vec4(bloomColor, 1.0);
+          float brightness = max(color.r, max(color.g, color.b));
+          float bloom = step(1.0, brightness);
+          brightColor = vec4(vec3(bloom) * color, 1.0);
 
         #else
           #ifdef IS_FULLSCREEN_TRIANGLE
             #ifdef IS_GAUSSIAN_BLUR
               vec2 texelSize = 1.0 / u_resolution;
     
-              // 9-tap Gaussian blur
               vec4 color = vec4(0.0);
-              
-              color += texture(inTexture, vUv + vec2(-4.0) * u_direction * texelSize) * 0.05;
-              color += texture(inTexture, vUv + vec2(-3.0) * u_direction * texelSize) * 0.09;
-              color += texture(inTexture, vUv + vec2(-2.0) * u_direction * texelSize) * 0.12;
-              color += texture(inTexture, vUv + vec2(-1.0) * u_direction * texelSize) * 0.15;
-              color += texture(inTexture, vUv) * 0.16;
-              color += texture(inTexture, vUv + vec2(1.0) * u_direction * texelSize) * 0.15;
-              color += texture(inTexture, vUv + vec2(2.0) * u_direction * texelSize) * 0.12;
-              color += texture(inTexture, vUv + vec2(3.0) * u_direction * texelSize) * 0.09;
-              color += texture(inTexture, vUv + vec2(4.0) * u_direction * texelSize) * 0.05;
+              vec2 off1 = vec2(1.411764705882353) * u_direction;
+              vec2 off2 = vec2(3.2941176470588234) * u_direction;
+              vec2 off3 = vec2(5.176470588235294) * u_direction;
+              color += texture(inTexture, vUv) * 0.1964825501511404;
+              color += texture(inTexture, vUv + (off1 * texelSize)) * 0.2969069646728344;
+              color += texture(inTexture, vUv - (off1 * texelSize)) * 0.2969069646728344;
+              color += texture(inTexture, vUv + (off2 * texelSize)) * 0.09447039785044732;
+              color += texture(inTexture, vUv - (off2 * texelSize)) * 0.09447039785044732;
+              color += texture(inTexture, vUv + (off3 * texelSize)) * 0.010381362401148057;
+              color += texture(inTexture, vUv - (off3 * texelSize)) * 0.010381362401148057;
               
               finalColor = color;
             #else
