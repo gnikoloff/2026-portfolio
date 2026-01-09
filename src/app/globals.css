@@ -282,6 +282,16 @@ h6 {
 	color: var(--foreground);
 }
 
+.highlight {
+	padding: 2rem;
+	border: 1px solid var(--subtlerer-border-color);
+	background-color: var(--background-secondary);
+}
+
+.highlight p {
+	margin-bottom: 0 !important;
+}
+
 @media screen and (min-width: 960px) {
 	.block-img:not(:has(a[href*="apple"])),
 	.splide,
