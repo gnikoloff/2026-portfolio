@@ -1,6 +1,6 @@
 import Link from "@/components/CustomLink";
 
-import { SPEAKING_URL_SEGMENT_NAME, WORKS_URL_SEGMENT_NAME } from "@/constants";
+import { WORKS_URL_SEGMENT_NAME } from "@/constants";
 import { FilterState } from "@/types";
 import { KeyTextField } from "@prismicio/client";
 import Image from "next/image";
@@ -8,7 +8,6 @@ import styles from "./WorkPreview.module.css";
 import WorkTagsList from "./WorkTagsList";
 
 export default function WorkPreview({
-	isHomepage,
 	title,
 	type = null,
 	technologies = [],
@@ -16,7 +15,6 @@ export default function WorkPreview({
 	previewImageURL,
 	filters,
 }: {
-	isHomepage: boolean;
 	title: KeyTextField;
 	type?: KeyTextField;
 	technologies?: string[];
@@ -24,9 +22,7 @@ export default function WorkPreview({
 	previewImageURL: string | null | undefined;
 	filters: FilterState;
 }) {
-	const rootSegment = isHomepage
-		? WORKS_URL_SEGMENT_NAME
-		: SPEAKING_URL_SEGMENT_NAME;
+	const rootSegment = WORKS_URL_SEGMENT_NAME;
 
 	return (
 		<Link

@@ -8,8 +8,6 @@ import sm from "../slicemachine.config.json";
 import {
 	ABOUT_CUSTOM_TYPE,
 	ABOUT_URL_SEGMENT_NAME,
-	SPEAKING_CUSTOM_TYPE,
-	SPEAKING_URL_SEGMENT_NAME,
 	WORKS_CUSTOM_TYPE,
 	WORKS_URL_SEGMENT_NAME,
 	WRITING_CUSTOM_TYPE,
@@ -32,11 +30,6 @@ const routes: Route[] = [
 	// Examples:
 	{ type: "home", path: "/" },
 	{ type: WORKS_CUSTOM_TYPE, path: `/${WORKS_URL_SEGMENT_NAME}/:uid` },
-	{ type: SPEAKING_CUSTOM_TYPE, path: `/${SPEAKING_URL_SEGMENT_NAME}` },
-	{
-		type: SPEAKING_CUSTOM_TYPE,
-		path: `/${SPEAKING_URL_SEGMENT_NAME}/:uid`,
-	},
 	{ type: WRITING_CUSTOM_TYPE, path: `/${WRITING_URL_SEGMENT_NAME}` },
 	{ type: ABOUT_CUSTOM_TYPE, path: `/${ABOUT_URL_SEGMENT_NAME}` },
 ];

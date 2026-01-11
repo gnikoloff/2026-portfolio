@@ -20,7 +20,6 @@ export default function YearWorkContainer({
 			<div className={styles.worksWrapper}>
 				{works.map((work) => (
 					<WorkPreview
-						isHomepage={true}
 						key={work.uid}
 						uid={work.uid}
 						title={work.data.project_title}

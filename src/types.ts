@@ -2,11 +2,7 @@
 
 import { NumberField } from "@prismicio/client";
 import { vec3 } from "gl-matrix";
-import {
-	BlogDocument,
-	SpeakingDocument,
-	WorkDocument,
-} from "../prismicio-types";
+import { BlogDocument, WorkDocument } from "../prismicio-types";
 
 export type ContactReason = "Project" | "Collaboration" | "General Inquiry";
 
@@ -33,8 +29,6 @@ export interface CharData {
 
 export type NavType =
 	| "home"
-	| "speaking"
-	| "speaking-single"
 	| "blog"
 	| "blog-single"
 	| "work"
@@ -275,18 +269,6 @@ export function getBlogYearRange(articles: BlogDocument[]): NumberField[] {
 			return acc;
 		}
 		acc.push(article.data.year);
-		return acc;
-	}, []);
-}
-
-export function getSpeakingYearRange(
-	articles: SpeakingDocument[],
-): NumberField[] {
-	return articles.reduce((acc: NumberField[], article) => {
-		if (acc.includes(article.data.project_year)) {
-			return acc;
-		}
-		acc.push(article.data.project_year);
 		return acc;
 	}, []);
 }

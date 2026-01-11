@@ -1,10 +1,6 @@
 // src/utils/filterWorks.ts
 
-import {
-	BlogDocument,
-	SpeakingDocument,
-	WorkDocument,
-} from "../../prismicio-types";
+import { BlogDocument, WorkDocument } from "../../prismicio-types";
 import { FilterState, TECH_TAGS, WorkTechTag } from "../types";
 
 /**
@@ -46,36 +42,6 @@ export function getAllArticleTechnologies(
 					// Fallback if not in TECH_TAGS
 					technologies.push({
 						name: tech.article_tech,
-						category: "frontend",
-					});
-				}
-			}
-		});
-	});
-
-	return technologies;
-}
-
-export function getAllSpeakingTechnologies(
-	articles: SpeakingDocument[],
-): WorkTechTag[] {
-	const techSet = new Set<string>();
-	const technologies: WorkTechTag[] = [];
-
-	articles.forEach((article) => {
-		article.data.project_technologies.forEach((tech) => {
-			if (tech.technology && !techSet.has(tech.technology)) {
-				techSet.add(tech.technology);
-
-				// Find the full tag definition from TECH_TAGS
-				const fullTag = TECH_TAGS.find((tag) => tag.name === tech.technology);
-
-				if (fullTag) {
-					technologies.push(fullTag);
-				} else {
-					// Fallback if not in TECH_TAGS
-					technologies.push({
-						name: tech.technology,
 						category: "frontend",
 					});
 				}
@@ -227,53 +193,6 @@ export function filterArticles(
 	});
 }
 
-export function filterSpeakingWorks(
-	works: SpeakingDocument[],
-	filters: FilterState,
-): SpeakingDocument[] {
-	return works.filter((work) => {
-		// Get all technologies from the work
-		const workTechs =
-			work.data.project_technologies
-				?.map((t) => t.technology)
-				.filter((tech) => tech !== null && tech !== undefined) || [];
-
-		if (workTechs.length === 0) return false;
-
-		// Filter by year range
-		if (filters.yearRange[0] !== null || filters.yearRange[1] !== null) {
-			const workYear = Number(work.data.project_year);
-
-			if (filters.yearRange[0] !== null && workYear < filters.yearRange[0]) {
-				return false;
-			}
-			if (filters.yearRange[1] !== null && workYear > filters.yearRange[1]) {
-				return false;
-			}
-		}
-
-		// Filter by language
-		if (filters.languages.length > 0) {
-			const hasMatchingLanguage = filters.languages.some((lang) =>
-				workTechs.some((workTech) => workTech === lang),
-			);
-			if (!hasMatchingLanguage) {
-				return false;
-			}
-		}
-
-		// Filter by technology
-		if (filters.technologies.length > 0) {
-			const hasMatchingTech = filters.technologies.some((tech) =>
-				workTechs.some((workTech) => workTech === tech),
-			);
-			if (!hasMatchingTech) return false;
-		}
-
-		return true;
-	});
-}
-
 /**
  * Group works by year
  */
@@ -290,22 +209,6 @@ export function groupWorksByYear(
 			return acc;
 		},
 		{} as Record<string, WorkDocument[]>,
-	);
-}
-
-export function groupSpeakingWorksByYear(
-	works: SpeakingDocument[],
-): Record<string, SpeakingDocument[]> {
-	return works.reduce(
-		(acc, work) => {
-			const year = work.data.project_year?.toString() ?? "Unknown";
-			if (!acc[year]) {
-				acc[year] = [];
-			}
-			acc[year].push(work);
-			return acc;
-		},
-		{} as Record<string, SpeakingDocument[]>,
 	);
 }
 

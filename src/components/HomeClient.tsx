@@ -60,7 +60,7 @@ export default function HomeClient({ initialFilters }: HomeClientProps) {
 			) : (
 				<>
 					{sortedYears
-						.filter((year) => year >= 2019)
+						.filter((year) => year > 2019)
 						.map((year, i) => (
 							<YearWorkContainer
 								key={year}
@@ -72,7 +72,7 @@ export default function HomeClient({ initialFilters }: HomeClientProps) {
 					<YearWorkContainer
 						title={"Archive"}
 						works={filteredWorks.filter(
-							(work) => Number(work.data.project_year) < 2019,
+							(work) => Number(work.data.project_year) <= 2019,
 						)}
 						hasMarginTop={true}
 					/>

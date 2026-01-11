@@ -2,8 +2,6 @@ import {
 	ABOUT_URL_SEGMENT_NAME,
 	BASE_URL,
 	CONTACT_URL_SEGMENT_NAME,
-	SPEAKING_CUSTOM_TYPE,
-	SPEAKING_URL_SEGMENT_NAME,
 	WORKS_CUSTOM_TYPE,
 	WORKS_URL_SEGMENT_NAME,
 	WRITING_URL_SEGMENT_NAME,
@@ -16,7 +14,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 	const rootRoutes = [
 		"",
 		`/${WORKS_URL_SEGMENT_NAME}`,
-		`/${SPEAKING_URL_SEGMENT_NAME}`,
 		`/${WRITING_URL_SEGMENT_NAME}`,
 		`/${ABOUT_URL_SEGMENT_NAME}`,
 		`/${CONTACT_URL_SEGMENT_NAME}`,
@@ -29,7 +26,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
 	const client = createClient();
 	const works = await client.getAllByType(WORKS_CUSTOM_TYPE);
-	const speakingWorks = await client.getAllByType(SPEAKING_CUSTOM_TYPE);
 	const articles = await getBlogPosts();
 
 	const workRoutes = works.map((work) => ({
@@ -46,12 +42,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 		priority: 0.6,
 	}));
 
-	const speakingRoutes = speakingWorks.map((work) => ({
-		url: `${BASE_URL}/${SPEAKING_URL_SEGMENT_NAME}/${work.uid}`,
-		lastModified: new Date(work.last_publication_date),
-		changeFrequency: "yearly" as const,
-		priority: 0.5,
-	}));
-
-	return [...rootRoutes, ...workRoutes, ...articleRoutes, ...speakingRoutes];
+	return [...rootRoutes, ...workRoutes, ...articleRoutes];
 }

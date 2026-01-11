@@ -6,7 +6,6 @@ import {
 	HTML_SITEMAP_URL_SEGMENT_NAME,
 	IMPRINT_URL_SEGMENT_NAME,
 	PRIVACY_POLICY_URL_SEGMENT_NAME,
-	SPEAKING_URL_SEGMENT_NAME,
 	WORKS_URL_SEGMENT_NAME,
 	WRITING_URL_SEGMENT_NAME,
 } from "@/constants";
@@ -24,17 +23,12 @@ import ImprintNavigation from "./ImprintNavigation";
 import PageNavigation from "./PageNavigation";
 import PrivacyPolicyNavigation from "./PrivacyPolicyNavigation";
 import SingleBlogNavigation from "./SingleBlogNavigation";
-import SingleSpeakingWorkNavigation from "./SingleSpeakingWorkNavigation";
 import SingleWorkNavigation from "./SingleWorkNavigation";
-import SpeakingNavigation from "./SpeakingNavigation";
 
 const getNavType = (pathname: string): NavType => {
 	if (pathname === `/${WRITING_URL_SEGMENT_NAME}`) return "blog";
 	if (pathname.startsWith(`/${WRITING_URL_SEGMENT_NAME}/`))
 		return "blog-single";
-	if (pathname === `/${SPEAKING_URL_SEGMENT_NAME}`) return "speaking";
-	if (pathname.startsWith(`/${SPEAKING_URL_SEGMENT_NAME}`))
-		return "speaking-single";
 	if (pathname.includes(WORKS_URL_SEGMENT_NAME)) return "work";
 	if (pathname.includes(ABOUT_URL_SEGMENT_NAME)) return "about";
 	if (pathname.includes(CONTACT_URL_SEGMENT_NAME)) return "contact";
@@ -110,10 +104,6 @@ export default function AppNavigation() {
 				return <BlogNavigation />;
 			case "blog-single":
 				return <SingleBlogNavigation pathname={pathToUse} />;
-			case "speaking":
-				return <SpeakingNavigation />;
-			case "speaking-single":
-				return <SingleSpeakingWorkNavigation pathname={pathToUse} />;
 			case "html-sitemap":
 				return <HTMLSitemapNavigation />;
 			case "privacy-policy":

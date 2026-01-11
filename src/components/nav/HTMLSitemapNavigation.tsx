@@ -8,7 +8,6 @@ function HTMLSitemapNavigation() {
 				entries={[
 					{ id: "root-pages", label: "Root Pages" },
 					{ id: "works", label: "Works" },
-					{ id: "speaking", label: "Speaking" },
 					{ id: "writing", label: "Writing" },
 				]}
 			/>

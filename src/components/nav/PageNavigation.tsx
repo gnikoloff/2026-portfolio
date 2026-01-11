@@ -2,7 +2,6 @@ import Link from "@/components/CustomLink";
 import {
 	ABOUT_URL_SEGMENT_NAME,
 	CONTACT_URL_SEGMENT_NAME,
-	SPEAKING_URL_SEGMENT_NAME,
 	WRITING_URL_SEGMENT_NAME,
 } from "@/constants";
 import { NavType } from "@/types";
@@ -10,7 +9,6 @@ import styles from "./PageNavigation.module.css";
 
 export default function PageNavigation({ navType }: { navType: NavType }) {
 	const isWork = navType === "work" || navType === "home";
-	const isSpeaking = navType === "speaking" || navType == "speaking-single";
 	const isWriting = navType === "blog" || navType === "blog-single";
 	const isAbout = navType === "about";
 	const isContact = navType === "contact";
@@ -20,14 +18,6 @@ export default function PageNavigation({ navType }: { navType: NavType }) {
 				<li>
 					<Link className={isWork ? styles.active : ""} href={"/"}>
 						Works
-					</Link>
-				</li>
-				<li>
-					<Link
-						className={isSpeaking ? styles.active : ""}
-						href={`/${SPEAKING_URL_SEGMENT_NAME}`}
-					>
-						Speaking
 					</Link>
 				</li>
 				<li>

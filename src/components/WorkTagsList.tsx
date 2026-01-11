@@ -1,9 +1,6 @@
 "use client";
 
-import {
-	SPEAKING_URL_SEGMENT_NAME,
-	WRITING_URL_SEGMENT_NAME,
-} from "@/constants";
+import { WRITING_URL_SEGMENT_NAME } from "@/constants";
 import { FilterState } from "@/types";
 import { usePathname } from "next/navigation";
 import styles from "./WorkTagsList.module.css";
@@ -21,9 +18,7 @@ export default function WorkTagsList({
 			{tags.map((tech) => {
 				const isMarked =
 					(filters &&
-						(pathname === "/" ||
-							pathname === `/${WRITING_URL_SEGMENT_NAME}` ||
-							pathname === `/${SPEAKING_URL_SEGMENT_NAME}`) &&
+						(pathname === "/" || pathname === `/${WRITING_URL_SEGMENT_NAME}`) &&
 						filters.languages.some((lang) => lang === tech)) ||
 					(filters && filters.technologies.some((lang) => lang === tech));
 				return (

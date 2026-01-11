@@ -5,14 +5,12 @@ import {
 	AboutDocument,
 	BlogDocument,
 	HomeDocument,
-	SpeakingDocument,
 	WorkDocument,
 } from "../../prismicio-types";
 
 type AppData = {
 	works: WorkDocument[];
 	articles: BlogDocument[];
-	speakingWorks: SpeakingDocument[];
 	home: HomeDocument | null;
 	about: AboutDocument | null;
 };
@@ -20,7 +18,6 @@ type AppData = {
 const DataContext = createContext<AppData>({
 	works: [],
 	articles: [],
-	speakingWorks: [],
 	home: null,
 	about: null,
 });

@@ -7,8 +7,6 @@ import {
 	HOME_CUSTOM_TYPE,
 	PAGE_DESCRIPTION,
 	PAGE_TITLE,
-	SPEAKING_CUSTOM_TYPE,
-	SPEAKING_URL_SEGMENT_NAME,
 	WORKS_CUSTOM_TYPE,
 	WORKS_URL_SEGMENT_NAME,
 	WRITING_URL_SEGMENT_NAME,
@@ -34,7 +32,6 @@ export async function generateMetadata(): Promise<Metadata> {
 async function HTMLSitemap() {
 	const client = createClient();
 	const works = await client.getAllByType(WORKS_CUSTOM_TYPE);
-	const speakingWorks = await client.getAllByType(SPEAKING_CUSTOM_TYPE);
 	const articles = await getBlogPosts();
 
 	return (
@@ -46,9 +43,6 @@ async function HTMLSitemap() {
 				<ul>
 					<li>
 						<Link href={`/`}>Works</Link>
-					</li>
-					<li>
-						<Link href={`/${SPEAKING_URL_SEGMENT_NAME}`}>Speaking</Link>
 					</li>
 					<li>
 						<Link href={`/${WRITING_URL_SEGMENT_NAME}`}>Writing</Link>
@@ -76,27 +70,6 @@ async function HTMLSitemap() {
 						.map((work) => (
 							<li key={work.uid}>
 								<Link href={`/${WORKS_URL_SEGMENT_NAME}/${work.uid}`}>
-									{work.data.project_title}
-								</Link>
-							</li>
-						))}
-				</ul>
-				<h2 id="speaking">Speaking</h2>
-				<ul>
-					{[...speakingWorks]
-						.sort(
-							(
-								{ first_publication_date: aPubDate },
-								{ first_publication_date: bPubDate },
-							) => {
-								const dateA = new Date(aPubDate).getTime();
-								const dateB = new Date(bPubDate).getTime();
-								return dateB - dateA;
-							},
-						)
-						.map((work) => (
-							<li key={work.uid}>
-								<Link href={`/${SPEAKING_URL_SEGMENT_NAME}/${work.uid}`}>
 									{work.data.project_title}
 								</Link>
 							</li>

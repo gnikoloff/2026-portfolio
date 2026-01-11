@@ -525,160 +525,6 @@ export type PdfCvDocument<Lang extends string = string> =
   >;
 
 /**
- * Item in *speaking → Project Technologies*
- */
-export interface SpeakingDocumentDataProjectTechnologiesItem {
-  /**
-   * Technology field in *speaking → Project Technologies*
-   *
-   * - **Field Type**: Select
-   * - **Placeholder**: *None*
-   * - **API ID Path**: speaking.project_technologies[].technology
-   * - **Documentation**: https://prismic.io/docs/fields/select
-   */
-  technology: prismic.SelectField<
-    "Javascript" | "Swift" | "WebGL" | "Metal" | "HTML" | "CSS" | "SVG"
-  >;
-}
-
-/**
- * Content for speaking documents
- */
-interface SpeakingDocumentData {
-  /**
-   * Project Title field in *speaking*
-   *
-   * - **Field Type**: Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: speaking.project_title
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/fields/text
-   */
-  project_title: prismic.KeyTextField;
-
-  /**
-   * Project Technologies field in *speaking*
-   *
-   * - **Field Type**: Group
-   * - **Placeholder**: *None*
-   * - **API ID Path**: speaking.project_technologies[]
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
-   */
-  project_technologies: prismic.GroupField<
-    Simplify<SpeakingDocumentDataProjectTechnologiesItem>
-  >;
-
-  /**
-   * Project Type field in *speaking*
-   *
-   * - **Field Type**: Select
-   * - **Placeholder**: *None*
-   * - **API ID Path**: speaking.project_type
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/fields/select
-   */
-  project_type: prismic.SelectField<"Video Course" | "Presentation">;
-
-  /**
-   * Project Year field in *speaking*
-   *
-   * - **Field Type**: Number
-   * - **Placeholder**: *None*
-   * - **API ID Path**: speaking.project_year
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/fields/number
-   */
-  project_year: prismic.NumberField;
-
-  /**
-   * project link field in *speaking*
-   *
-   * - **Field Type**: Link
-   * - **Placeholder**: *None*
-   * - **API ID Path**: speaking.project_link
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/fields/link
-   */
-  project_link: prismic.LinkField<
-    string,
-    string,
-    unknown,
-    prismic.FieldState,
-    never
-  >;
-
-  /**
-   * project tech field in *speaking*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: speaking.project_tech
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
-   */
-  project_tech: prismic.RichTextField;
-
-  /**
-   * Project Image field in *speaking*
-   *
-   * - **Field Type**: Image
-   * - **Placeholder**: *None*
-   * - **API ID Path**: speaking.project_image
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/fields/image
-   */
-  project_image: prismic.ImageField<never>;
-
-  /**
-   * Project Body field in *speaking*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: speaking.project_body
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
-   */
-  project_body: prismic.RichTextField; /**
-   * Meta Description field in *speaking*
-   *
-   * - **Field Type**: Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: speaking.meta_description
-   * - **Tab**: Metadata
-   * - **Documentation**: https://prismic.io/docs/fields/text
-   */
-  meta_description: prismic.KeyTextField;
-
-  /**
-   * meta_image field in *speaking*
-   *
-   * - **Field Type**: Image
-   * - **Placeholder**: *None*
-   * - **API ID Path**: speaking.meta_image
-   * - **Tab**: Metadata
-   * - **Documentation**: https://prismic.io/docs/fields/image
-   */
-  meta_image: prismic.ImageField<never>;
-}
-
-/**
- * speaking document from Prismic
- *
- * - **API ID**: `speaking`
- * - **Repeatable**: `true`
- * - **Documentation**: https://prismic.io/docs/content-modeling
- *
- * @typeParam Lang - Language API ID of the document.
- */
-export type SpeakingDocument<Lang extends string = string> =
-  prismic.PrismicDocumentWithUID<
-    Simplify<SpeakingDocumentData>,
-    "speaking",
-    Lang
-  >;
-
-/**
  * Item in *work → Project Technologies*
  */
 export interface WorkDocumentDataProjectTechnologiesListItem {
@@ -745,6 +591,7 @@ interface WorkDocumentData {
     | "Game"
     | "Visualisation"
     | "Animation"
+    | "Video Course"
   >;
 
   /**
@@ -877,7 +724,6 @@ export type AllDocumentTypes =
   | CvDocument
   | HomeDocument
   | PdfCvDocument
-  | SpeakingDocument
   | WorkDocument;
 
 declare module "@prismicio/client" {
@@ -913,9 +759,6 @@ declare module "@prismicio/client" {
       HomeDocumentData,
       PdfCvDocument,
       PdfCvDocumentData,
-      SpeakingDocument,
-      SpeakingDocumentData,
-      SpeakingDocumentDataProjectTechnologiesItem,
       WorkDocument,
       WorkDocumentData,
       WorkDocumentDataProjectTechnologiesListItem,

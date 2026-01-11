@@ -14,7 +14,6 @@ import ScrollToTop from "@/components/ScrollToTop";
 import {
 	ABOUT_CUSTOM_TYPE,
 	HOME_CUSTOM_TYPE,
-	SPEAKING_CUSTOM_TYPE,
 	WORKS_CUSTOM_TYPE,
 } from "@/constants";
 import { DataProvider } from "@/contexts/DataContext";
@@ -41,11 +40,10 @@ export default async function RootLayout({
 	// Fetch data from Prismic
 	const client = createClient();
 
-	const [home, about, works, speakingWorks, articles] = await Promise.all([
+	const [home, about, works, articles] = await Promise.all([
 		client.getSingle(HOME_CUSTOM_TYPE),
 		client.getSingle(ABOUT_CUSTOM_TYPE),
 		client.getAllByType(WORKS_CUSTOM_TYPE),
-		client.getAllByType(SPEAKING_CUSTOM_TYPE),
 		getBlogPosts(),
 	]);
 
@@ -58,7 +56,6 @@ export default async function RootLayout({
 						home,
 						about,
 						works,
-						speakingWorks,
 						articles,
 					}}
 				>
