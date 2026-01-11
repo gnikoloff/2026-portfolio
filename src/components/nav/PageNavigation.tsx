@@ -25,7 +25,7 @@ export default function PageNavigation({ navType }: { navType: NavType }) {
 						className={isWriting ? styles.active : ""}
 						href={`/${WRITING_URL_SEGMENT_NAME}`}
 					>
-						Writing
+						Articles
 					</Link>
 				</li>
 				<li>
