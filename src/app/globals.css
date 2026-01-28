@@ -1,6 +1,7 @@
 :root {
 	--background: #ffffff;
-	--background-secondary: #eee;
+	--background-secondary: #efefef;
+	--background-third: #eee;
 	--foreground: #171717;
 	--foreground-secondary: #444;
 
@@ -34,7 +35,8 @@
 @media (prefers-color-scheme: dark) {
 	:root {
 		--background: #0a0a0a;
-		--background-secondary: #242424;
+		--background-secondary: #121212;
+		--background-third: #242424;
 		--foreground: #ededed;
 		--foreground-secondary: #aaa;
 
@@ -80,9 +82,11 @@ a {
 }
 
 code {
-	background-color: var(--background-secondary) !important;
+	background-color: var(--background-third) !important;
+	border: 1px solid var(--subtlerer-border-color) !important;
 	color: var(--foreground) !important;
 	border-radius: 4px;
+	white-space: pre;
 }
 
 fieldset {
@@ -98,8 +102,38 @@ button {
 	font-size: inherit;
 }
 
+.typeset code {
+	font-size: 1.1rem !important;
+}
+
+.typeset pre {
+	line-height: 2.5 !important;
+}
+
+.typeset table {
+	width: 100%;
+}
+
 .typeset h1 {
 	margin-top: 0 !important;
+}
+
+.typeset thead th {
+	color: var(--foreground);
+	background-color: var(--background-third);
+}
+
+.typeset tbody tr:nth-of-type(2n) {
+	background-color: var(--background-secondary);
+}
+
+.typeset td,
+.typeset th {
+	border: 1px solid var(--subtlerer-border-color) !important;
+}
+
+.typeset thead th {
+	border: 1px solid var(--subtler-border-color) !important;
 }
 
 #logo-viz-wrapper {
@@ -144,6 +178,7 @@ button {
 	padding: 0 !important;
 	background-color: transparent !important;
 	border: none !important;
+	font-size: 1rem !important;
 }
 
 .fw500 {
@@ -283,9 +318,20 @@ h6 {
 }
 
 .highlight {
-	padding: 2rem;
+	padding: 3rem 1rem 1rem;
+	background-color: var(--background-third);
 	border: 1px solid var(--subtlerer-border-color);
-	background-color: var(--background-secondary);
+	border-radius: 2px;
+	background-image: url("/icons/info-square-dark.svg");
+	background-size: 24px;
+	background-repeat: no-repeat;
+	background-position: 1rem 12px;
+}
+
+@media (prefers-color-scheme: dark) {
+	.highlight {
+		background-image: url("/icons/info-square-light.svg");
+	}
 }
 
 .highlight p {

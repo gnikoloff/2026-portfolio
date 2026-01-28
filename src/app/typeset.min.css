@@ -3,7 +3,7 @@
 	max-width: 100%;
 }
 .typeset {
-	--background-color: #f3f6fa;
+	/* --background-color: #f3f6fa; */
 	--border-color: #dbe2f2;
 	--color: #324354;
 	--blockquote-color: rgba(0, 0, 0, 0.2);
@@ -140,22 +140,21 @@
 .typeset code,
 .typeset pre,
 .typeset th {
-	background-color: #f3f6fa;
-	background-color: var(--background-color);
+	/* background-color: #f3f6fa; */
 }
 .typeset code,
 .typeset pre,
 .typeset td,
 .typeset th {
-	color: #324354;
-	color: var(--color);
+	/* color: #324354;
+	color: var(--color); */
 }
 .typeset pre,
 .typeset table,
 .typeset td,
 .typeset th {
-	border: 1px solid #dbe2f2;
-	border-color: var(--border-color);
+	/* border: 1px solid #dbe2f2;
+	border-color: var(--border-color); */
 }
 .typeset a {
 	text-decoration: underline;
