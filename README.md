@@ -2,7 +2,7 @@
 
 ![Hero Unit](preview.png)
 
-Source code for Georgi Nikolov's portfolio.
+Source code for my personal portfolio.
 
 ## Stack
 
@@ -16,7 +16,7 @@ It uses [Prismic](https://prismic.io/) as CMS and is hosted on [Vercel](https://
 - [hdrpng.js](https://enkimute.github.io/hdrpng.js/) - HDR images for the web
 - [gl-matrix](https://glmatrix.net/) - Javascript Matrix and Vector library
 - [highlight.js](https://highlightjs.org/) - JavaScript syntax highlighter
-- (image-compare-viewer)(https://image-compare-viewer.netlify.app/) - Compare before and after images
+- [image-compare-viewer](https://image-compare-viewer.netlify.app/) - Compare before and after images
 - [SplideJS](https://github.com/Splidejs/splide) - a lightweight, flexible and accessible slider and carousel
 - [medium-zoom](https://github.com/francoischalifour/medium-zoom) - A JavaScript library for zooming images like Medium
 - [typeset.css](https://github.com/joshuarudd/typeset.css/) - A no-nonsense CSS typography reset for styling user-generated content
