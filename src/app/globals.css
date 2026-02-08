@@ -102,12 +102,42 @@ button {
 	font-size: inherit;
 }
 
-.typeset code {
-	font-size: 1.1rem !important;
+.typeset p,
+.typeset li {
+	line-height: 1.6 !important;
 }
 
-.typeset pre {
-	line-height: 2.5 !important;
+.typeset blockquote {
+	border-left-color: var(--subtle-border-color) !important;
+}
+
+.typeset code {
+	font-size: 1.1rem !important;
+	line-height: 1.4 !important;
+}
+
+/* .typeset p:empty,
+.typeset p:blank {
+	display: none;
+} */
+
+.typeset caption {
+	caption-side: bottom !important;
+	margin: 1rem 0 !important;
+	font-weight: 400 !important;
+	text-align: center !important;
+	color: var(--foreground-secondary) !important;
+}
+
+.img-caption {
+	margin: -1rem 0 3rem 0 !important;
+	font-weight: 400 !important;
+	text-align: center !important;
+	color: var(--foreground-secondary) !important;
+}
+
+.typeset caption p {
+	margin: 0;
 }
 
 .typeset table {

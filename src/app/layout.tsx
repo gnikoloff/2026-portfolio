@@ -20,7 +20,7 @@ import { DataProvider } from "@/contexts/DataContext";
 import { createClient } from "@/prismicio";
 import getBlogPosts from "@/utils/get-blog-posts";
 import hljs from "highlight.js/lib/core";
-import glsl from "highlight.js/lib/languages/glsl";
+import cpp from "highlight.js/lib/languages/cpp";
 import javascript from "highlight.js/lib/languages/javascript";
 import swift from "highlight.js/lib/languages/swift";
 import typescript from "highlight.js/lib/languages/typescript";
@@ -29,7 +29,7 @@ import xml from "highlight.js/lib/languages/xml";
 hljs.registerLanguage("xml", xml);
 hljs.registerLanguage("javascript", javascript);
 hljs.registerLanguage("typescript", typescript);
-hljs.registerLanguage("glsl", glsl);
+hljs.registerLanguage("cpp", cpp);
 hljs.registerLanguage("swift", swift);
 
 export default async function RootLayout({

@@ -50,6 +50,9 @@ export default async function WritingWork({
 			<div className="tight-container">
 				<main className={styles.main}>
 					<ArticleClient
+						tableOfContents={
+							page.data.table_of_contents && page.data.table_of_contents[0]
+						}
 						title={page.data.title}
 						html={html}
 						date={new Date(page.last_publication_date)}

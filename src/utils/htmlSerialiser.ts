@@ -12,6 +12,15 @@ const decodeHTMLEntities = (html: string): string => {
 		.replace(/&amp;/g, "&");
 };
 
+const extractLanguage = (text: string): string | null => {
+	const match = text.match(/^<!(\w+)>/);
+	return match ? match[1] : null;
+};
+
+const removeLanguagePrefix = (text: string): string => {
+	return text.replace(/^<!(\w+)>\s*/, "");
+};
+
 export const htmlSerializer: HTMLRichTextSerializer = {
 	paragraph: ({ children: content }) => {
 		return `<p>${decodeHTMLEntities(content)}</p>`;
@@ -23,12 +32,18 @@ export const htmlSerializer: HTMLRichTextSerializer = {
 		return `<li>${decodeHTMLEntities(content)}</li>`;
 	},
 	preformatted: ({ children }) => {
-		const renderedChildren = children;
-		const lang = "javascript"; //renderedChildren.substring(0, renderedChildren.indexOf('*'))
+		const decoded = decodeHTMLEntities(children);
+		const extractedLang = extractLanguage(decoded);
+		const withoutPrefix = extractedLang
+			? removeLanguagePrefix(decoded)
+			: decoded;
+		const formatted = htmlToFormattedText(withoutPrefix)
+			.replaceAll("__LT__", "&lt;")
+			.replaceAll("__RT__", "&gt;");
 
-		return `<pre class="code-snippet"><code class="${lang}">${htmlToFormattedText(
-			renderedChildren,
-		)}</code></pre>`;
+		const language = extractedLang || "javascript";
+
+		return `<pre class="code-snippet"><code class="${language}">${formatted}</code></pre>`;
 	},
 	image: ({ node }) => {
 		const imgixUrl = new URL(node.url);
@@ -37,9 +52,35 @@ export const htmlSerializer: HTMLRichTextSerializer = {
 		imgixUrl.searchParams.delete("auto");
 		imgixUrl.searchParams.set("q", "80");
 
+		const alt = node.alt as string;
+		const isDiagram = alt.includes("DIAGRAM");
+		const hasCaption = alt.includes("CAPTION");
+
+		let caption = "";
+		if (hasCaption) {
+			caption = alt.substring("CAPTION: ".length);
+		}
+
 		const linkUrl = node.linkTo ? node.linkTo.url : null;
 		const img = `<img src="${imgixUrl.toString()}" alt="${node.alt || ""}" />`;
 
-		return `<p class="block-img">${linkUrl ? `<a href="${linkUrl}">${img}</a>` : img}</p>`;
+		const urlPartial = linkUrl ? `<a href="${linkUrl}">${img}</a>` : img;
+
+		return `
+      <div>
+        ${
+					isDiagram
+						? `<p>${urlPartial}</p>`
+						: `<p class="block-img">${urlPartial}</p>`
+				}
+        ${
+					hasCaption
+						? `
+            <p class="img-caption">${caption}</p>
+          `
+						: ""
+				}
+      </div>
+    `;
 	},
 };

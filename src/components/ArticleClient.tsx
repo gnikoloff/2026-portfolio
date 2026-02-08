@@ -1,6 +1,6 @@
 "use client";
 
-import { KeyTextField } from "@prismicio/client";
+import { KeyTextField, RTNode } from "@prismicio/client";
 import Splide from "@splidejs/splide";
 import hljs from "highlight.js";
 // @ts-ignore
@@ -8,6 +8,7 @@ import ImageCompare from "image-compare-viewer";
 import { useEffect, useRef } from "react";
 
 import styles from "./ArticleClient.module.css";
+import ArticleTableOfContents from "./ArticleTableOfContents";
 import { SinglePageHeader } from "./SinglePageHeader";
 
 export default function ArticleClient({
@@ -15,11 +16,13 @@ export default function ArticleClient({
 	date,
 	technologies,
 	html,
+	tableOfContents,
 }: {
 	title: KeyTextField;
 	html: string;
 	technologies: string[];
 	date: Date;
+	tableOfContents: RTNode | undefined;
 }) {
 	const contentRef = useRef<HTMLDivElement>(null);
 	const splideInited = useRef(false);
@@ -91,11 +94,12 @@ export default function ArticleClient({
 				year={new Date(date).getFullYear()}
 				technologies={technologies}
 			/>
-			<div
-				className={`typeset ${styles.root}`}
-				ref={contentRef}
-				dangerouslySetInnerHTML={{ __html: html }}
-			></div>
+			<div className={`typeset ${styles.root}`} ref={contentRef}>
+				{tableOfContents && (
+					<ArticleTableOfContents tableOfContents={tableOfContents} />
+				)}
+				<div dangerouslySetInnerHTML={{ __html: html }} />
+			</div>
 		</div>
 	);
 }

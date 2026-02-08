@@ -1,0 +1,19 @@
+.toc {
+	padding: 1rem;
+	background-color: var(--background-secondary);
+}
+
+.summary {
+}
+
+.toc[open] .summary {
+	padding-bottom: 1rem;
+	margin-bottom: 1rem;
+	border-bottom: 1px solid var(--subtlerer-border-color);
+}
+
+.headline {
+	user-select: none;
+	margin: 0 !important;
+	display: inline-block;
+}
