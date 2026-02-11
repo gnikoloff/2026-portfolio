@@ -107,6 +107,10 @@ button {
 	line-height: 1.6 !important;
 }
 
+.typeset img {
+	height: auto;
+}
+
 .typeset blockquote {
 	border-left-color: var(--subtle-border-color) !important;
 }

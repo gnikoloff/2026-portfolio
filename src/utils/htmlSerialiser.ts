@@ -53,8 +53,8 @@ export const htmlSerializer: HTMLRichTextSerializer = {
 		imgixUrl.searchParams.set("q", "80");
 
 		const alt = node.alt as string;
-		const isDiagram = alt.includes("DIAGRAM");
-		const hasCaption = alt.includes("CAPTION");
+		const isDiagram = alt?.includes("DIAGRAM");
+		const hasCaption = alt?.includes("CAPTION");
 
 		let caption = "";
 		if (hasCaption) {
@@ -62,7 +62,9 @@ export const htmlSerializer: HTMLRichTextSerializer = {
 		}
 
 		const linkUrl = node.linkTo ? node.linkTo.url : null;
-		const img = `<img src="${imgixUrl.toString()}" alt="${node.alt || ""}" />`;
+		const width = node.dimensions.width;
+		const height = node.dimensions.height;
+		const img = `<img class="lazyload" data-src="${imgixUrl.toString()}" data-sizes="auto" alt="${node.alt || ""}" width="${width}" height="${height}" />`;
 
 		const urlPartial = linkUrl ? `<a href="${linkUrl}">${img}</a>` : img;
 

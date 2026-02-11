@@ -1,6 +1,7 @@
 "use client";
 
 import { KeyTextField, NumberField } from "@prismicio/client";
+import lazySizes from "lazysizes";
 import mediumZoom from "medium-zoom";
 import { useEffect, useRef } from "react";
 import { WorkDocumentDataProjectTechnologiesListItem } from "../../prismicio-types";
@@ -34,6 +35,7 @@ function WorkClient({
 		if (rootRef.current == null) {
 			return;
 		}
+		lazySizes.autoSizer?.checkElems();
 		const allImages = [...rootRef.current.getElementsByTagName("img")].filter(
 			(img) => {
 				if (img == null || img.parentNode == null) {

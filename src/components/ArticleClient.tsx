@@ -3,6 +3,7 @@
 import { KeyTextField, RTNode } from "@prismicio/client";
 import Splide from "@splidejs/splide";
 import hljs from "highlight.js";
+import lazySizes from "lazysizes";
 // @ts-ignore
 import ImageCompare from "image-compare-viewer";
 import { useEffect, useRef } from "react";
@@ -34,6 +35,8 @@ export default function ArticleClient({
 		if (!container) {
 			return;
 		}
+
+		lazySizes.autoSizer?.checkElems();
 
 		if (!splideInited.current) {
 			// Query within the container, not the whole document

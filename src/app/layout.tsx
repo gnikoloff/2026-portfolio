@@ -25,6 +25,7 @@ import javascript from "highlight.js/lib/languages/javascript";
 import swift from "highlight.js/lib/languages/swift";
 import typescript from "highlight.js/lib/languages/typescript";
 import xml from "highlight.js/lib/languages/xml";
+import "lazysizes";
 
 hljs.registerLanguage("xml", xml);
 hljs.registerLanguage("javascript", javascript);
